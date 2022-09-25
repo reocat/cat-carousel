@@ -328,3 +328,15 @@ console.log('Browser');
 console.log(navigator.appName);
 console.log('IP');
 getIPs().then(res => console.log(res.join('\n')));
+
+let on_off = document.querySelector('.container .title');
+let audio = document.querySelector('.musicOn audio');
+
+on_off.onclick = function() {
+  audio.paused ? audio.play() : music_stop();
+}
+
+function music_stop() {
+  audio.pause();
+  audio.currentTime = 0;
+}
