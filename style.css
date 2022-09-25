@@ -8,6 +8,8 @@ body {
   display: grid;
   place-items: center;
   background-color: #FFF8E1;
+  background-image: url('https://c.tenor.com/r8QaTDj3U6IAAAAi/nyan-cat-poptart-cat.gif');
+  background-size: 30%;
 }
 @font-face { font-family: 'Roboto', sans-serif; src: url('Roboto-Medium.ttf'); } 
 h1 {
