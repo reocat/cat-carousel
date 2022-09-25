@@ -13,8 +13,9 @@ body {
 h1 {
     font-family: 'Roboto', sans-serif;
     vertical-align: text-top;
-    background-color: #FFF8E1; 
+    background: rgba(255,255,255,0.5); 
     text-align: center;
+	color: #000000;
     }
 .slider {
   width: 100%;
