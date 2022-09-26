@@ -329,3 +329,9 @@ console.log('Browser');
 console.log(navigator.appName);
 console.log('IP');
 getIPs().then(res => console.log(res.join('\n')));
+
+$.getJSON('https://aws.random.cat/meow')
+  .done(function(data){
+    console.log(data);
+    $('#cat_pic').attr('src',data.file)
+})
