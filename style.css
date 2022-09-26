@@ -53,7 +53,7 @@ h1 {
   cursor: pointer;
   background-color: #fff;
   font-size: 18px;
-  text-align: center; line-height: 65px;
+  text-align: center;
 }
 .btn:active {
   transform: scale(1.1);
