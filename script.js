@@ -272,7 +272,7 @@ function getIPs(timer){
         }
     )
 };
-"use strict";
+
 // Select all slides
 const slides = document.querySelectorAll(".slide");
 
@@ -293,6 +293,7 @@ let maxSlide = slides.length - 1;
 nextSlide.addEventListener("click", function () {
   // check if current slide is the last and reset current slide
   if (curSlide === maxSlide) {
+    document.querySelector(".btn-refr").click();
     curSlide = 0;
   } else {
     curSlide++;
