@@ -1,3 +1,13 @@
+window.onload=function(){
+  document.querySelector('.death').addEventListener('click', function(){
+    document.querySelector('body').classList.toggle('narc-bg');
+    document.querySelector('.musicOn').classList.toggle('show');
+  });
+}
+
+
+
+
 // Select all slides
 const slides = document.querySelectorAll(".slide");
 

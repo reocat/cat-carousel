@@ -15,9 +15,10 @@
   <h1>Random Cat Image Carousel</h1>
 
   <div class="musicOn">
-    <audio id="audio" src="https://www.nyan.cat/music/original.mp3" controls  loop>
+    <audio id="audio" src="https://www.nyan.cat/music/original.mp3" controls loop>
   </div>
   <button onClick=" window.location.reload();" class="btn-refr">Refresh</button>
+
   <body oncontextmenu="return false">
     <!-- Slider container -->
     <div class="slider">
@@ -42,11 +43,16 @@
       </div>
 
       <!-- Control buttons -->
-      <button class="btn btn-next">&#10095;</button>
-      <button class="btn btn-prev">&#10094;</button>
+      <button class="btn btn-next"><span class="wrapper">&#10095;</span></button>
+      <button class="btn btn-prev"> <span class="wrapper"> &#10094;</span></button>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="vanilla.js"></script>
-	<script src="jquery_code.js"></script>
-     </body>
-</html >
+    <script src="jquery_code.js"></script>
+    <div class="btn-container">
+      <a href="#" class="death">toggle death mode</a> 
+    </div>
+  </body>
+
+</html>

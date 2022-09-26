@@ -8,8 +8,7 @@ body {
   display: grid;
   place-items: center;
   background-color: #FFF8E1;
-  background-image: url('https://c.tenor.com/r8QaTDj3U6IAAAAi/nyan-cat-poptart-cat.gif');
-  background-size: 30%;
+
 }
 @font-face { font-family: 'Roboto', sans-serif; src: url('Roboto-Medium.ttf'); } 
 h1 {
@@ -26,6 +25,13 @@ h1 {
   position: relative;
   overflow: hidden; /* <===  */
   border-radius: 15px;
+}
+a{
+  text-decoration: none;
+  color:white;
+}
+.show{
+  display:block !important;
 }
 
 .slide {
@@ -61,11 +67,53 @@ h1 {
 .btn-prev {
   top: 45%;
   left: 2%;
+  padding:5px;
 }
 
 .btn-next {
   top: 45%;
   right: 2%;
+  padding:5px;
+  
+}
+.btn-refr{
+  text-decoration: none;
+  border:none;
+  background-color:bisque;
+  color:black;
+  padding:5px 10px;
+  border-radius:8px;
+  transition:all 0.5s ease-in-out;
+}
+.btn-refr:hover{
+  transform: scale3d(1.1, 1.1, 1.1);
+  color:white;
+  background-color:black;
+}
+.btn-container{
+  background-color:black;
+  position:fixed;
+  top:20px;
+  left:20px;
+  width:fit-content;
+  height:30px;
+  border-radius: 10px;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:0 10px;
+}
+.death{
+  margin-right: 5px;
+}
+.musicOn{
+  display:none;
+}
+.narc-bg{
+    background-color: #FFF8E1;
+  background-image: url('https://c.tenor.com/r8QaTDj3U6IAAAAi/nyan-cat-poptart-cat.gif');
+  background-size: 30%;
 }
 /* .slider {
   max-width: 100rem;
