@@ -18,6 +18,17 @@ h1 {
     text-align: center;
 	color: #000000;
     }
+    .rot{
+      transform: rotate(360deg);
+      transition: all 3s ease;
+    }
+
+    .nn{
+      font-size: 70px;
+      background: -webkit-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 .slider {
   width: 100%;
   max-width: 800px;
@@ -159,3 +170,17 @@ a{
 }
 
  */
+@media screen and (max-width:500px)   {
+  .btn-container{
+    width: 15vw;
+    height: auto;
+    top:2vw;
+    left:2vw;
+    word-wrap: normal;
+    
+  }
+  h1{
+    margin-top: 60px;
+  }
+  
+}
