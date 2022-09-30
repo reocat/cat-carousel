@@ -6,9 +6,10 @@
 body {
   height: 100vh;
   display:flex;
-flex-direction:column;
-justify-content:center;
-row-gap:20px;
+  flex-direction:column;
+  justify-content:center;
+  row-gap:20px;
+  align-items:center;
   background-color: #FFF8E1;
 
 }
