@@ -5,8 +5,10 @@
 }
 body {
   height: 100vh;
-  display: grid;
-  place-items: center;
+  display:flex;
+flex-direction:column;
+justify-content:center;
+row-gap:20px;
   background-color: #FFF8E1;
 
 }
