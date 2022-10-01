@@ -14,7 +14,7 @@ window.onload = function () {
 
 
   });
-  document.querySelector('.death').addEventListener('click', function () {
+  document.querySelector('.btn-container').addEventListener('click', function () {
     document.querySelector('body').classList.toggle('narc-bg');
     document.querySelector('.musicOn').classList.toggle('show');
     document.querySelector('h1').classList.toggle('nn');
