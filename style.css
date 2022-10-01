@@ -132,6 +132,7 @@ a{
   align-items:center;
   padding:0 10px;
   translation-diration: all 0.5s ease-in-out;
+  font-family: 'Roboto', sans-serif;
 }
 .death{
   margin-right: 5px;
