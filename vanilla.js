@@ -1,31 +1,56 @@
-window.onload=function(){
-  document.querySelector('.death').addEventListener('click', function(){
+
+window.onload = function () {
+  var duration = '0.5s';
+  var animation = 'animate__tada';
+  var btnDeathMode = document.querySelector('.btn-container');
+  btnDeathMode.addEventListener('click', function () {
+    btnDeathMode.classList.add(animation);
+    btnDeathMode.style.animationDuration = duration;
+    setTimeout(function () {
+      btnDeathMode.classList.remove(animation);
+    }, 550);
+
+
+
+
+  });
+  document.querySelector('.death').addEventListener('click', function () {
     document.querySelector('body').classList.toggle('narc-bg');
     document.querySelector('.musicOn').classList.toggle('show');
     document.querySelector('h1').classList.toggle('nn');
 
   });
+
+var toExport;
+  var buttonRefresh = document.querySelector('.btn-refr');
+  console.log(buttonRefresh);
+  buttonRefresh.addEventListener('click', function () {
+    var list = document.querySelectorAll('img');
+    for (var i = 0; i < list.length; i++) {
+      
+        list[i].src = list[i].src + '/';
+      
+    }
+    console.log(list);
+  });
 }
 
-function GetURLParameter(sParam)
-{
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++) 
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) 
-        {
-            return sParameterName[1];
-        }
+function GetURLParameter(sParam) {
+  var sPageURL = window.location.search.substring(1);
+  var sURLVariables = sPageURL.split('&');
+  for (var i = 0; i < sURLVariables.length; i++) {
+    var sParameterName = sURLVariables[i].split('=');
+    if (sParameterName[0] == sParam) {
+      return sParameterName[1];
     }
+  }
 }
 
 var nyan = GetURLParameter('nyan');
 if (nyan === 1) {
-    document.querySelector('body').classList.toggle('narc-bg');
-    document.querySelector('.musicOn').classList.toggle('show');
-    document.querySelector('h1').classList.toggle('nn');
+  document.querySelector('body').classList.toggle('narc-bg');
+  document.querySelector('.musicOn').classList.toggle('show');
+  document.querySelector('h1').classList.toggle('nn');
 }
 
 // Select all slides
@@ -77,3 +102,4 @@ prevSlide.addEventListener("click", function () {
     slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
   });
 });
+
