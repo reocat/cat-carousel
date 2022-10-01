@@ -31,8 +31,17 @@ h1 {
     .nn{
       font-size: 70px;
       background: -webkit-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
+      background:-moz-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
+      background:-ms-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
+      background:-o-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
       -webkit-background-clip: text;
+      background-clip:text;
       -webkit-text-fill-color: transparent;
+      -moz-text-fill-color:transparent;
+      -ms-text-fill-color:transparent;
+      -o-text-fill-color:transparent;
+      
+
     }
 .slider {
   outline:4px solid lightgray;
@@ -218,6 +227,7 @@ a{
 .rainbow_text_animated {
     background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
     -webkit-background-clip: text;
+    
     background-clip: text;
     color: transparent;
     animation: rainbow_animation 6s ease-in-out infinite;
