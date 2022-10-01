@@ -35,24 +35,6 @@ var toExport;
   });
 }
 
-function GetURLParameter(sParam) {
-  var sPageURL = window.location.search.substring(1);
-  var sURLVariables = sPageURL.split('&');
-  for (var i = 0; i < sURLVariables.length; i++) {
-    var sParameterName = sURLVariables[i].split('=');
-    if (sParameterName[0] == sParam) {
-      return sParameterName[1];
-    }
-  }
-}
-
-var nyan = GetURLParameter('nyan');
-if (nyan === 1) {
-  document.querySelector('body').classList.toggle('narc-bg');
-  document.querySelector('.musicOn').classList.toggle('show');
-  document.querySelector('h1').classList.toggle('nn');
-}
-
 // Select all slides
 const slides = document.querySelectorAll(".slide");
 
