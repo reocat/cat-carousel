@@ -149,8 +149,7 @@ a{
 .narc-bg{
   background-color: #f9e4ff;
   background-image: url('https://c.tenor.com/r8QaTDj3U6IAAAAi/nyan-cat-poptart-cat.gif');
-  background-size: auto;
-  background-repeat: round;
+  background-size: 100%;
 }
 @font-face {
   font-family: 'Peaberry';
