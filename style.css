@@ -22,8 +22,6 @@ body {
 h1 {
     font-family: 'Peaberry';
     vertical-align: text-top;
-	rgba(249, 228, 255, 0.5)
-    text-align: center;
 	color: #000000;
     }
     .rot{
@@ -138,7 +136,7 @@ a{
   justify-content:center;
   align-items:center;
   padding:0 10px;
-  translation-diration: all 0.5s ease-in-out;
+  transition-duration: all 0.5s ease-in-out;
 }
 
 .death{
@@ -154,11 +152,11 @@ a{
 }
 @font-face {
   font-family: 'Peaberry';
-  src: url('Peaberry.ttf') format('truetype')
+  src: url('Peaberry.ttf') format('truetype');
 }
 @font-face {
   font-family: '04b03';
-  src: url('04b03.ttf') format('truetype')
+  src: url('04b03.ttf') format('truetype');
 }
 
 @media screen and (max-width:500px)   {
@@ -167,6 +165,7 @@ a{
     height: auto;
     top:20px;
     left:auto;
+    padding: 5px 0;
     
     display: flex;
     justify-content: center;
