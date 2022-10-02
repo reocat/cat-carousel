@@ -13,9 +13,11 @@ body {
   background-color: #FFF8E1;
   margin-left: 2%;
   margin-right: 2%;
+  font-family: 'Montserrat',sans-serif;
+  letter-spacing: 3px;
 
 }
-@font-face { font-family: 'Roboto', sans-serif; src: url('Roboto-Medium.ttf'); } 
+
 h1 {
     font-family: 'Roboto', sans-serif;
     vertical-align: text-top;
