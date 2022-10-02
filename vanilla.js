@@ -57,6 +57,7 @@ nextSlide.addEventListener("click", function () {
   if (curSlide === maxSlide) {
     document.querySelector(".btn-refr").click();
     curSlide = 0;
+    
   } else {
     curSlide++;
   }
