@@ -44,6 +44,10 @@ h1 {
       
 
     }
+    .audio-1,.audio-2,select{
+      display:none;
+      
+    }
 .slider {
   outline:4px solid lightgray;
   width: 100%;
@@ -59,8 +63,9 @@ a{
 }
 .show{
   display:block !important;
+  visibility: visible;
 }
-
+audio
 .slide {
   width: 100%;
   max-width: 800px;
