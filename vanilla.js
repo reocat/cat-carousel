@@ -17,12 +17,9 @@ window.onload = function () {
   document.querySelector('.btn-container').addEventListener('click', function () {
     document.querySelector('body').classList.toggle('narc-bg');
     document.querySelector('.musicOn').classList.toggle('show');
-    
-    document.getElementById('select').classList.toggle('show');
     document.querySelector('h1').classList.toggle('nn');
 
   });
-
 
 var toExport;
   var buttonRefresh = document.querySelector('.btn-refr');
@@ -87,18 +84,5 @@ prevSlide.addEventListener("click", function () {
   slides.forEach((slide, indx) => {
     slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
   });
-});
-
-
-var musicSelector=document.getElementById("select").children;
-var musicContainer = document.querySelector('.musicOn').children;
-
-document.getElementById("select").addEventListener("change", function () {
-for (var i = 0; i < musicSelector.length; i++){
-  if (musicSelector[i].selected==true){
-   musicContainer[i].classList.toggle("show");
-  }
-  else{musicContainer[i].classList.remove("show");}
-}
 });
 

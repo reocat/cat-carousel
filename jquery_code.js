@@ -4,9 +4,3 @@ func =function(){ $.getJSON('https://aws.random.cat/meow')
     $('#cat_pic').attr('src',data.file)
 });}
 
-
-$('#select option').change(function() {
-  if ($(this).prop('selected') == true) {
-    console.log($(this).val());
-  }
-});
