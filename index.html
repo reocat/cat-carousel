@@ -21,7 +21,16 @@
   </div>
 
   <div class="musicOn">
-    <audio id="audio" src="https://www.nyan.cat/music/original.mp3" controls loop>
+    <select id="selection">
+      <option value="">- Select track -</option>
+      <option value="https://www.nyan.cat/music/original.mp3">Nyan Cat Soundtrack</option>
+      <option value="http://79.111.14.76:8002/lo-fi">Lo-Fi</option>
+    </select>
+    </br>
+
+    <audio id="player" controls="controls" loop>
+      <source id="mp3_src" src="" type="audio/mp3"/>Your browser does not support the audio element.
+    </audio>
   </div>
   <button onClick=" " class="btn-refr">Refresh</button>
 
