@@ -7,7 +7,7 @@
 body {
   height: 100vh;
   display:flex;
-	align-items:center;
+  align-items:center;
   flex-direction:column;
   justify-content:center;
   row-gap:20px;
