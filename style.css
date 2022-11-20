@@ -7,11 +7,11 @@
 body {
   height: 100vh;
   display:flex;
-	align-items:center;
+  align-items:center;
   flex-direction:column;
   justify-content:center;
   row-gap:20px;
-  background-color: #f9e4ff;
+  background-color: #146B3A;
   margin-left: 2%;
   margin-right: 2%;
   font-family: '04b03';
@@ -22,7 +22,10 @@ body {
 h1 {
     font-family: 'Peaberry';
     vertical-align: text-top;
-	color: #000000;
+    background: linear-gradient(to right, #AE8625,
+                    #f7ef8a, #d2ac47, #edc967);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     }
     .rot{
       transform: rotate(360deg);
@@ -31,19 +34,21 @@ h1 {
 
     .nn{
       font-size: 55px;
-      background:-webkit-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
-      background:-moz-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
-      background:-ms-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
-      background:-o-linear-gradient(rgb(255, 0, 0), rgb(0, 26, 255));
+      --color1: #ffffff;
+      --color2: #BB2528;
+      background: repeating-linear-gradient(
+      45deg,
+      var(--color1),
+      var(--color1) 30px,
+      var(--color2) 30px,
+      var(--color2) 60px
+      );
+      background-clip: text;
+      color: transparent;
       -webkit-background-clip: text;
-      background-clip:text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color:transparent;
-      -ms-text-fill-color:transparent;
-      -o-text-fill-color:transparent;
-      
-
+      animation: 40s linear 0s infinite move;
     }
+
 .slider {
   outline:4px solid lightgray;
   width: 100%;
@@ -146,7 +151,7 @@ a{
   display:none;
 }
 .narc-bg{
-  background-color: #f9e4ff;
+  background-color: #146B3A;
   background-image: url('https://c.tenor.com/r8QaTDj3U6IAAAAi/nyan-cat-poptart-cat.gif');
   background-size: 100%;
 }
@@ -158,7 +163,14 @@ a{
   font-family: '04b03';
   src: url('04b03.ttf') format('truetype');
 }
-
+@keyframes move {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: 1000px;
+  }
+}
 @media screen and (max-width:500px)   {
   .btn-container{
     width: 80%;
