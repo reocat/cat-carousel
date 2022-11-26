@@ -28,7 +28,7 @@ var toExport;
     var list = document.querySelectorAll('img');
     for (var i = 0; i < list.length; i++) {
       
-        list[i].src = list[i].src + '/';
+        list[i].src = list[i].src + '%20';
       
     }
     console.log(list);
