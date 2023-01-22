@@ -202,6 +202,7 @@ a {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  cursor:pointer;
 }
 
 /* Tooltip text */
@@ -225,20 +226,14 @@ a {
   left: 50%;
   margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
 }
-
+.tooltiptext a:hover{
+  color:purple;
+}
+.tooltiptext a{
+  transition:.2s all ease-in-out;
+}
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-.links {
-  line-height: 1.4;
-}
 
-.links {
-  color: blue;
-}
-
-.links:focus,
-a:hover {
-  border-bottom: 1px solid;
-}
