@@ -230,7 +230,7 @@ a {
   color:purple;
 }
 .tooltiptext a{
-  transition:.2s all ease-in-out;
+  transition:.2s color ease-in-out;
 }
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
