@@ -230,3 +230,15 @@ a {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+.links {
+  line-height: 1.4;
+}
+
+.links {
+  color: blue;
+}
+
+.links:focus,
+a:hover {
+  border-bottom: 1px solid;
+}
