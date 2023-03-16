@@ -256,23 +256,6 @@ a {
   width:100%;
 }
 
-.act {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-}
-
-#snd_meow {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-
-.nodisplay {
-  display:none;
-}
 
 
 /*
