@@ -3,7 +3,6 @@
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
   const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-  const zlib = require("zlib");
   const TerserPlugin = require('terser-webpack-plugin');
 
   module.exports = {
