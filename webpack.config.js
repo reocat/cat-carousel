@@ -1,65 +1,68 @@
-  const path = require('path');
-  const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-  const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
-  const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-  const zlib = require("zlib");
-  const TerserPlugin = require('terser-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-  module.exports = {
+module.exports = {
+    mode: 'development',
     entry: {
       main:'./src/js/index.js',
       vanilla:'./src/js/vanilla.js',
       jquery:'./src/js/jq.js'
     },
-    plugins: [
-     new MiniCssExtractPlugin(),
-     new HtmlWebpackPlugin({
-       template: './src/index.html',
-       minify: {
-         collapseWhitespace: true,
-         removeComments: true,
-         removeRedundantAttributes: true,
-         removeScriptTypeAttributes: true,
-         removeStyleLinkTypeAttributes: true,
-         useShortDoctype: true
-       }
-     }),
-   ],
     output: {
       filename: '[name].[contenthash].js',
       path: path.resolve(__dirname, 'dist'),
+      publicPath: '/',
       clean: true,
     },
-    module: {
-     rules: [
-       {
-         test: /.s?css$/,
-         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-       },
-     ],
-    },
     optimization: {
-      splitChunks: {
-        cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
+        splitChunks: {
             chunks: 'all',
-          },
-        }, 
-      },
-     minimizer: [
-        new CssMinimizerPlugin(),
-        new TerserPlugin({
-         parallel: true,
-        }),
-     ],
-       minimize: true,
+        },
+        runtimeChunk: {
+            name: 'runtime',
+        },
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    compress: {
+                        drop_console: true,
+                    },
+                },
+                extractComments: false,
+            }),
+        ],
     },
-  mode: 'development',
+    module: {
+        rules: [{
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
+        ],
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.[contenthash].css',
+        }),
+    ],
 };
-
 
 
 
