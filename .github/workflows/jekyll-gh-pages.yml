@@ -33,7 +33,7 @@ jobs:
       - run: npm run dev
       - run: sudo mkdir /github
       - run: sudo mkdir /github/workspace
-      - run: sudo cp * /github/workspace
+      - run: sudo cp -rf * /github/workspace
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
