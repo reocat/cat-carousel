@@ -3,8 +3,8 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
   # Runs on pushes targeting the default branch
-#  push:
-#    branches: ["nyan"]
+  push:
+    branches: ["nyan"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,25 +33,8 @@ jobs:
           node-version: 16
       - name: Build webpack
         run: |
-          rm -rf dist/*
           npm ci
           npm run dev
-          rm -rf node*
-          git add .
-      - name: Commit files
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -a -m "Re-generate webpack dist"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          force_with_lease: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - run: git pull
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build with Jekyll
