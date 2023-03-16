@@ -3,7 +3,6 @@
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
   const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-  const CompressionPlugin = require('compression-webpack-plugin');
   const zlib = require("zlib");
   const TerserPlugin = require('terser-webpack-plugin');
 
@@ -26,19 +25,6 @@
          useShortDoctype: true
        }
      }),
-     new CompressionPlugin({
-       filename: "[path][base].br",
-       algorithm: "brotliCompress",
-       test: /\.(js|css|html|svg)$/,
-       compressionOptions: {
-         params: {
-           [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-         },
-       },
-       threshold: 10240,
-       minRatio: 0.8,
-       deleteOriginalAssets: false,
-     }),
    ],
     output: {
       filename: '[name].[contenthash].js',
@@ -54,6 +40,15 @@
      ],
     },
     optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        }, 
+      },
      minimizer: [
         new CssMinimizerPlugin(),
         new TerserPlugin({
