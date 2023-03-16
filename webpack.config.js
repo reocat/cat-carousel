@@ -1,8 +1,11 @@
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+  const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
   const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-
+  const CompressionPlugin = require('compression-webpack-plugin');
+  const zlib = require("zlib");
+  const TerserPlugin = require('terser-webpack-plugin');
 
   module.exports = {
     entry: {
@@ -13,12 +16,32 @@
     plugins: [
      new MiniCssExtractPlugin(),
      new HtmlWebpackPlugin({
-       title: 'Caching',
-       template: path.resolve(__dirname, "src", "index.html")
-      }),
-    ],
+       template: './src/index.html',
+       minify: {
+         collapseWhitespace: true,
+         removeComments: true,
+         removeRedundantAttributes: true,
+         removeScriptTypeAttributes: true,
+         removeStyleLinkTypeAttributes: true,
+         useShortDoctype: true
+       }
+     }),
+     new CompressionPlugin({
+       filename: "[path][base].br",
+       algorithm: "brotliCompress",
+       test: /\.(js|css|html|svg)$/,
+       compressionOptions: {
+         params: {
+           [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+         },
+       },
+       threshold: 10240,
+       minRatio: 0.8,
+       deleteOriginalAssets: false,
+     }),
+   ],
     output: {
-     filename: '[name].[contenthash].js',
+      filename: '[name].[contenthash].js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
@@ -32,9 +55,16 @@
     },
     optimization: {
      minimizer: [
-           new CssMinimizerPlugin(),
-	],
+        new CssMinimizerPlugin(),
+        new TerserPlugin({
+         parallel: true,
+        }),
+     ],
        minimize: true,
     },
   mode: 'development',
 };
+
+
+
+
