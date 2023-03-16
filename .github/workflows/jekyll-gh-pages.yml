@@ -31,9 +31,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - run: rm -rf dist/*
       - run: npm ci
       - run: npm run dev
       - run: rm -rf node*
+      - run: git add .
       - name: Commit files
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
