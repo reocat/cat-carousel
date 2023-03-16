@@ -1,9 +1,3 @@
-func =function(){ $.getJSON('https://aws.random.cat/meow')
-  .done(function(data){
-    console.log(data);
-    $('#cat_pic').attr('src',data.file)
-});}
-
 $(document).ready(function() {
 
   $('#selection').on('change', function() {
