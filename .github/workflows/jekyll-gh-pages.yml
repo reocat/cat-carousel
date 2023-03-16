@@ -31,6 +31,8 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run dev
+      - run: pwd
+      - run: ls /
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
