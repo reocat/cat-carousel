@@ -29,6 +29,9 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          persist-credentials: true
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -43,7 +46,8 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: ${{ github.head_ref }}
+          ssh: true
+          branch: ${{ github.ref }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
