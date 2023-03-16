@@ -46,6 +46,7 @@ jobs:
           branch: ${{ github.ref }}
       - name: Checkout
         uses: actions/checkout@v3
+      - run: git pull
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build with Jekyll
