@@ -12,6 +12,10 @@
       jquery:'./src/js/jq.js'
     },
     plugins: [
+     new FontPreloadPlugin({
+       extensions: ["woff", "ttf", "eot"],
+       loadType: "preload",
+     }),
      new MiniCssExtractPlugin(),
      new HtmlWebpackPlugin({
        template: './src/index.html',
