@@ -14,7 +14,8 @@
     },
     plugins: [
      new FontPreloadPlugin({
-       extensions: ["woff", "ttf", "eot"],
+       index: "index.html",
+       extensions: ["ttf", "off"],
        loadType: "preload",
      }),
      new MiniCssExtractPlugin(),
