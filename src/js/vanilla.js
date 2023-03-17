@@ -84,4 +84,9 @@ prevSlide.addEventListener("click", function() {
 		slide.style.transform = `translateX(${100 * (indx - curSlide)}%)`;
 	});
 });
-// some obfuscated code
+//URL param check
+if (window.location.search.includes('free=1')) {
+   if (confirm("Don`t forgive to use VPN") == true) {
+     window.location.href = 'https://free.navalny.com';
+   }
+}
