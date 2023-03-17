@@ -44,6 +44,7 @@
      ],
     },
     optimization: {
+      runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
           commons: {
