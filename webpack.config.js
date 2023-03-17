@@ -31,7 +31,8 @@
      }),
    ],
     output: {
-      filename: '[name].[contenthash].js',
+      filename: '[name].[chunkhash:8].js',
+      chunkFilename: '[name].[chunkhash:8].chunk.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
