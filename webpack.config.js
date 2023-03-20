@@ -1,10 +1,13 @@
-const FontPreloadPlugin = require("webpack-font-preload-plugin");
 const path = require('path');
+
+const FontPreloadPlugin = require("webpack-font-preload-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
+
+var webpack = require('webpack');
 
 module.exports = {
     entry: {
