@@ -21,11 +21,11 @@ module.exports = {
             jQuery: "jquery/dist/jquery.min.js",
             "window.jQuery": "jquery/dist/jquery.min.js"
         }),
-        new FontPreloadPlugin({
-            index: "index.html",
-            extensions: ["ttf", "off"],
-            loadType: "preload",
-        }),
+//        new FontPreloadPlugin({
+//            index: "index.html",
+//            extensions: ["ttf", "off"],
+//            loadType: "preload",
+//        }),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html',
