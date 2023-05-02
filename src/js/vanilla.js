@@ -66,8 +66,8 @@ if (window.location.search.includes('free=1')) {
 // fetch cat images using async/await
 async function fetchCatImages() {
   let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
-  if (window.location.search.includes('neko=1')) {
-    apiUrl = 'https://nekos.life/api/v2/img/neko';
+  if (window.location.search.includes('shibe=1')) {
+    apiUrl = 'https://shibe.online/api/cats?count=3';
   }
   try {
     const response = await fetch(apiUrl);
