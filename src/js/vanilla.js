@@ -103,3 +103,4 @@ async function fetchCatImages() {
     })
     .catch(error => console.error(error));
 }
+fetchCatImages();
