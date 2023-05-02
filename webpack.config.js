@@ -28,6 +28,10 @@ module.exports = {
 //        }),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
+            filename: 'config.html',
+            template: 'src/config.html',
+        }),
+        new HtmlWebpackPlugin({
             template: './src/index.html',
             minify: {
                 collapseWhitespace: true,
