@@ -73,7 +73,7 @@ const cookieValue = document.cookie
 async function fetchCatImages() {
   let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
   try {
-      if(cookieValue === '1') {
+      if(cookieValue == '1') {
         apiUrl = 'https://shibe.online/api/cats?count=3';
         fetch(apiUrl)
         .then(response => response.json())
