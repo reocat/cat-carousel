@@ -20,8 +20,8 @@ buttonRefresh.addEventListener('click', function() {
   const list = document.querySelectorAll('img');
   for (const img of list) {
     img.src = img.src + ' ';
+    fetchCatImages();
   }
-  fetchCatImages();
 });
 
 nextSlide.addEventListener('click', () => changeSlide(1));
