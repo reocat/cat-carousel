@@ -77,13 +77,15 @@ async function fetchCatImages() {
            document.getElementById("slide2").src = data[1];
            document.getElementById("slide3").src = data[2];
         })
-       }
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    const urls = data.map(image => image.url);
-    document.getElementById('slide1').src = urls[0];
-    document.getElementById('slide2').src = urls[1];
-    document.getElementById('slide3').src = urls[2];
+       } 
+      else {
+       const response = await fetch(apiUrl);
+       const data = await response.json();
+       const urls = data.map(image => image.url);
+       document.getElementById('slide1').src = urls[0];
+       document.getElementById('slide2').src = urls[1];
+       document.getElementById('slide3').src = urls[2];
+      }
   } catch (error) {
     console.error(error);
   }
