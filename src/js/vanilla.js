@@ -91,12 +91,15 @@ if (window.location.search.includes('free=1')) {
    }
 }
 
-fetch("https://api.thecatapi.com/v1/images/search?limit=10")
+fetch('https://api.thecatapi.com/v1/images/search?limit=10')
   .then(response => response.json())
   .then(data => {
+    // Extract the URLs from the response JSON
     const urls = data.map(image => image.url);
-    document.getElementById("slide1").src = urls[0];
-    document.getElementById("slide2").src = urls[1];
-    document.getElementById("slide3").src = urls[2];
+
+    // Set the URLs as the src attribute of the image elements
+    document.getElementById('slide1').src = urls[0];
+    document.getElementById('slide2').src = urls[1];
+    document.getElementById('slide3').src = urls[2];
   })
   .catch(error => console.error(error));
