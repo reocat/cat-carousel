@@ -29,7 +29,7 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             page1: './src/index.html',
-            page2: './src/config.html',
+//            page2: './src/config.html',
             minify: {
                 collapseWhitespace: true,
                 removeComments: true,
