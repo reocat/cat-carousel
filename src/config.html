@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Website Configuration</title>
+  </head>
+  <body>
+    <h1>Website Configuration</h1>
+    <p>Select an API:</p>
+    <select id="api-select">
+      <option value="catapi">Cat API</option>
+      <option value="shibe">Shibe API</option>
+    </select>
+    <button onclick="setCookie()">Save</button>
+
+    <script>
+      function setCookie() {
+        var apiSelect = document.getElementById("api-select");
+        var apiValue = apiSelect.options[apiSelect.selectedIndex].value;
+        if(apiValue === "catapi") {
+          document.cookie = "catapi=1";
+        } else if(apiValue === "shibe") {
+          document.cookie = "shibe=1";
+        }
+      }
+    </script>
+  </body>
+</html>
