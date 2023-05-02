@@ -66,10 +66,17 @@ if (window.location.search.includes('free=1')) {
 // fetch cat images using async/await
 async function fetchCatImages() {
   let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
-  if (window.location.search.includes('shibe=1')) {
-    apiUrl = 'https://shibe.online/api/cats?count=3';
-  }
   try {
+      if (window.location.search.includes('shibe=1')) {
+        apiUrl = 'https://shibe.online/api/cats?count=3';
+        fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+           // Assuming element IDs for slides are: slide1, slide2, and slide3
+           document.getElementById("slide1").src = data[0];
+           document.getElementById("slide2").src = data[1];
+           document.getElementById("slide3").src = data[2];
+        })
     const response = await fetch(apiUrl);
     const data = await response.json();
     const urls = data.map(image => image.url);
