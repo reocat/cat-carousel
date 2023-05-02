@@ -15,6 +15,9 @@
     <button onclick="setCookie()">Save</button>
 
     <script>
+      function myFunction() {
+        alert("Configuration applied, nya!");
+      }
       function setCookie() {
         var apiSelect = document.getElementById("api-select");
         var apiValue = apiSelect.options[apiSelect.selectedIndex].value;
