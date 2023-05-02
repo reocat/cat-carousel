@@ -1,21 +1,12 @@
-$(document).ready(function() {
-
+$(document).ready(function() { 
   $('#selection').on('change', function() {
-    change($(this).val());
+    var audio = document.getElementById("player");
+    var source = document.getElementById("mp3_src");
+    audio.pause();
+    if ($(this).val()) {
+      source.src = $(this).val();
+      audio.load();
+      audio.play();
+    }
   });
-
 });
-
-
-function change(sourceUrl) {
-  var audio = document.getElementById("player");
-  var source = document.getElementById("mp3_src");
-
-  audio.pause();
-
-  if (sourceUrl) {
-    source.src = sourceUrl;
-    audio.load();
-    audio.play();
-  }
-}
