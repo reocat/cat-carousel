@@ -65,8 +65,12 @@ if (window.location.search.includes('free=1')) {
 
 // fetch cat images using async/await
 async function fetchCatImages() {
+  let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
+  if (window.location.search.includes('neko=1')) {
+    apiUrl = 'https://nekos.life/api/v2/img/neko';
+  }
   try {
-    const response = await fetch('https://api.thecatapi.com/v1/images/search?limit=10');
+    const response = await fetch(apiUrl);
     const data = await response.json();
     const urls = data.map(image => image.url);
     document.getElementById('slide1').src = urls[0];
@@ -76,5 +80,6 @@ async function fetchCatImages() {
     console.error(error);
   }
 }
+
 // call fetchCatImages on page load
 fetchCatImages();
