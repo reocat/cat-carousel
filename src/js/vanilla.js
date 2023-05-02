@@ -6,6 +6,10 @@ const buttonRefresh = document.querySelector('.btn-refr');
 const slides = document.querySelectorAll('.slide');
 const nextSlide = document.querySelector('.btn-next');
 const prevSlide = document.querySelector('.btn-prev');
+const btnContainer = document.querySelector('.btn-container');
+const body = document.querySelector('body');
+const musicOn = document.querySelector('.musicOn');
+const h1 = document.querySelector('h1');
 
 // Add event listeners
 btnDeathMode.addEventListener('click', function() {
@@ -16,12 +20,21 @@ btnDeathMode.addEventListener('click', function() {
   }, 550);
 });
 
+btnContainer.addEventListener('click', function() {
+  body.classList.toggle('narc-bg');
+  musicOn.classList.toggle('show');
+  h1.classList.toggle('nn');
+});
+
+var toExport;
+var buttonRefresh = document.querySelector('.btn-refr');
+console.log(buttonRefresh);
 buttonRefresh.addEventListener('click', function() {
-  const list = document.querySelectorAll('img');
-  for (const img of list) {
-    img.src = img.src + ' ';
+var list = document.querySelectorAll('img');
+for (var i = 0; i < list.length; i++) {
+    list[i].src = list[i].src + ' ';
     fetchCatImages();
-  }
+}
 });
 
 nextSlide.addEventListener('click', () => changeSlide(1));
