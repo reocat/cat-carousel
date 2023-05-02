@@ -63,31 +63,17 @@ if (window.location.search.includes('free=1')) {
   }
 }
 
-function getCookie(name) {
-    // Split cookie string and get all individual name=value pairs in an array
-    var cookieArr = document.cookie.split(";");
-    
-    // Loop through the array elements
-    for(var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-        
-        /* Removing whitespace at the beginning of the cookie name
-        and compare it with the given string */
-        if(name == cookiePair[0].trim()) {
-            // Decode the cookie value and return
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-    
-    // Return null if not found
-    return null;
-}
+// Reading the cookie "shibe" value
+const cookieValue = document.cookie
+  .split('; ')
+  .find(row => row.startsWith('shibe='))
+  .split('=')[1];
 
 // fetch cat images using async/await
 async function fetchCatImages() {
   let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
   try {
-      if (getCookie(shibe) = '1')) {
+      if(cookieValue === '1') {
         apiUrl = 'https://shibe.online/api/cats?count=3';
         fetch(apiUrl)
         .then(response => response.json())
