@@ -77,6 +77,7 @@ async function fetchCatImages() {
            document.getElementById("slide2").src = data[1];
            document.getElementById("slide3").src = data[2];
         })
+       }
     const response = await fetch(apiUrl);
     const data = await response.json();
     const urls = data.map(image => image.url);
