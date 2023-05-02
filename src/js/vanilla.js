@@ -90,3 +90,13 @@ if (window.location.search.includes('free=1')) {
      window.location.href = 'https://free.navalny.com';
    }
 }
+
+fetch("https://api.thecatapi.com/v1/images/search")
+  .then(response => response.json())
+  .then(data => {
+    const urls = data.map(image => image.url);
+    document.getElementById("slide1").src = urls[0];
+    document.getElementById("slide2").src = urls[1];
+    document.getElementById("slide3").src = urls[2];
+  })
+  .catch(error => console.error(error));
