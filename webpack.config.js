@@ -25,7 +25,11 @@ module.exports = {
 //            index: "index.html",
 //            extensions: ["ttf", "off"],
 //            loadType: "preload",
-//        }),
+//      }),
+          new HtmlWebpackPlugin({
+            filename: 'config.html',
+            template: 'src/config.html',
+        }),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             page1: './src/index.html',
