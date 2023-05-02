@@ -26,8 +26,7 @@ btnContainer.addEventListener('click', function() {
   h1.classList.toggle('nn');
 });
 
-var toExport;
-var buttonRefresh = document.querySelector('.btn-refr');
+
 console.log(buttonRefresh);
 buttonRefresh.addEventListener('click', function() {
 var list = document.querySelectorAll('img');
