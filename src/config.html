@@ -18,8 +18,10 @@
         var apiSelect = document.getElementById("api-select");
         var apiValue = apiSelect.options[apiSelect.selectedIndex].value;
         if(apiValue === "catapi") {
+          document.cookie = "shibe=0";
           document.cookie = "catapi=1";
         } else if(apiValue === "shibe") {
+          document.cookie = "catapi=0";
           document.cookie = "shibe=1";
         }
       }
