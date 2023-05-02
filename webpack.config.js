@@ -28,7 +28,8 @@ module.exports = {
 //        }),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            page1: './src/index.html',
+            page2: './src/config.html',
             minify: {
                 collapseWhitespace: true,
                 removeComments: true,
