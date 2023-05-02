@@ -27,8 +27,8 @@ window.onload = function() {
 		var list = document.querySelectorAll('img');
 		for (var i = 0; i < list.length; i++) {
 
-			list[i].src = list[i].src + '%20';
-
+			//list[i].src = list[i].src + '%20';
+                        fetchCatImages();
 		}
 		console.log(list);
 	});
@@ -90,16 +90,16 @@ if (window.location.search.includes('free=1')) {
      window.location.href = 'https://free.navalny.com';
    }
 }
-
-fetch('https://api.thecatapi.com/v1/images/search?limit=10')
-  .then(response => response.json())
-  .then(data => {
-    // Extract the URLs from the response JSON
-    const urls = data.map(image => image.url);
-
-    // Set the URLs as the src attribute of the image elements
-    document.getElementById('slide1').src = urls[0];
-    document.getElementById('slide2').src = urls[1];
-    document.getElementById('slide3').src = urls[2];
-  })
-  .catch(error => console.error(error));
+async function fetchCatImages() {
+  fetch('https://api.thecatapi.com/v1/images/search?limit=10')
+    .then(response => response.json())
+    .then(data => {
+      // Extract the URLs from the response JSON
+      const urls = data.map(image => image.url);
+      // Set the URLs as the src attribute of the image elements
+      document.getElementById('slide1').src = urls[0];
+      document.getElementById('slide2').src = urls[1];
+      document.getElementById('slide3').src = urls[2];
+    })
+    .catch(error => console.error(error));
+}
