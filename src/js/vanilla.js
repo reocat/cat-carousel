@@ -76,3 +76,5 @@ async function fetchCatImages() {
     console.error(error);
   }
 }
+// call fetchCatImages on page load
+fetchCatImages();
