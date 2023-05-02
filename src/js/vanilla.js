@@ -91,7 +91,7 @@ if (window.location.search.includes('free=1')) {
    }
 }
 
-fetch("https://api.thecatapi.com/v1/images/search")
+fetch("https://api.thecatapi.com/v1/images/search?limit=10")
   .then(response => response.json())
   .then(data => {
     const urls = data.map(image => image.url);
