@@ -1,3 +1,12 @@
+// Get the value of the "color" cookie
+const colorValue = getCookie('color');
+
+// Apply the background color to an element with ID "myElement"
+const myElement = document.getElementById('myElement');
+if (colorValue) {
+  myElement.style.backgroundColor = colorValue;
+}
+
 // cache frequently used DOM elements
 const btnDeathMode = document.querySelector('.btn-container');
 const buttonRefresh = document.querySelector('.btn-refr');
