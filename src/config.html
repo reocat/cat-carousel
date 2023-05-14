@@ -35,7 +35,19 @@
     </script>
   </body>
 <body>
-   <label for="colorpicker">Select your background color:</label>
-   <input type="color" id="colorpicker" value="#0000ff">
+    <script>
+      function startup() {
+       colorPicker = document.querySelector("#color-picker");
+       colorPicker.value = defaultColor;
+       colorPicker.addEventListener("input", updateFirst, false);
+       colorPicker.addEventListener("change", updateAll, false);
+       colorPicker.select();
+      }
+    let colorPicker;
+    const defaultColor = "#0000ff";
+    window.addEventListener("load", startup, false);
+  </script>  
+   <label for="color-picker">Select your background color:</label>
+   <input type="color" id="color-picker" value="#0000ff">
  </body>
 </html>
