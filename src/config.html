@@ -2,22 +2,48 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Website Configuration</title>
+    <title>Website Configuration
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+  </head>
   <body>
-    <h1>Website Configuration</h1>
-    <p>Select an API:</p>
+    <h1>Website Configuration
+    </h1>
+    <p>Select an API:
+    </p>
     <select id="api-select">
-      <option value="catapi">Cat API</option>
-      <option value="shibe">Shibe API</option>
+      <option value="catapi">Cat API
+      </option>
+      <option value="shibe">Shibe API
+      </option>
     </select>
-    <button onclick="setCookie()">Save</button>
-
+    <button onclick="setCookie()">Save
+    </button>
     <script>
       function popup() {
-        alert("Configuration applied, nya!");
+        alert("Configuration applied, nya!");
         window.location.href = "https://mimi.ddns.net";
+      }
+      function getCookie(name) {
+        // function to get the value of a cookie
+        let cookieValue = "";
+        const cookies = document.cookie.split(";");
+        // split all cookies into an array
+        cookies.forEach((cookie) => {
+          // loop through each cookie
+          let [cookieName, cookieVal] = cookie.split("=");
+          // get cookie's name and value
+          cookieName = cookieName.trim();
+          // remove leading/trailing whitespaces
+          if (cookieName === name) {
+            // if cookie's name is the required one
+            cookieValue = cookieVal;
+            // save its value
+          }
+        }
+                       );
+        return cookieValue;
+        // return cookie's value
       }
       function setCookie() {
         var apiSelect = document.getElementById("api-select");
@@ -26,7 +52,8 @@
           document.cookie = "shibe=0";
           document.cookie = "catapi=1";
           popup();
-        } else if(apiValue === "shibe") {
+        }
+        else if(apiValue === "shibe") {
           document.cookie = "catapi=0";
           document.cookie = "shibe=1";
           popup();
@@ -34,20 +61,21 @@
       }
     </script>
   </body>
-<body>
+  <body>
     <script>
       function startup() {
-       colorPicker = document.querySelector("#color-picker");
-       colorPicker.value = defaultColor;
-       colorPicker.addEventListener("input", updateFirst, false);
-       colorPicker.addEventListener("change", updateAll, false);
-       colorPicker.select();
+        colorPicker = document.querySelector("#color-picker");
+        colorPicker.value = defaultColor;
+        colorPicker.addEventListener("input", updateFirst, false);
+        colorPicker.addEventListener("change", updateAll, false);
+        colorPicker.select();
       }
-    let colorPicker;
-    const defaultColor = "#0000ff";
-    window.addEventListener("load", startup, false);
-  </script>  
-   <label for="color-picker">Select your background color:</label>
-   <input type="color" id="color-picker" value="#0000ff">
- </body>
+      let colorPicker;
+      const defaultColor = "#0000ff";
+      window.addEventListener("load", startup, false);
+    </script>  
+    <label for="color-picker">Select your background color:
+    </label>
+    <input type="color" id="color-picker" value="#0000ff">
+  </body>
 </html>
