@@ -67,7 +67,7 @@
         const element = document.querySelector('body');
         const styles = window.getComputedStyle(element);
         const backgroundColor = styles.getPropertyValue('background-color');
-        console.log(backgroundColor);
+        return backgroundColor;
       }
       function startup() {
         colorPicker = document.querySelector("#color-picker");
@@ -77,9 +77,8 @@
         colorPicker.select();
       }
       let colorPicker;
-      const defaultColor = "#0000ff";
+      const defaultColor = getbgvalue();
       window.addEventListener("load", startup, false);
-      getbgvalue();
     </script>  
     <label for="color-picker">Select your background color:
     </label>
