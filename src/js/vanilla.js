@@ -3,7 +3,7 @@ const colorValue = getCookie('color');
 
 // Apply the color value as the background color globally
 if (colorValue) {
-  document.body.style.background-color = colorValue;
+  document.body.style.backgroundColor = colorValue;
 }
 
 // cache frequently used DOM elements
