@@ -1,10 +1,9 @@
 // Get the value of the "color" cookie
 const colorValue = getCookie('color');
 
-// Apply the background color to an element with ID "myElement"
-const myElement = document.getElementById('myElement');
+// Apply the color value as the background color globally
 if (colorValue) {
-  myElement.style.backgroundColor = colorValue;
+  document.body.style.backgroundColor = colorValue;
 }
 
 // cache frequently used DOM elements
