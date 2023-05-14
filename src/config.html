@@ -75,14 +75,11 @@
        const hex = values.map(value => parseInt(value).toString(16).padStart(2, '0')).join('');
        return '#' + hex;
       }
-      async function getbgvalue() {
-        const element = document.querySelector('body');
-        const styles = window.getComputedStyle(element);
-        const backgroundColor = styles.getPropertyValue('background-color');
-        return backgroundColor;
-      }
+      const element = document.querySelector('body');
+      const styles = window.getComputedStyle(element);
+      const backgroundColor = styles.getPropertyValue('background-color');
       let colorPicker;
-      const defaultColor = rgbToHex(getbgvalue());
+      const defaultColor = rgbToHex(backgroundColor);
       window.addEventListener("load", startup, false);
     </script>  
     <label for="color-picker">Select your background color:
