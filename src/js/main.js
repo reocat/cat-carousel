@@ -1,5 +1,5 @@
-var common = require("./common");
-var common = require("./main_jq.js");
+var common = require("./common.js");
+var main_jq = require("./main_jq.js");
 // Get the value of the "color" cookie
 const colorValue = getCookie('color');
 
