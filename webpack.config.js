@@ -44,7 +44,7 @@ module.exports = {
         }),
     ],
     output: {
-        filename: '[name].js',
+        filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
@@ -61,10 +61,10 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 commons: {
-					name: "commons",
-					chunks: "initial",
-					minChunks: 2,
-					minSize: 0
+			name: "commons",
+			chunks: "initial",
+			minChunks: 2,
+			minSize: 0
                 },
             },
         },
