@@ -1,3 +1,4 @@
+var common = require("./common");
 function popup() {
         alert("Configuration applied, nya!");
         window.location.href = "https://mimi.ddns.net";
