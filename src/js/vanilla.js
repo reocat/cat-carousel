@@ -71,7 +71,7 @@ if (window.location.search.includes('free=1')) {
   }
 }
 
-let shibeValue = parseFloat(getCookie("shibe")); // Get the value of cookie "shibe" and convert it to a float
+let cur_api_val = parseFloat(getCookie("cur_api")); // Get the value of cookie "shibe" and convert it to a float
 
 function getCookie(name) { // function to get the value of a cookie
   let cookieValue = "";
@@ -114,10 +114,10 @@ async function ShibeAPI() {
 async function fetchCatImages() {
   let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
   try {
-      if (isNaN(shibeValue)) { // check if value is not a number or cookie doesn't exist
-        document.cookie = "shibe=0";
+      if (isNaN(cur_api_val)) { // check if value is not a number or cookie doesn't exist
+        document.cookie = "cur_api=catapi";
         CatApi();
-    } else if (shibeValue === 1) { // check if shibe value is 1
+    } else if (cur_api_val == "shibe") { // check if shibe value is 1
         ShibeAPI();
        } 
       else {
