@@ -116,7 +116,7 @@ async function fetchCatImages() {
   try {
       if (isNaN(cur_api_val)) { // check if value is not a number or cookie doesn't exist
         document.cookie = "cur_api=catapi";
-        CatApi();
+        CatAPI();
     } else if (cur_api_val == "shibe") { // check if shibe value is 1
         ShibeAPI();
        } 
