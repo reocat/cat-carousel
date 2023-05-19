@@ -11,9 +11,9 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: './src/js/main.js',
-        config: './src/js/config.js',
-        index: './src/js/index.js'
+        main: './src/js/index.js',
+        vanilla: './src/js/vanilla.js',
+        jquery: './src/js/jq.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -61,10 +61,9 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 commons: {
-					name: "commons",
-					chunks: "initial",
-					minChunks: 2,
-					minSize: 0
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
                 },
             },
         },
