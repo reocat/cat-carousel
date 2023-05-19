@@ -1,4 +1,3 @@
-var common = require("./common");
 // Get the value of the "color" cookie
 const colorValue = getCookie('color');
 
