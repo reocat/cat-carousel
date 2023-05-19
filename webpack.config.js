@@ -8,6 +8,15 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 
 var webpack = require('webpack');
+let htmlPageNames = ['index', 'config'];
+let multipleHtmlPlugins = htmlPageNames.map(name => {
+  return new HtmlWebpackPlugin({
+    template: `./src/${name}.html`, 
+    filename: `${name}.html`,
+    chunks: [`${name}`] 
+  })
+});
+
 
 module.exports = {
     entry: {
@@ -30,6 +39,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'config.html',
             template: 'src/config.html',
+			minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true
+            }
         }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
