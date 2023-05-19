@@ -88,7 +88,7 @@ function getCookie(name) { // function to get the value of a cookie
 
   return cookieValue; // return cookie's value
 }
-async function CatApi() {
+async function CatAPI() {
        let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
        const response = await fetch(apiUrl);
        const data = await response.json();
@@ -98,7 +98,7 @@ async function CatApi() {
        document.getElementById('slide3').src = urls[2];
 }
 
-async function Shibe() {
+async function ShibeAPI() {
         let apiUrl = 'https://shibe.online/api/cats?count=3';
         fetch(apiUrl)
         .then(response => response.json())
@@ -118,10 +118,10 @@ async function fetchCatImages() {
         document.cookie = "shibe=0";
         CatApi();
     } else if (shibeValue === 1) { // check if shibe value is 1
-        Shibe();
+        ShibeAPI();
        } 
       else {
-        CatApi();
+        CatAPI();
       }
   } catch (error) {
     console.error(error);
