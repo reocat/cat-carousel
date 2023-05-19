@@ -1,4 +1,3 @@
-module.exports = "Common";
 async function getCookie(name) { // function to get the value of a cookie
   let cookieValue = "";
   const cookies = document.cookie.split(";"); // split all cookies into an array
