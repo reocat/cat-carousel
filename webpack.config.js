@@ -27,10 +27,11 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            $: "jquery/dist/jquery.min.js",
-            jQuery: "jquery/dist/jquery.min.js",
-            "window.jQuery": "jquery/dist/jquery.min.js"
-        }),
+ 		$: "jquery/dist/jquery.min.js",
+ 		jQuery: "jquery/dist/jquery.min.js",
+ 		"window.jQuery": "jquery/dist/jquery.min.js",
+ 		common: "./src/js/common.js", // Add this line
+	}),
 //        new FontPreloadPlugin({
 //            index: "index.html",
 //            extensions: ["ttf", "off"],
@@ -66,6 +67,8 @@ module.exports = {
         chunkFilename: '[name].[chunkhash:8].chunk.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
+  	library: 'Cookies',
+ 	libraryTarget: 'umd',
     },
     module: {
         rules: [{
