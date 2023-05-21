@@ -108,23 +108,19 @@ async function ShibeAPI() {
 })
 }
 
-// fetch cat images using async/await
-async function fetchCatImages() {
-  let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
-  try {
-      let CurAPI = getCookie('CurAPI'); // get the value of the CurAPI cookie
-      if (isNaN(String(CurAPI))) { // check if value is not a number or cookie doesn't exist
-        document.cookie = "CurAPI=catapi"; // set a new CurAPI cookie with the value 'catapi'
-        CatAPI(); // call the CatAPI function
-      } else if (String(CurAPI) == "shibe") {
-        ShibeAPI(); // call the ShibeAPI function
-      } else {
-        CatAPI(); // call the CatAPI function
-      }
-  } catch (error) {
-    console.error(error);
-  }
+// Get the value of the "CurAPI" cookie
+let curAPIValue = getCookie('CurAPI');
+
+// Check if the "CurAPI" cookie exists
+if (!curAPIValue) {
+  // Create the "CurAPI" cookie with the default value "catapi"
+  document.cookie = 'CurAPI=catapi';
+  curAPIValue = 'catapi';
 }
 
-// call fetchCatImages on page load
-fetchCatImages();
+// Apply the corresponding API function based on the cookie value
+if (curAPIValue === 'catapi') {
+  CatAPI();
+} else if (curAPIValue === 'shibe') {
+  ShibeAPI();
+}
