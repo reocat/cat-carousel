@@ -114,8 +114,8 @@ async function ShibeAPI() {
 async function fetchCatImages() {
   let apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
   try {
-      if (isNaN(CurAPI)) { // check if value is not a number or cookie doesn't exist
-        document.cookie = "cur_api=catapi";
+      if (isNaN(String(CurAPI))) { // check if value is not a number or cookie doesn't exist
+        document.cookie = "CurAPI=catapi";
         CatAPI();
       } 
       else if (String(CurAPI) == "shibe");
