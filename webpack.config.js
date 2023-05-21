@@ -20,9 +20,10 @@ let multipleHtmlPlugins = htmlPageNames.map(name => {
 
 module.exports = {
     entry: {
-        main: './src/js/index.js',
+        index: './src/js/index.js',
         vanilla: './src/js/vanilla.js',
-        jquery: './src/js/jq.js'
+        jquery: './src/js/jq.js',
+	common: './src/js/common.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
