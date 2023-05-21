@@ -108,19 +108,22 @@ async function ShibeAPI() {
 })
 }
 
-// Get the value of the "CurAPI" cookie
-let curAPIValue = getCookie('CurAPI');
-
-// Check if the "CurAPI" cookie exists
-if (!curAPIValue) {
-  // Create the "CurAPI" cookie with the default value "catapi"
-  document.cookie = 'CurAPI=catapi';
-  curAPIValue = 'catapi';
+async function fetchCatImages() {
+  // Get the value of the "CurAPI" cookie
+  let curAPIValue = getCookie('CurAPI');
+  // Check if the "CurAPI" cookie exists
+  if (!curAPIValue) {
+    // Create the "CurAPI" cookie with the default value "catapi"
+    document.cookie = 'CurAPI=catapi';
+    curAPIValue = 'catapi';
+  }
+  // Apply the corresponding API function based on the cookie value
+  if (curAPIValue === 'catapi') {
+    await CatAPI();
+  } else if (curAPIValue === 'shibe') {
+    await ShibeAPI();
+  }
 }
 
-// Apply the corresponding API function based on the cookie value
-if (curAPIValue === 'catapi') {
-  CatAPI();
-} else if (curAPIValue === 'shibe') {
-  ShibeAPI();
-}
+fetchCatImages();
+
