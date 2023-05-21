@@ -1,19 +1,15 @@
-      function getCookie(cookieName) {
-        var name = cookieName + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var cookieArray = decodedCookie.split(';');
+function getCookie(name) { // function to get the value of a cookie
+  let cookieValue = "";
+  const cookies = document.cookie.split(";"); // split all cookies into an array
 
-        for (var i = 0; i < cookieArray.length; i++) {
-          var cookie = cookieArray[i];
+  cookies.forEach((cookie) => { // loop through each cookie
+    let [cookieName, cookieVal] = cookie.split("="); // get cookie's name and value
+    cookieName = cookieName.trim(); // remove leading/trailing whitespaces
 
-          while (cookie.charAt(0) === ' ') {
-            cookie = cookie.substring(1);
-          }
+    if (cookieName === name) { // if cookie's name is the required one
+      cookieValue = cookieVal; // save its value
+    }
+  });
 
-          if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
-          }
-        }
-
-        return "";
-      }
+  return cookieValue; // return cookie's value
+}
