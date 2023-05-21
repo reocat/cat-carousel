@@ -118,7 +118,7 @@ async function fetchCatImages() {
         document.cookie = "cur_api=catapi";
         CatAPI();
       } 
-      else if (document.cookie.includes("CurAPI=shibe"));
+      else if (String(CurAPI) == "shibe");
         ShibeAPI();
       } 
       else {
