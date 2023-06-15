@@ -39,19 +39,9 @@ module.exports = {
 //        }),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
-            filename: 'config.html',
-            template: 'src/config.html',
-			minify: {
-                collapseWhitespace: true,
-                removeComments: true,
-                removeRedundantAttributes: true,
-                removeScriptTypeAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                useShortDoctype: true
-            }
-        }),
-        new HtmlWebpackPlugin({
+            filename: 'index.html',
             template: './src/index.html',
+            chunks: ['vanilla', 'jquery'],
             minify: {
                 collapseWhitespace: true,
                 removeComments: true,
@@ -61,6 +51,20 @@ module.exports = {
                 useShortDoctype: true
             }
         }),
+        new HtmlWebpackPlugin({
+            filename: 'config.html',
+            template: './src/config.html',
+            chunks: ['config'],
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                useShortDoctype: true
+            }
+        }),
+
     ],
     output: {
         filename: '[name].[chunkhash:8].js',
