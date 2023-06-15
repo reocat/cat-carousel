@@ -41,7 +41,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html',
-            chunks: ['vanilla', 'jquery'],
+            chunks: ['vanilla', 'jquery', 'index'],
             minify: {
                 collapseWhitespace: true,
                 removeComments: true,
@@ -54,7 +54,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'config.html',
             template: './src/config.html',
-            chunks: ['config'],
+            chunks: ['config', 'index'],
             minify: {
                 collapseWhitespace: true,
                 removeComments: true,
