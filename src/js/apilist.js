@@ -18,3 +18,12 @@ export async function CatAPI() {
        document.getElementById('slide2').src = urls[1];
        document.getElementById('slide3').src = urls[2];
 }
+export async function AnimalityAPI() {
+       let apiUrl = 'https://api.animality.xyz/img/cat';
+       const response = await fetch(apiUrl);
+       const data = await response.json();
+       const urls = data.map(image => image.link);
+       document.getElementById('slide1').src = urls[0];
+       document.getElementById('slide2').src = urls[1];
+       document.getElementById('slide3').src = urls[2];
+}
