@@ -1,12 +1,7 @@
 // Get the value of the "color" cookie
 const colorValue = getCookie('color');
-const dir = require.context('./api', true, /\.js$/);
-
-const modules = {};
-   dir.keys().forEach(key => {
-     const module = dir(key);
-     modules[key.replace(/\.\/|\.js/g, '')] = module;
-});
+import * as APIList from './apilist.js';
+import {getCookie} from './shared.js';
    
 
 // Apply the color value as the background color globally
@@ -82,17 +77,7 @@ if (window.location.search.includes('free=1')) {
   
 
 
-async function ShibeAPI() {
-        let apiUrl = 'https://shibe.online/api/cats?count=3';
-        fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-           // Assuming element IDs for slides are: slide1, slide2, and slide3
-           document.getElementById("slide1").src = data[0];
-           document.getElementById("slide2").src = data[1];
-           document.getElementById("slide3").src = data[2];
-})
-}
+
 
 async function fetchCatImages() {
   // Get the value of the "CurAPI" cookie
@@ -105,10 +90,10 @@ async function fetchCatImages() {
   }
   // Apply the corresponding API function based on the cookie value
   if (curAPIValue === 'catapi') {
-    await modules['catapi.js'].CatAPI();
+    await APIList.CatAPI();
 
   } else if (curAPIValue === 'shibe') {
-    await ShibeAPI();
+    await APIList.ShibeAPI();
   }
 }
 
