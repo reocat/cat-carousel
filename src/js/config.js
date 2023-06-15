@@ -18,6 +18,10 @@ function setCookie() {
           document.cookie = "CurAPI=shibe";
           document.cookie = "color=" + encodeURIComponent(colorValue);
           popup();
+        } else if (apiValue === "animality") {
+          document.cookie = "CurAPI=animality";
+          document.cookie = "color=" + encodeURIComponent(colorValue);
+          popup();
         }
       }
 
