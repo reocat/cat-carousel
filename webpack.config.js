@@ -23,7 +23,7 @@ module.exports = {
         index: './src/js/index.js',
         vanilla: './src/js/vanilla.js',
         jquery: './src/js/jq.js',
-	common: './src/js/common.js'
+	shared: './src/js/shared.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
