@@ -105,7 +105,8 @@ async function fetchCatImages() {
   }
   // Apply the corresponding API function based on the cookie value
   if (curAPIValue === 'catapi') {
-    await CatAPI();
+    await modules['catapi.js'].CatAPI();
+
   } else if (curAPIValue === 'shibe') {
     await ShibeAPI();
   }
