@@ -112,4 +112,4 @@ async function fetchCatImages() {
 
 fetchCatImages();
 
-import {getCookie} from './Cookies'
+import {getCookie} from './shared.js'
