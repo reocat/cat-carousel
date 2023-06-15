@@ -23,6 +23,7 @@ module.exports = {
         index: './src/js/index.js',
         vanilla: './src/js/vanilla.js',
         jquery: './src/js/jq.js',
+	config: './src/js/config.js',
 	shared: './src/js/shared.js'
     },
     plugins: [
