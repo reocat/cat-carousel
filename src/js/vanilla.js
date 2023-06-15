@@ -1,5 +1,7 @@
 // Get the value of the "color" cookie
 const colorValue = getCookie('color');
+
+// Import functions
 import * as APIList from './apilist.js';
 import {getCookie} from './shared.js';
    
@@ -74,11 +76,6 @@ if (window.location.search.includes('free=1')) {
   }
 }
 
-  
-
-
-
-
 async function fetchCatImages() {
   // Get the value of the "CurAPI" cookie
   let curAPIValue = getCookie('CurAPI');
@@ -91,12 +88,11 @@ async function fetchCatImages() {
   // Apply the corresponding API function based on the cookie value
   if (curAPIValue === 'catapi') {
     await APIList.CatAPI();
-
   } else if (curAPIValue === 'shibe') {
     await APIList.ShibeAPI();
+  } else if (curAPIValue === 'animality') {
+    await APIList.AnimalityAPI();
   }
 }
 
 fetchCatImages();
-
-import {getCookie} from './shared.js'
