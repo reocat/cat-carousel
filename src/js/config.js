@@ -38,3 +38,5 @@ function setCookie() {
 
 // Call the setDefaultAPIValue function when the page loads
 window.onload = setDefaultAPIValue;
+
+import {getCookie} from './shared.js'
