@@ -17,8 +17,10 @@
         "webpack-font-preload-plugin": "^1.5.0"
     },
     "dependencies": {
+        "animality": "^2.0.1",
         "animate.css": "^4.1.1",
         "babel-loader": "^9.1.2",
+        "eruda": "^3.0.0",
         "html-webpack-plugin": "^5.5.0"
     }
 }
