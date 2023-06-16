@@ -19,12 +19,15 @@ export async function CatAPI() {
        document.getElementById('slide3').src = urls[2];
 }
 export async function AnimalityAPI() {
-    let apiUrl = 'https://api.animality.xyz/img/cat';
-    const response = await fetch(apiUrl);
+  try {
+    const response = await fetch("https://api.animality.xyz/img/cat");
     const data = await response.json();
-    const urls = typeof data === 'string' ? [data] : data;
-    document.getElementById('slide1').src = urls[0];
-    document.getElementById('slide2').src = urls[1];
-    document.getElementById('slide3').src = urls[2];
+    
+    const urls = data.map(item => item.link); // assuming the JSON data contains an array of objects with "link" property for each URL
+    document.getElementById("slide1").src = urls[0];
+    document.getElementById("slide2").src = urls[1];
+    document.getElementById("slide3").src = urls[2];
+  } catch (error) {
+    console.log(error);
+  }
 }
-
