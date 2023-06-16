@@ -1,3 +1,8 @@
+document.getElementById("save-btn").addEventListener("click", () => {
+  setCookie(); 
+});
+
+
 function popup() {
         alert("Configuration applied, nya!");
         window.location.href = window.location = '/';
