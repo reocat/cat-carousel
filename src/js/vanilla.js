@@ -96,25 +96,4 @@ async function fetchCatImages() {
 }
 
 fetchCatImages();
-// Wrapper function to display errors on the screen
-function displayError(msg) {
-  var errorBox = document.createElement('div');
-  errorBox.style.position = 'fixed';
-  errorBox.style.top = 0;
-  errorBox.style.left = 0;
-  errorBox.style.width = '100%';
-  errorBox.style.background = 'red';
-  errorBox.style.color = 'white';
-  errorBox.style.textAlign = 'center';
-  errorBox.style.padding = '10px';
-  errorBox.textContent = msg;
-  document.body.appendChild(errorBox);
-}
-
-// Capture errors and display them
-window.onerror = function(msg, url, lineNo, columnNo, error) {
-  var fullMsg = `${msg} (${url}:${lineNo}:${columnNo})`;
-  displayError(fullMsg);
-};
-
-
+eruda.init();
