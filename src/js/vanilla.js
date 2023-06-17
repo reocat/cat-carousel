@@ -97,9 +97,16 @@ async function fetchCatImages() {
 
 fetchCatImages();
 
-;(function () {
-    var src = '//cdn.jsdelivr.net/npm/eruda';
-    if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
-    document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
-})();
+// Check if the "eruda=true" parameter exists in the URL
+if (window.location.search.indexOf('eruda=true') !== -1) {
+
+  // Create a new script element
+  var script = document.createElement('script');
+
+  // Set the source of the script to the CDN URL
+  script.src = 'https://cdn.jsdelivr.net/npm/eruda@2.4.1';
+
+  // Append the script element to the document head
+  document.head.appendChild(script);
+
+}
