@@ -116,4 +116,5 @@ if (window.location.search.indexOf('eruda=true') !== -1) {
       container: el,
       tool: ['console', 'elements']
   });
+  eruda.init();
 }
