@@ -104,9 +104,19 @@ if (window.location.search.indexOf('eruda=true') !== -1) {
   var script = document.createElement('script');
 
   // Set the source of the script to the CDN URL
-  script.src = 'https://cdn.jsdelivr.net/npm/eruda@2.4.1';
+  script.src = 'https://cdn.jsdelivr.net/npm/eruda';
 
   // Append the script element to the document head
   document.head.appendChild(script);
+  ErudaInit();
+}
 
+async function ErudaInit() {
+  let el = document.createElement('div');
+  document.body.appendChild(el);
+
+  eruda.init({
+      container: el,
+      tool: ['console', 'elements']
+  });
 }
