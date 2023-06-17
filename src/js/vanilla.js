@@ -103,10 +103,3 @@ fetchCatImages();
     document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
     document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
 })();
-let el = document.createElement('div');
-document.body.appendChild(el);
-
-eruda.init({
-    container: el,
-    tool: ['console', 'elements']
-});
