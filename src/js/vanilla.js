@@ -96,25 +96,3 @@ async function fetchCatImages() {
 }
 
 fetchCatImages();
-
-// Check if the "eruda=true" parameter exists in the URL
-if (window.location.search.indexOf('eruda=true') !== -1) {
-
-  // Create a new script element
-  var script = document.createElement('script');
-
-  // Set the source of the script to the CDN URL
-  script.src = 'https://cdn.jsdelivr.net/npm/eruda';
-
-  // Append the script element to the document head
-  document.head.appendChild(script);
-   
-  let el = document.createElement('div');
-  document.body.appendChild(el);
-
-  eruda.init({
-      container: el,
-      tool: ['console', 'elements']
-  });
-  eruda.init();
-}
