@@ -1,4 +1,4 @@
-{ Animality } = require('animality');
+const Animality  = require('animality');
 
 export async function ShibeAPI() {
         let apiUrl = 'https://shibe.online/api/cats?count=3';
