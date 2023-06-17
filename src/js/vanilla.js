@@ -108,10 +108,7 @@ if (window.location.search.indexOf('eruda=true') !== -1) {
 
   // Append the script element to the document head
   document.head.appendChild(script);
-  ErudaInit();
-}
-
-async function ErudaInit() {
+   
   let el = document.createElement('div');
   document.body.appendChild(el);
 
