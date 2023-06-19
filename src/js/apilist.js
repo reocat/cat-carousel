@@ -1,5 +1,3 @@
-const Animality  = require('animality');
-
 export async function ShibeAPI() {
         let apiUrl = 'https://shibe.online/api/cats?count=3';
         fetch(apiUrl)
@@ -21,20 +19,14 @@ export async function CatAPI() {
        document.getElementById('slide3').src = urls[2];
 }
 export async function AnimalityAPI() {
-  const animals = await Promise.all([
-    Animality.getAsync('cat', 'API_KEY'),
-    Animality.getAsync('dog', 'API_KEY'),
-    Animality.getAsync('fox', 'API_KEY')
-  ]);
-
-  const slide1 = document.getElementById('slide1');
-  slide1.src = animals[0].image;
-
-  const slide2 = document.getElementById('slide2');
-  slide2.src = animals[1].image;
-
-  const slide3 = document.getElementById('slide3');
-  slide3.src = animals[2].image;
+  try {
+    const response = await fetch("https://api.animality.xyz/img/cat");
+    const data = await response.json();
+    const imageUrl = data.image;
+    document.getElementById("slide1").setAttribute("src", imageUrl);
+    document.getElementById("slide2").setAttribute("src", imageUrl + "?2");
+    document.getElementById("slide3").setAttribute("src", imageUrl + "?3");
+  } catch (error) {
+    console.error(error);
+  }
 }
-
-
