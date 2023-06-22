@@ -2,6 +2,14 @@ document.getElementById("save-btn").addEventListener("click", () => {
   setCookie();
 });
 
+// Get the value of the "color" cookie
+const colorValue = getCookie('color');
+
+
+// Apply the color value as the background color globally
+if (colorValue) {
+  document.body.style.backgroundColor = colorValue;
+}
 
 function popup() {
   alert("Configuration applied, nya!");
@@ -17,15 +25,18 @@ function setCookie() {
 
   if (apiValue === "catapi") {
     document.cookie = "CurAPI=catapi";
-    document.cookie = "color=" + encodeURIComponent(colorValue);
+    document.cookie = "color=" + colorValue;
+    console.log(colorValue);
     popup();
   } else if (apiValue === "shibe") {
     document.cookie = "CurAPI=shibe";
-    document.cookie = "color=" + encodeURIComponent(colorValue);
+    document.cookie = "color=" + colorValue;
+    console.log(colorValue);
     popup();
   } else if (apiValue === "animality") {
     document.cookie = "CurAPI=animality";
-    document.cookie = "color=" + encodeURIComponent(colorValue);
+    document.cookie = "color=" + colorValue;
+    console.log(colorValue);
     popup();
   }
 }
