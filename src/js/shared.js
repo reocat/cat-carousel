@@ -10,6 +10,7 @@ export function getCookie(name) { // function to get the value of a cookie
       cookieValue = cookieVal; // save its value
     }
   });
+  console.log(cookies)
 
   return cookieValue; // return cookie's value
 }
