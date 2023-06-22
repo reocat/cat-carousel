@@ -1,3 +1,8 @@
+import {
+  getCookie
+} from './shared.js'
+
+
 document.getElementById("save-btn").addEventListener("click", () => {
   setCookie();
 });
@@ -12,7 +17,7 @@ if (colorValue) {
 }
 
 function popup() {
-  alert("Configuration applied, nya!");
+  alert(`Configuration applied, nya! Your cookies: ${getCookie('color')},${getCookie('CurAPI')}`);
   window.location.href = window.location = '/';
 }
 
@@ -59,6 +64,3 @@ function setDefaultAPIValue() {
 // Call the setDefaultAPIValue function when the page loads
 window.onload = setDefaultAPIValue;
 
-import {
-  getCookie
-} from './shared.js'

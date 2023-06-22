@@ -13,7 +13,7 @@ let multipleHtmlPlugins = htmlPageNames.map(name => {
   return new HtmlWebpackPlugin({
     template: `./src/${name}.html`, 
     filename: `${name}.html`,
-    chunks: [`${name}`] 
+    
   })
 });
 
@@ -25,6 +25,13 @@ module.exports = {
         jquery: './src/js/jq.js',
 	config: './src/js/config.js',
 	shared: './src/js/shared.js'
+    },
+    devServer:{
+        static: path.resolve(__dirname, 'src'),
+        port: 8080,
+        open: true,
+        hot: true,
+        
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -101,5 +108,5 @@ module.exports = {
         ],
         minimize: true,
     },
-    mode: 'development',
+    mode: 'production',
 };
