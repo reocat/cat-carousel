@@ -1,10 +1,11 @@
-// Get the value of the "color" cookie
-const colorValue = getCookie('color');
 
 // Import functions
 import * as APIList from './apilist.js';
 import {getCookie} from './shared.js';
-   
+
+// Get the value of the "color" cookie
+const colorValue = getCookie('color');
+
 
 // Apply the color value as the background color globally
 if (colorValue) {
