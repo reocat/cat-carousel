@@ -8,7 +8,7 @@ document.getElementById("save-btn").addEventListener("click", () => {
 });
 
 // Get the value of the "color" cookie
-const colorValue = getCookie('color');
+let colorValue = getCookie('color');
 
 
 // Apply the color value as the background color globally
@@ -17,7 +17,7 @@ if (colorValue) {
 }
 
 function popup() {
-  alert(`Configuration applied, nya! Your cookies: ${getCookie('color')},${getCookie('CurAPI')}`);
+  alert(`Configuration applied, nya! Your cookies: color: ${getCookie('color')}, ${getCookie('CurAPI')} image processing api`);
   window.location.href = window.location = '/';
 }
 
@@ -60,7 +60,17 @@ function setDefaultAPIValue() {
     }
   }
 }
+function setDefaultBackgroundColor() {
+  
+  let curColor = getCookie("color");
+ document.getElementById("color-select").value = curColor;
+  console.log('curColor :>> ', curColor);
+}
+function resetDefault () {
+  setDefaultAPIValue();
+  setDefaultBackgroundColor();
+}
 
 // Call the setDefaultAPIValue function when the page loads
-window.onload = setDefaultAPIValue;
+window.onload = resetDefault();
 

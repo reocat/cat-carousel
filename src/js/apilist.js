@@ -22,7 +22,7 @@ export async function AnimalityAPI() {
   try {
     const response = await fetch("https://api.animality.xyz/img/cat");
     const data = await response.json();
-    const imageUrl = data.image;
+    const imageUrl = data.link;
     document.getElementById("slide1").setAttribute("src", imageUrl);
     document.getElementById("slide2").setAttribute("src", imageUrl + "?2");
     document.getElementById("slide3").setAttribute("src", imageUrl + "?3");
