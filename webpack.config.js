@@ -108,5 +108,5 @@ module.exports = {
         ],
         minimize: true,
     },
-    mode: 'production',
+    mode: 'development',
 };
