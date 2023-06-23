@@ -2,9 +2,15 @@ import {
   getCookie
 } from './shared.js'
 
+import {defColorVal} from './shared.js';
+import {setDefaultValue} from './shared.js';
 
 document.getElementById("save-btn").addEventListener("click", () => {
   setCookie();
+});
+
+document.getElementById("rst-btn").addEventListener("click", () => {
+  setDefaultValue();
 });
 
 // Get the value of the "color" cookie
