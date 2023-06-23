@@ -14,3 +14,10 @@ export function getCookie(name) { // function to get the value of a cookie
 
   return cookieValue; // return cookie's value
 }
+
+export const defColorVal = "#ffdead"
+
+export async function setDefaultValue () {
+  document.cookie = "CurAPI=catapi";
+  document.cookie = "color=" + defColorVal;
+}
