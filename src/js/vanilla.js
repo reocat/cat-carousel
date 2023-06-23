@@ -1,8 +1,7 @@
+
 // Import functions
 import * as APIList from './apilist.js';
 import {getCookie} from './shared.js';
-import {defColorVal} from './shared.js';
-import {setDefaultValue} from './shared.js';
 
 // Get the value of the "color" cookie
 const colorValue = getCookie('color');
@@ -84,7 +83,8 @@ async function fetchCatImages() {
   // Check if the "CurAPI" cookie exists
   if (!curAPIValue) {
     // Create the "CurAPI" cookie with the default value "catapi"
-    setDefaultValue();
+    document.cookie = 'CurAPI=catapi';
+    curAPIValue = 'catapi';
   }
   // Apply the corresponding API function based on the cookie value
   if (curAPIValue === 'catapi') {
