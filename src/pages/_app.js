@@ -25,8 +25,6 @@ const ImageCarousel = () => {
     fetchImages();
   }, []);
 
-
-
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => {
       const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
@@ -60,10 +58,16 @@ const ImageCarousel = () => {
         </div>
       )}
       <div className="carousel-controls">
-        <div className="circle-button left btn btn-prev" onClick={goToPreviousImage}>
+        <div
+          className="circle-button left btn btn-prev"
+          onClick={goToPreviousImage}
+        >
           &lt;
         </div>
-        <div className="circle-button right btn btn-next" onClick={goToNextImage}>
+        <div
+          className="circle-button right btn btn-next"
+          onClick={goToNextImage}
+        >
           &gt;
         </div>
       </div>
@@ -74,19 +78,23 @@ const ImageCarousel = () => {
 const HomePage = () => {
   return (
     <div className="page-container">
-    	<h1 id="page-title">
-    	  <TextTransition springConfig={presets.default}>Random Cat Image Carousel</TextTransition>
-   	 </h1>
+      <h1 id="page-title">
+        <TextTransition springConfig={presets.default}>
+          Random Cat Image Carousel
+        </TextTransition>
+      </h1>
       <div className="carousel-container">
         <ImageCarousel />
       </div>
-	<a id="tooltip">Authors</a>
-	<Tooltip anchorSelect="#tooltip" clickable>
-        <span class="tooltiptext">Made by <a class="links" href="https://github.com/reocat">reocat</a> and <a class="links" href="https://github.com/L1ttleWizard">L1ttleWizard</a></span>
-    	</Tooltip>
+      <a id="tooltip">Authors</a>
+      <Tooltip anchorSelect="#tooltip" clickable>
+        <span class="tooltiptext">
+          Made by <a class="links" href="https://github.com/reocat">reocat</a> and{' '}
+          <a class="links" href="https://github.com/L1ttleWizard">L1ttleWizard</a>
+        </span>
+      </Tooltip>
     </div>
   );
 };
-
 
 export default HomePage;
