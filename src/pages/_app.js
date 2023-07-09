@@ -4,7 +4,7 @@ import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
 
 // Import files
-import useRainbow from '../hooks/useRainbow.hook';
+import useRainbow from '../hooks/useRainbow.hook.js';
 import '../styles/global.css';
 import '../styles/fonts.css';
 
