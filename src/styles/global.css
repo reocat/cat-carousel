@@ -23,6 +23,7 @@
   text-align: center;
 }
 
+
 body {
   height: 100vh;
   display: flex;
@@ -69,6 +70,11 @@ h1 {
 
 .image-container:hover .carousel-image {
   transform: scale(1.2); /* Adjust the scale factor as desired */
+}
+
+.nyan {
+  background-image: url("https://c.tenor.com/r8QaTDj3U6IAAAAi/nyan-cat-poptart-cat.gif");
+  background-size:  100%;
 }
 
 .page-container {
