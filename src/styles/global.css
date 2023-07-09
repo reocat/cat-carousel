@@ -1,0 +1,112 @@
+:root {
+  --rt-color-white: #fff;
+  --rt-color-dark: #222;
+  --rt-color-success: #8dc572;
+  --rt-color-error: #be6464;
+  --rt-color-warning: #f0ad4e;
+  --rt-color-info: #337ab7;
+  --rt-opacity: 0.9;
+}
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 20px;
+  background-color: #ffdead;
+  margin-left: 2%;
+  margin-right: 2%;
+  font-family: "04b03";
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-family: "Nokia FC 22";
+  vertical-align: text-top;
+  background: #5c4033;
+  -webkit-background-clip: text;
+}
+
+.carousel-image {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px rgb(123, 63, 0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-container {
+  width: 900px; /* Adjust the container width as needed */
+  height: 600px; /* Adjust the container height as needed */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1px;
+  margin: 10px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px rgb(123, 63, 0);
+}
+
+.image-container:hover .carousel-image {
+  transform: scale(1.2); /* Adjust the scale factor as desired */
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+}
+
+.btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  z-index: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 18px;
+  text-align: center;
+  line-height: 35px; /* Added line-height */
+  top: 50%; /* Added top */
+  transform: translateY(-50%); /* Added transform */
+}
+
+.btn-prev {
+  top: 50%; /* Adjusted to 50% */
+  left: 2%;
+  padding: 5px;
+  transform: translateY(-50%); /* Added to center vertically */
+}
+
+.btn-next {
+  top: 50%; /* Adjusted to 50% */
+  right: 2%;
+  padding: 5px;
+  transform: translateY(-50%); /* Added to center vertically */
+}
+
+.tooltip {
+  background-color: #000;
+  color: #fff;
+  padding: 8px;
+}

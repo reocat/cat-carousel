@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Nokia FC 22';
+  src: url('../fonts/nokiafc22.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: '04b03';
+  src: url('../fonts/04b03.ttf') format('truetype');
+}
