@@ -1,4 +1,6 @@
 "use client"
+import './styles/fonts.css'
+import './styles/index.css'
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from 'react-tooltip';
@@ -7,9 +9,6 @@ import ReactPlayer from 'react-player';
 import { ImageCarousel } from './Components/ImageCarousel';
 
 // Import files
-
-import './styles/index.module.css';
-import './styles/fonts.module.css';
 
 export default function Home() {
   return (
