@@ -1,7 +1,8 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 
-const Config = () => {
+export default function Home() {
   const [selectedValue, setSelectedValue] = useState('');
   const [colorValue, setColorValue] = useState('');
 
@@ -51,4 +52,3 @@ const Config = () => {
   );
 };
 
-export default Config;

@@ -1,15 +1,11 @@
+"use client"
 import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from 'react-tooltip';
 import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
-
-// Import files
 import useRainbow from '../hooks/useRainbow.hook.js';
-import {fetchShibeApiImages} from '../api/shibeapi';
-import {fetchCatApiImages} from '../api/catapi';
-import '../styles/index.module.css';
-import '../styles/fonts.module.css';
-
+import { fetchShibeApiImages } from '../api/shibeapi';
+import { fetchCatApiImages } from '../api/catapi';
 
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
   const colors = useRainbow({ intervalDelay });
@@ -113,116 +109,92 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
   );
 };
 
-const ImageCarousel = () => {
-  const [images, setImages] = useState([]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchImages = async () => {
-    setIsLoading(true);
+export const ImageCarousel = () => {
+    const [images, setImages] = useState([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
   
-    try {
-      const curApi = document.cookie.replace(
-        /(?:(?:^|.*;\s*)cur_api\s*\=\s*([^;]*).*$)|^.*$/,
-        '$1'
+    const fetchImages = async () => {
+      setIsLoading(true);
+  
+      try {
+        const curApi = document.cookie.replace(
+          /(?:(?:^|.*;\s*)cur_api\s*\=\s*([^;]*).*$)|^.*$/,
+          '$1'
+        );
+  
+        let images;
+        if (curApi === 'shibe') {
+          images = await fetchShibeApiImages();
+        } else {
+          images = await fetchCatApiImages();
+        }
+  
+        setImages(images);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      fetchImages();
+    }, []);
+  
+    const goToNextImage = () => {
+      setCurrentImageIndex((prevIndex) => {
+        const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
+        const nearEndOfPictures = nextIndex === images.length - 3;
+  
+        if (nearEndOfPictures) {
+          fetchImages();
+        }
+  
+        return nextIndex;
+      });
+    };
+  
+    const goToPreviousImage = () => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? images.length - 1 : prevIndex - 1
       );
+    };
   
-      let images;
-      if (curApi === 'shibe') {
-        images = await fetchShibeApiImages();
-      } else {
-        images = await fetchCatApiImages();
-      }
-  
-      setImages(images);
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchImages();
-  }, []);
-
-  const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) => {
-      const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
-      const nearEndOfPictures = nextIndex === images.length - 3;
-
-      if (nearEndOfPictures) {
-        fetchImages();
-      }
-
-      return nextIndex;
-    });
-  };
-
-  const goToPreviousImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    return (
+      <div className="carousel">
+        <MagicRainbowButton intervalDelay={1500}>
+          toggle death mode
+        </MagicRainbowButton>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          images.length > 0 && (
+            <div className="image-container">
+              <img
+                id="cat-img"
+                src={images[currentImageIndex]}
+                alt="carousel-image"
+                className="carousel-image"
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </div>
+          )
+        )}
+        <div className="carousel-controls">
+          <div
+            className="circle-button left btn btn-prev"
+            onClick={goToPreviousImage}
+          >
+            &lt;
+          </div>
+          <div
+            className="circle-button right btn btn-next"
+            onClick={goToNextImage}
+          >
+            &gt;
+          </div>
+        </div>
+      </div>
     );
   };
-
-  return (
-    <div className="carousel">
-      <MagicRainbowButton intervalDelay={1500}>
-        toggle death mode
-      </MagicRainbowButton>
-      {isLoading ? (
-        <h2>Loading...</h2>
-      ) : (
-        images.length > 0 && (
-          <div className="image-container">
-            <img
-              id="cat-img"
-              src={images[currentImageIndex]}
-              alt="carousel-image"
-              className="carousel-image"
-              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-            />
-          </div>
-        )
-      )}
-      <div className="carousel-controls">
-        <div
-          className="circle-button left btn btn-prev"
-          onClick={goToPreviousImage}
-        >
-          &lt;
-        </div>
-        <div
-          className="circle-button right btn btn-next"
-          onClick={goToNextImage}
-        >
-          &gt;
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const HomePage = () => {
-  return (
-    <div className="page-container">
-      <h1 id="page-title">
-        <TextTransition springConfig={presets.default}>
-          Random Cat Image Carousel
-        </TextTransition>
-      </h1>
-      <div className="carousel-container">
-        <ImageCarousel />
-      </div>
-      <a id="tooltip">Authors</a>
-      <Tooltip anchorSelect="#tooltip" clickable>
-        <span className="tooltiptext">
-          Made by <a className="links" href="https://github.com/reocat">reocat</a> and{' '}
-          <a className="links" href="https://github.com/L1ttleWizard">L1ttleWizard</a>
-        </span>
-      </Tooltip>
-    </div>
-  );
-};
-
-export default HomePage;
