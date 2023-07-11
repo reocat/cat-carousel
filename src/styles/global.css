@@ -8,15 +8,6 @@
   --rt-opacity: 0.9;
 }
 
-@media (max-width: 768px) {
-  .carousel-image {
-    /* Styles for mobile devices */
-    width: 100%;
-    height: auto;
-  }
-}
-
-
 * {
   padding: 0;
   box-sizing: border-box;
