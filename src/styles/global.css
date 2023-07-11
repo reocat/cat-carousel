@@ -34,7 +34,9 @@ h1 {
   background: #5c4033;
   -webkit-background-clip: text;
 }
-
+.rainbow-button {
+  font-family: "04b03";
+}
 .carousel-image {
   border-radius: 15px;
   border: 1px solid #ccc;
