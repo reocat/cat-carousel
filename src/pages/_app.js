@@ -116,12 +116,28 @@ const ImageCarousel = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch(
-        'https://api.thecatapi.com/v1/images/search?limit=10'
+      const curApi = document.cookie.replace(
+        /(?:(?:^|.*;\s*)cur_api\s*\=\s*([^;]*).*$)|^.*$/,
+        '$1'
       );
+      let apiUrl;
+
+      if (curApi === 'shibe') {
+        apiUrl = 'https://shibe.online/api/cats?count=10';
+      } else {
+        apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
+      }
+
+      const response = await fetch(apiUrl);
       const data = await response.json();
-      const imageUrls = data.map((image) => image.url);
-      setImages(imageUrls);
+
+      if (curApi === 'shibe') {
+        const imageUrls = data;
+        setImages(imageUrls);
+      } else {
+        const imageUrls = data.map((image) => image.url);
+        setImages(imageUrls);
+      }
     } catch (error) {
       console.error('Error fetching images:', error);
     }
