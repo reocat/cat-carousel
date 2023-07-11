@@ -1,4 +1,4 @@
-/*body {
+body {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -11,13 +11,19 @@
   letter-spacing: 3px;
 }
 
+* {
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
 h1 {
   font-family: "Nokia FC 22";
   vertical-align: text-top;
-  background: #5c4033;
-  -webkit-background-clip: text;
+  color: #5c4033;
+  --webkit-background-clip: text;
 }
-*/
+
 .rainbow-button {
   font-family: "04b03";
 }
@@ -60,6 +66,7 @@ h1 {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  font-family: "04b03";
 }
 
 .page-title {
