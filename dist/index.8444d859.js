@@ -1,1 +1,0 @@
-"use strict";!function(e,o){"object"==typeof exports&&"object"==typeof module?module.exports=o():"function"==typeof define&&define.amd?define([],o):"object"==typeof exports?exports.Cookies=o():e.Cookies=o()}(self,(()=>(self.webpackChunkCookies=self.webpackChunkCookies||[]).push([[826],{971:(e,o,t)=>{t.r(o)}},e=>(e.O(0,[216],(()=>{return o=971,e(e.s=o);var o})),e.O())])));
