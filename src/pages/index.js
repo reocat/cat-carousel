@@ -5,8 +5,11 @@ import ReactPlayer from 'react-player';
 
 // Import files
 import useRainbow from '../hooks/useRainbow.hook.js';
-import '../styles/global.css';
-import '../styles/fonts.css';
+import {fetchShibeApiImages} from '../api/shibeapi';
+import {fetchCatApiImages} from '../api/catapi';
+import '../styles/index.module.css';
+import '../styles/fonts.module.css';
+
 
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
   const colors = useRainbow({ intervalDelay });
@@ -117,30 +120,21 @@ const ImageCarousel = () => {
 
   const fetchImages = async () => {
     setIsLoading(true);
-
+  
     try {
       const curApi = document.cookie.replace(
         /(?:(?:^|.*;\s*)cur_api\s*\=\s*([^;]*).*$)|^.*$/,
         '$1'
       );
-      let apiUrl;
-
+  
+      let images;
       if (curApi === 'shibe') {
-        apiUrl = 'https://shibe.online/api/cats?count=10';
+        images = await fetchShibeApiImages();
       } else {
-        apiUrl = 'https://api.thecatapi.com/v1/images/search?limit=10';
+        images = await fetchCatApiImages();
       }
-
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-
-      if (curApi === 'shibe') {
-        const imageUrls = data;
-        setImages(imageUrls);
-      } else {
-        const imageUrls = data.map((image) => image.url);
-        setImages(imageUrls);
-      }
+  
+      setImages(images);
     } catch (error) {
       console.error('Error fetching images:', error);
     } finally {

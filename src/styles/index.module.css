@@ -1,21 +1,4 @@
-:root {
-  --rt-color-white: #fff;
-  --rt-color-dark: #222;
-  --rt-color-success: #8dc572;
-  --rt-color-error: #be6464;
-  --rt-color-warning: #f0ad4e;
-  --rt-color-info: #337ab7;
-  --rt-opacity: 0.9;
-}
-
-* {
-  padding: 0;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-
-body {
+/*body {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -34,6 +17,7 @@ h1 {
   background: #5c4033;
   -webkit-background-clip: text;
 }
+*/
 .rainbow-button {
   font-family: "04b03";
 }
@@ -136,9 +120,9 @@ h1 {
     height: 100%;
     object-fit: cover;
   }
-
+/*
   h1 {
-    /* Existing styles */
-    font-size: 24px; /* Adjust the font size as needed for mobile */
+    font-size: 24px; 
   }
+*/
 }
