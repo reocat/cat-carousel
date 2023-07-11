@@ -113,8 +113,11 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
 const ImageCarousel = () => {
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchImages = async () => {
+    setIsLoading(true);
+
     try {
       const curApi = document.cookie.replace(
         /(?:(?:^|.*;\s*)cur_api\s*\=\s*([^;]*).*$)|^.*$/,
@@ -140,6 +143,8 @@ const ImageCarousel = () => {
       }
     } catch (error) {
       console.error('Error fetching images:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -171,16 +176,20 @@ const ImageCarousel = () => {
       <MagicRainbowButton intervalDelay={1500}>
         toggle death mode
       </MagicRainbowButton>
-      {images.length > 0 && (
-        <div className="image-container">
-          <img
-            id="cat-img"
-            src={images[currentImageIndex]}
-            alt="carousel-image"
-            className="carousel-image"
-            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          />
-        </div>
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
+        images.length > 0 && (
+          <div className="image-container">
+            <img
+              id="cat-img"
+              src={images[currentImageIndex]}
+              alt="carousel-image"
+              className="carousel-image"
+              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+            />
+          </div>
+        )
       )}
       <div className="carousel-controls">
         <div
