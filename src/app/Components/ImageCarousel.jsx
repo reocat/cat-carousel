@@ -6,10 +6,9 @@ import ReactPlayer from 'react-player';
 import useRainbow from '../hooks/useRainbow.hook.js';
 import { fetchShibeApiImages } from '../api/shibeapi';
 import { fetchCatApiImages } from '../api/catapi';
-import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
-  const { t } = useTranslation();
   const colors = useRainbow({ intervalDelay });
   const colorKeys = Object.keys(colors);
   const transitionDelay = 200;
@@ -72,12 +71,13 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
       >
         {children}
       </button>
+      <br/>
       {showDropdown && (
         <select value={selectedMusic} onChange={handleMusicSelection}>
-          <option value="">{t('rainbowButton.selectMusic')}</option>
-          <option value="lo-fi">{t('rainbowButton.lofi')}</option>
-          <option value="nyan-cat">{t('rainbowButton.nyanCat')}</option>
-          <option value="rain">{t('rainbowButton.rain')}</option>
+          <option value="">Select Music</option>
+          <option value="lo-fi">Lo-fi</option>
+          <option value="nyan-cat">Nyan Cat Soundtrack</option>
+          <option value="rain">Rain</option>
         </select>
       )}
       {selectedMusic === 'lo-fi' && (
@@ -112,7 +112,6 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
 };
 
 export const ImageCarousel = () => {
-  const { t } = useTranslation();
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -176,8 +175,18 @@ export const ImageCarousel = () => {
 
   return (
     <div className="carousel">
+      <Helmet>
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://cataas.com/cat/says/%20?width=100&height=100"
+        />
+      </Helmet>
+      <MagicRainbowButton intervalDelay={1500}>
+          toggle death mode
+      </MagicRainbowButton>
       {isLoading ? (
-        <h2>{t('imageCarousel.loading')}</h2>
+        <h2>Loading...</h2>
       ) : (
         images.length > 0 && (
           <div className="image-container">
@@ -205,6 +214,7 @@ export const ImageCarousel = () => {
           &gt;
         </div>
       </div>
+      
     </div>
   );
 };

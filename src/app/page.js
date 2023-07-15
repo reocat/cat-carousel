@@ -1,14 +1,15 @@
 "use client"
-import './styles/fonts.css'
-import './styles/index.css'
+
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Tooltip } from 'react-tooltip';
-import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
+import { Tooltip } from 'react-tooltip';
+import Favicon from 'react-favicon';
+import TextTransition, { presets } from 'react-text-transition';
+
 import { ImageCarousel } from './Components/ImageCarousel';
-import { appWithTranslation } from 'next-i18next';
-import './i18n';
+import './styles/fonts.css';
+import './styles/index.css';
 
 function Home() {
   return (
@@ -32,4 +33,4 @@ function Home() {
   );
 }
 
-export default appWithTranslation(Home);
+export default Home;
