@@ -8,7 +8,6 @@ import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
 import { ImageCarousel } from './Components/ImageCarousel';
 
-// Import files
 
 export default function Home() {
   return (
