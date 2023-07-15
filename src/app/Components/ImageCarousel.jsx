@@ -119,7 +119,7 @@ export const ImageCarousel = () => {
   
       try {
         const curApi = document.cookie.replace(
-          /(?:(?:^|.*;\s*)cur_api\s*\=\s*([^;]*).*$)|^.*$/,
+          /(?:(?:^|.*;\s*)api_val\s*\=\s*([^;]*).*$)|^.*$/,
           '$1'
         );
   
