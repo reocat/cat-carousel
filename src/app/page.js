@@ -7,9 +7,10 @@ import { Tooltip } from 'react-tooltip';
 import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
 import { ImageCarousel } from './Components/ImageCarousel';
+import { appWithTranslation } from 'next-i18next';
+import './i18n';
 
-
-export default function Home() {
+function Home() {
   return (
     <div className="page-container">
       <h1 id="page-title">
@@ -30,3 +31,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default appWithTranslation(Home);

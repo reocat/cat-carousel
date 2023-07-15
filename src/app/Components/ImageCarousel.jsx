@@ -6,9 +6,10 @@ import ReactPlayer from 'react-player';
 import useRainbow from '../hooks/useRainbow.hook.js';
 import { fetchShibeApiImages } from '../api/shibeapi';
 import { fetchCatApiImages } from '../api/catapi';
-
+import { useTranslation } from 'react-i18next';
 
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
+  const { t } = useTranslation();
   const colors = useRainbow({ intervalDelay });
   const colorKeys = Object.keys(colors);
   const transitionDelay = 200;
@@ -73,10 +74,10 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
       </button>
       {showDropdown && (
         <select value={selectedMusic} onChange={handleMusicSelection}>
-          <option value="">Select Music</option>
-          <option value="lo-fi">Lo-fi</option>
-          <option value="nyan-cat">Nyan Cat Soundtrack</option>
-          <option value="rain">Rain</option>
+          <option value="">{t('rainbowButton.selectMusic')}</option>
+          <option value="lo-fi">{t('rainbowButton.lofi')}</option>
+          <option value="nyan-cat">{t('rainbowButton.nyanCat')}</option>
+          <option value="rain">{t('rainbowButton.rain')}</option>
         </select>
       )}
       {selectedMusic === 'lo-fi' && (
@@ -111,6 +112,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
 };
 
 export const ImageCarousel = () => {
+  const { t } = useTranslation();
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -175,7 +177,7 @@ export const ImageCarousel = () => {
   return (
     <div className="carousel">
       {isLoading ? (
-        <h2>Loading...</h2>
+        <h2>{t('imageCarousel.loading')}</h2>
       ) : (
         images.length > 0 && (
           <div className="image-container">
