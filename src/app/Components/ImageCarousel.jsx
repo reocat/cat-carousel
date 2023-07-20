@@ -1,11 +1,11 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
-import { Tooltip } from 'react-tooltip';
 import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
 import useRainbow from '../hooks/useRainbow.hook.js';
 import { fetchShibeApiImages } from '../api/shibeapi';
 import { fetchCatApiImages } from '../api/catapi';
+import { fetchNekoApiImages } from '../api/nekos';
 import { Helmet } from 'react-helmet';
 
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
@@ -128,6 +128,8 @@ export const ImageCarousel = () => {
       let images;
       if (curApi === 'shibe') {
         images = await fetchShibeApiImages();
+      } else if (curApi === 'neko') {
+        images = await fetchNekoApiImages();
       } else {
         images = await fetchCatApiImages();
       }
@@ -164,6 +166,10 @@ export const ImageCarousel = () => {
   };
 
   useEffect(() => {
+    fetchImages();
+  }, []);
+
+  useEffect(() => {
     const colorCookie = document.cookie.replace(
       /(?:(?:^|.*;\s*)color\s*\=\s*([^;]*).*$)|^.*$/,
       '$1'
@@ -171,7 +177,33 @@ export const ImageCarousel = () => {
 
     const body = document.body;
     body.style.backgroundColor = colorCookie || '#ffdead';
+
+    // Add the Konami code event listener
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiCodePosition = 0;
+
+    function onKeyDown(e) {
+      const keyPressed = e.key;
+      if (keyPressed.toLowerCase() === konamiCode[konamiCodePosition].toLowerCase()) {
+        konamiCodePosition++;
+      } else {
+        konamiCodePosition = 0;
+      }
+
+      if (konamiCodePosition === konamiCode.length) {
+        alert('Nyan! Pwease, wefwesh this page!');
+        document.cookie = "api_val=neko";
+        konamiCodePosition = 0;
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, []);
+
 
   return (
     <div className="carousel">

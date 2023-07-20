@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import ReactPlayer from 'react-player';
 import { Tooltip } from 'react-tooltip';
-import Favicon from 'react-favicon';
 import TextTransition, { presets } from 'react-text-transition';
 
 import { ImageCarousel } from './Components/ImageCarousel';
