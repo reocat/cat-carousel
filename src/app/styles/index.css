@@ -67,6 +67,8 @@ h1 {
   justify-content: center;
   height: 100vh;
   font-family: "04b03";
+  margin-right: 5%;
+  margin-left: 5%;
 }
 
 .page-title {
@@ -92,16 +94,16 @@ h1 {
 
 .btn-prev {
   top: 50%; /* Adjusted to 50% */
-  left: 2%;
+  left: 5%;
   padding: 5px;
-  transform: translateY(-50%); /* Added to center vertically */
+   /* Added to center vertically */
 }
 
 .btn-next {
   top: 50%; /* Adjusted to 50% */
-  right: 2%;
+  right: 5%;
   padding: 5px;
-  transform: translateY(-50%); /* Added to center vertically */
+   /* Added to center vertically */
 }
 
 .tooltip {
@@ -114,7 +116,7 @@ h1 {
 
   .image-container {
     width: 95%; /* Adjust the container width as needed for mobile */
-    height: 400px; /* Adjust the container height as needed for mobile */
+    height: auto; /* Adjust the container height as needed for mobile */
     margin: 10px;
     border-radius: 15px;
     border: 1px solid #ccc;
@@ -132,4 +134,8 @@ h1 {
     font-size: 24px; 
   }
 */
+}
+.carousel{
+  position:relative;
+
 }

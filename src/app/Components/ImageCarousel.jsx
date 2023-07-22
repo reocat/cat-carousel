@@ -232,7 +232,6 @@ export const ImageCarousel = () => {
           </div>
         )
       )}
-      <div className="carousel-controls">
         <div
           className="circle-button left btn btn-prev"
           onClick={goToPreviousImage}
@@ -247,6 +246,6 @@ export const ImageCarousel = () => {
         </div>
       </div>
       
-    </div>
+    
   );
 };
