@@ -78,6 +78,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
           <option value="lo-fi">Lo-fi</option>
           <option value="nyan-cat">Nyan Cat Soundtrack</option>
           <option value="rain">Rain</option>
+          <option value="synth">Synthwave</option>
         </select>
       )}
       {selectedMusic === 'lo-fi' && (
@@ -101,6 +102,15 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
       {selectedMusic === 'rain' && (
         <ReactPlayer
           url="https://stream.willstare.com:8850/;?type=http&nocache=9305"
+          playing={true}
+          loop={true}
+          width={0}
+          height={0}
+        />
+      )}
+      {selectedMusic === 'synth' && (
+        <ReactPlayer
+          url="http://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5"
           playing={true}
           loop={true}
           width={0}
