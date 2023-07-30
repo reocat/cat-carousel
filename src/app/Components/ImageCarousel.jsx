@@ -8,6 +8,15 @@ import { fetchCatApiImages } from '../api/catapi';
 import { fetchNekoApiImages } from '../api/nekos';
 import { Helmet } from 'react-helmet';
 
+const retro = () => {
+  const body = document.body;
+  const title = document.getElementById("pagetitle");
+  body.classList.remove('nyan');
+  title.classList.remove('h1');
+  title.classList.add('h1-retro');
+  body.classList.add('retro');
+};
+
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
   const colors = useRainbow({ intervalDelay });
   const colorKeys = Object.keys(colors);
@@ -17,7 +26,12 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
   const [showDropdown, setShowDropdown] = useState(false); // New state variable
 
   const handleMusicSelection = (event) => {
-    setSelectedMusic(event.target.value);
+    const selectedValue = event.target.value;
+    setSelectedMusic(selectedValue);
+
+    if (selectedValue === 'synth') {
+      retro();
+    }
   };
 
   useEffect(() => {
@@ -214,7 +228,6 @@ export const ImageCarousel = () => {
     };
   }, []);
 
-
   return (
     <div className="carousel">
       <Helmet>
@@ -225,7 +238,7 @@ export const ImageCarousel = () => {
         />
       </Helmet>
       <MagicRainbowButton intervalDelay={1500}>
-          toggle death mode
+        toggle death mode
       </MagicRainbowButton>
       {isLoading ? (
         <h2>Loading...</h2>
@@ -242,20 +255,18 @@ export const ImageCarousel = () => {
           </div>
         )
       )}
-        <div
-          className="circle-button left btn btn-prev"
-          onClick={goToPreviousImage}
-        >
-          &lt;
-        </div>
-        <div
-          className="circle-button right btn btn-next"
-          onClick={goToNextImage}
-        >
-          &gt;
-        </div>
+      <div
+        className="circle-button left btn btn-prev"
+        onClick={goToPreviousImage}
+      >
+        &lt;
       </div>
-      
-    
+      <div
+        className="circle-button right btn btn-next"
+        onClick={goToNextImage}
+      >
+        &gt;
+      </div>
+    </div>
   );
 };

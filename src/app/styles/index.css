@@ -112,7 +112,7 @@ h1 {
   padding: 8px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   .image-container {
     width: 95%; /* Adjust the container width as needed for mobile */
@@ -134,8 +134,32 @@ h1 {
     font-size: 24px; 
   }
 */
+  .retro {
+    background-image: url("../gif/phone-bg.gif");
+    background-size:  100%;
+  }
+
+  .h1-retro {
+   font-family: "OverdriveAvenue";
+   vertical-align: text-top;
+   --webkit-background-clip: text;
+   font-size: 20px; 
+  }
+
 }
 .carousel{
   position:relative;
 
+}
+
+.retro {
+  background-image: url("../gif/retro-bg.gif");
+  background-size:  100%;
+}
+
+.h1-retro {
+  font-family: "OverdriveAvenue";
+  vertical-align: text-top;
+  --webkit-background-clip: text;
+  font-size: 30px; 
 }

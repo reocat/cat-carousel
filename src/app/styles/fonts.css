@@ -7,3 +7,7 @@
   font-family: '04b03';
   src: url('../fonts/04b03.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'OverdriveAvenue';
+  src: url("../fonts/Overdrive_Avenue.otf") format("opentype");
+}

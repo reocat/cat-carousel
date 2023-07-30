@@ -4,7 +4,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from 'react-tooltip';
 import TextTransition, { presets } from 'react-text-transition';
-
+import GithubCorner from 'react-github-corner';
 import { ImageCarousel } from './Components/ImageCarousel';
 import './styles/fonts.css';
 import './styles/index.css';
@@ -12,7 +12,8 @@ import './styles/index.css';
 function Home() {
   return (
     <div className="page-container">
-      <h1 id="page-title">
+      <GithubCorner direction="left" bannerColor="#e863a1" size="100" href="https://github.com/reocat/cat-carousel" />
+      <h1 id="pagetitle">
         <TextTransition springConfig={presets.default}>
           Random Cat Image Carousel
         </TextTransition>
