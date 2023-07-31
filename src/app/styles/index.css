@@ -69,7 +69,7 @@ h1 {
   font-family: "04b03";
   margin-right: 5%;
   margin-left: 5%;
-}
+}npm 
 
 .page-title {
   text-align: center;
@@ -87,11 +87,16 @@ h1 {
   background-color: #fff;
   font-size: 18px;
   text-align: center;
-  line-height: 35px; /* Added line-height */
+  line-height: 35px; /* Added line-hei
   top: 50%; /* Added top */
   transform: translateY(-50%); /* Added transform */
 }
-
+.retro{
+  background:url('../gif/retro-bg.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .btn-prev {
   top: 50%; /* Adjusted to 50% */
   left: 5%;
@@ -136,7 +141,10 @@ h1 {
 */
   .retro {
     background-image: url("../gif/phone-bg.gif");
-    background-size:  100%;
+    background-size:  cover;
+    background-repeat:no-repeat;
+    background-position: center;
+
   }
 
   .h1-retro {
@@ -149,13 +157,9 @@ h1 {
 }
 .carousel{
   position:relative;
-
 }
 
-.retro {
-  background-image: url("../gif/retro-bg.gif");
-  background-size:  100%;
-}
+
 
 .h1-retro {
   font-family: "OverdriveAvenue";
