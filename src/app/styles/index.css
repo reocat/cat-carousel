@@ -69,7 +69,7 @@ h1 {
   font-family: "04b03";
   margin-right: 5%;
   margin-left: 5%;
-}npm 
+} 
 
 .page-title {
   text-align: center;
@@ -87,7 +87,7 @@ h1 {
   background-color: #fff;
   font-size: 18px;
   text-align: center;
-  line-height: 35px; /* Added line-hei
+  line-height: 35px; /* Added line-height*/
   top: 50%; /* Added top */
   transform: translateY(-50%); /* Added transform */
 }
