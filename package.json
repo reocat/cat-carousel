@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "homepage":".",
   "dependencies": {
     "@types/node": "20.4.0",
     "@types/react": "18.2.14",
