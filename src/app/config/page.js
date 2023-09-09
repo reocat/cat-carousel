@@ -41,6 +41,7 @@ export default function Home() {
         <option value="">-- Select --</option>
         <option value="catapi">The Cat API</option>
         <option value="shibe">Shibe API</option>
+        <option value="animality">Animality API</option>
       </select>
       <br /> 
       <label htmlFor="colorPicker">Select Color:</label>

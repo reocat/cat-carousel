@@ -6,6 +6,7 @@ import useRainbow from '../hooks/useRainbow.hook.js';
 import { fetchShibeApiImages } from '../api/shibeapi';
 import { fetchCatApiImages } from '../api/catapi';
 import { fetchNekoApiImages } from '../api/nekos';
+import { fetchAnimalityApiImages } from '../api/animality';
 import { Helmet } from 'react-helmet';
 
 const retro = () => {
@@ -154,6 +155,8 @@ export const ImageCarousel = () => {
         images = await fetchShibeApiImages();
       } else if (curApi === 'neko') {
         images = await fetchNekoApiImages();
+      } else if (curApi === 'animality') {
+        images = await fetchAnimalityApiImages();
       } else {
         images = await fetchCatApiImages();
       }
