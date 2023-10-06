@@ -1,6 +1,5 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
-import TextTransition, { presets } from 'react-text-transition';
 import ReactPlayer from 'react-player';
 import useRainbow from '../hooks/useRainbow.hook.js';
 import { fetchShibeApiImages } from '../api/shibeapi';
@@ -143,7 +142,6 @@ export const ImageCarousel = () => {
 
   const fetchImages = async () => {
     setIsLoading(true);
-
     try {
       const curApi = document.cookie.replace(
         /(?:(?:^|.*;\s*)api_val\s*\=\s*([^;]*).*$)|^.*$/,
@@ -151,14 +149,18 @@ export const ImageCarousel = () => {
       );
 
       let images;
-      if (curApi === 'shibe') {
-        images = await fetchShibeApiImages();
-      } else if (curApi === 'neko') {
-        images = await fetchNekoApiImages();
-      } else if (curApi === 'animality') {
-        images = await fetchAnimalityApiImages();
-      } else {
-        images = await fetchCatApiImages();
+      switch(curApi) {
+        case 'shibe':
+            images = await fetchShibeApiImages();
+            break;
+        case 'neko':
+            images = await fetchNekoApiImages();
+            break;
+        case 'animality':
+            images = await fetchAnimalityApiImages();
+            break;
+        default:
+            images = await fetchCatApiImages();
       }
 
       setImages(images);
@@ -201,7 +203,6 @@ export const ImageCarousel = () => {
       /(?:(?:^|.*;\s*)color\s*\=\s*([^;]*).*$)|^.*$/,
       '$1'
     );
-
     const body = document.body;
     body.style.backgroundColor = colorCookie || '#ffdead';
 
