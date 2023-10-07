@@ -1,25 +1,39 @@
-name: Dependabot auto-merge
-on: 
-  pull_request:  
-  workflow_dispatch:
-
-permissions:
-  contents: write
-  pull-requests: write
+name: Auto-Merge Dependabot PRs
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  push:
+    branches:
+      - nyan-react # Set this to the default branch of your repository
 
 jobs:
-  dependabot:
+  auto-merge-dependabot-pr:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Enable auto-merge for Dependabot PRs
-        if: ${{contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
-        run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get install -y software-properties-common
+          sudo apt-add-repository -y ppa:git-core/ppa
+          sudo apt-get update
+          sudo apt-get install -y git gh
+        if: success()
+
+      - name: Fetch Dependabot PR information
+        id: fetch_pr_info
+        run: |
+          pr_number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
+          gh pr view $pr_number --json state --jq ".state" > pr_state.json
+          echo "::set-output name=pr_state::$(cat pr_state.json)"
+        continue-on-error: true
+
+      - name: Merge Dependabot PR
+        if: steps.fetch_pr_info.outputs.pr_state == 'open'
+        run: |
+          pr_number=$(jq -r ".pull_request.number" "$GITHUB_EVENT_PATH")
+          gh pr merge $pr_number --auto --merge --squash
+        continue-on-error: true
