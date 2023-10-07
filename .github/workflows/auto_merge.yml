@@ -30,7 +30,9 @@ jobs:
           gh pr view $pr_number --json state --jq ".state" > pr_state.json
           echo "::set-output name=pr_state::$(cat pr_state.json)"
         continue-on-error: true
-
+        env:
+          GH_TOKEN: ${{ github.token }}
+    
       - name: Merge Dependabot PR
         if: steps.fetch_pr_info.outputs.pr_state == 'open'
         run: |
