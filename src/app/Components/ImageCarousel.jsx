@@ -5,6 +5,7 @@ import useRainbow from '../hooks/useRainbow.hook.js';
 import { fetchShibeApiImages } from '../api/shibeapi';
 import { fetchCatApiImages } from '../api/catapi';
 import { fetchNekoApiImages } from '../api/nekos';
+import { fetchPurrBotApiImages } from '../api/purrbot';
 import { fetchAnimalityApiImages } from '../api/animality';
 import { Helmet } from 'react-helmet';
 
@@ -158,6 +159,11 @@ export const ImageCarousel = () => {
             break;
         case 'animality':
             images = await fetchAnimalityApiImages();
+            break;
+        case 'purrbot':
+            const endpoints = ["smile", "slap", "pout", "poke", "pat", "neko", "lick", "lay", "kiss"];
+            const type = "gif";
+            images = await fetchPurrBotApiImages(endpoints[Math.random*endpoints.length], type);
             break;
         default:
             images = await fetchCatApiImages();
