@@ -1,4 +1,4 @@
-export const fetchPurrBotApiImages = async () => {
+export const fetchPurrBotApiImages = async (plushie) => {
     try {
       const numImages = 10; // Number of images to fetch per request
       const apiUrl = 'https://purrbot.site/api/img/sfw/' + plushie +'/img';
