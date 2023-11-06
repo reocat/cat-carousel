@@ -3,4 +3,10 @@
   "extends": [
     "config:base"
   ]
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "automerge": false
+    }
+  ]
 }
