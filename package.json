@@ -22,7 +22,7 @@
     "js-cookie": "^3.0.5",
     "nekos.life": "^3.0.0",
     "next": "14.0.0",
-    "next-i18next": "^14.0.3",
+    "next-i18next": "^15.0.0",
     "nextjs": "^0.0.3",
     "postcss": "8.4.31",
     "react": "18.2.0",
