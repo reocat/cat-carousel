@@ -4,7 +4,8 @@
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],
-      "automerge": true
+      "automerge": true,
+      "ignoreTests": true
     }
   ]
 }
