@@ -224,9 +224,9 @@ export const ImageCarousel = () => {
 
       if (konamiCodePosition === konamiCode.length) {
         alert('Nyan! Pwease, wefwesh this page!');
-        const endpoints = ["neko", "purrbot"];
-        const plush_val = endpoints[Math.random*endpoints.length]
-        document.cookie = `api_val=$(plush_val)`;
+        var endpoints = ["neko", "purrbot"];
+        var plushVal = endpoints[Math.floor(Math.random() * endpoints.length)];
+        document.cookie = `api_val=${plushVal}`;
         konamiCodePosition = 0;
       }
     }
