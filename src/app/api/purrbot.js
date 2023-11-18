@@ -1,6 +1,9 @@
-export const fetchPurrBotApiImages = async (plushie, type) => {
+export const fetchPurrBotApiImages = async () => {
     try {
       const numImages = 10; // Number of images to fetch per request
+      const endpoints = ["smile", "slap", "pout", "poke", "pat", "neko", "lick", "lay", "kiss"];
+      const type = "gif";
+      const plushie = endpoints[Math.random*endpoints.length]
       const apiUrl = 'https://purrbot.sunflowers-warp.workers.dev/sfw/' + plushie +'/' + type;
       const images = [];
   
