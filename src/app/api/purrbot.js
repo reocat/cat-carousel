@@ -10,7 +10,7 @@ export const fetchPurrBotApiImages = async () => {
       for (let i = 0; i < numImages; i++) {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        images.push(data.image);
+        images.push(data.link);
       }
   
       return images;
