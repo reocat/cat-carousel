@@ -161,9 +161,7 @@ export const ImageCarousel = () => {
             images = await fetchAnimalityApiImages();
             break;
         case 'purrbot':
-            const endpoints = ["smile", "slap", "pout", "poke", "pat", "neko", "lick", "lay", "kiss"];
-            const type = "gif";
-            images = await fetchPurrBotApiImages(endpoints[Math.random*endpoints.length], type);
+            images = await fetchPurrBotApiImages();
             break;
         default:
             images = await fetchCatApiImages();
