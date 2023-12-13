@@ -11,7 +11,7 @@
   "homepage":".",
   "dependencies": {
     "@types/node": "20.10.4",
-    "@types/react": "18.2.44",
+    "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
     "@uiw/github-corners": "^1.5.16",
     "animality": "^2.1.4",
