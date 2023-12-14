@@ -116,7 +116,9 @@ h1 {
   color: #fff;
   padding: 8px;
 }
-
+.rainbow-button {
+  font-family: "04b03";
+}
 @media (max-width: 900px) {
 
   .image-container {
