@@ -17,6 +17,9 @@ label {
   margin-bottom: 8px;
 }
 
+h1 {
+  font-family: "Nokia FC 22";
+}
 select,
 input[type="color"] {
   width: 100%;
