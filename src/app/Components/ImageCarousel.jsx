@@ -1,21 +1,21 @@
-"use client"
-import { useState, useEffect, useRef } from 'react';
-import ReactPlayer from 'react-player';
-import useRainbow from '../hooks/useRainbow.hook.js';
-import { fetchShibeApiImages } from '../api/shibeapi';
-import { fetchCatApiImages } from '../api/catapi';
-import { fetchNekoApiImages } from '../api/nekos';
-import { fetchPurrBotApiImages } from '../api/purrbot';
-import { fetchAnimalityApiImages } from '../api/animality';
-import { Helmet } from 'react-helmet';
+"use client";
+import { useState, useEffect, useRef } from "react";
+import ReactPlayer from "react-player";
+import useRainbow from "../hooks/useRainbow.hook.js";
+import { fetchShibeApiImages } from "../api/shibeapi";
+import { fetchCatApiImages } from "../api/catapi";
+import { fetchNekoApiImages } from "../api/nekos";
+import { fetchPurrBotApiImages } from "../api/purrbot";
+import { fetchAnimalityApiImages } from "../api/animality";
+import { Helmet } from "react-helmet";
 
 const retro = () => {
   const body = document.body;
   const title = document.getElementById("pagetitle");
-  body.classList.remove('nyan');
-  title.classList.remove('h1');
-  title.classList.add('h1-retro');
-  body.classList.add('retro');
+  body.classList.remove("nyan");
+  title.classList.remove("h1");
+  title.classList.add("h1-retro");
+  body.classList.add("retro");
 };
 
 const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
@@ -23,14 +23,14 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
   const colorKeys = Object.keys(colors);
   const transitionDelay = 200;
   const buttonElemRef = useRef(null);
-  const [selectedMusic, setSelectedMusic] = useState('');
+  const [selectedMusic, setSelectedMusic] = useState("");
   const [showDropdown, setShowDropdown] = useState(false); // New state variable
 
   const handleMusicSelection = (event) => {
     const selectedValue = event.target.value;
     setSelectedMusic(selectedValue);
 
-    if (selectedValue === 'synth') {
+    if (selectedValue === "synth") {
       retro();
     }
   };
@@ -39,19 +39,19 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
     const buttonElem = buttonElemRef.current;
 
     function handleClick() {
-      if (document.body.classList.contains('nyan')) {
-        document.body.classList.remove('nyan');
+      if (document.body.classList.contains("nyan")) {
+        document.body.classList.remove("nyan");
       } else {
-        document.body.classList.add('nyan');
+        document.body.classList.add("nyan");
       }
 
       setShowDropdown(!showDropdown); // Toggle dropdown visibility
     }
 
-    buttonElem.addEventListener('click', handleClick);
+    buttonElem.addEventListener("click", handleClick);
 
     return () => {
-      buttonElem.removeEventListener('click', handleClick);
+      buttonElem.removeEventListener("click", handleClick);
     };
   }, [showDropdown]); // Update effect dependency
 
@@ -61,13 +61,13 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
         id="rainbow-button"
         ref={buttonElemRef}
         style={{
-          fontFamily: '04b03',
-          padding: '5px 30px',
-          border: 'none',
-          borderRadius: '10px',
-          fontSize: '14px',
-          color: '#fff',
-          cursor: 'pointer',
+          fontFamily: "04b03",
+          padding: "5px 30px",
+          border: "none",
+          borderRadius: "10px",
+          fontSize: "14px",
+          color: "#fff",
+          cursor: "pointer",
           ...colors,
           transition: `
             ${colorKeys[0]} ${transitionDelay}ms linear,
@@ -86,7 +86,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
       >
         {children}
       </button>
-      <br/>
+      <br />
       {showDropdown && (
         <select value={selectedMusic} onChange={handleMusicSelection}>
           <option value="">Select Music</option>
@@ -96,7 +96,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
           <option value="synth">Synthwave</option>
         </select>
       )}
-      {selectedMusic === 'lo-fi' && (
+      {selectedMusic === "lo-fi" && (
         <ReactPlayer
           url="https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de"
           playing={true}
@@ -105,7 +105,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
           height={0}
         />
       )}
-      {selectedMusic === 'nyan-cat' && (
+      {selectedMusic === "nyan-cat" && (
         <ReactPlayer
           url="https://www.nyan.cat/music/original.mp3"
           playing={true}
@@ -114,7 +114,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
           height={0}
         />
       )}
-      {selectedMusic === 'rain' && (
+      {selectedMusic === "rain" && (
         <ReactPlayer
           url="https://stream.willstare.com:8850/;?type=http&nocache=9305"
           playing={true}
@@ -123,7 +123,7 @@ const MagicRainbowButton = ({ children, intervalDelay = 1000 }) => {
           height={0}
         />
       )}
-      {selectedMusic === 'synth' && (
+      {selectedMusic === "synth" && (
         <ReactPlayer
           url="http://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5"
           playing={true}
@@ -144,32 +144,24 @@ export const ImageCarousel = () => {
   const fetchImages = async () => {
     setIsLoading(true);
     try {
+      const apiFunctions = {
+        shibe: fetchShibeApiImages,
+        neko: fetchNekoApiImages,
+        animality: fetchAnimalityApiImages,
+        purrbot: fetchPurrBotApiImages,
+        default: fetchCatApiImages,
+      };
+
       const curApi = document.cookie.replace(
         /(?:(?:^|.*;\s*)api_val\s*\=\s*([^;]*).*$)|^.*$/,
-        '$1'
+        "$1",
       );
 
-      let images;
-      switch(curApi) {
-        case 'shibe':
-            images = await fetchShibeApiImages();
-            break;
-        case 'neko':
-            images = await fetchNekoApiImages();
-            break;
-        case 'animality':
-            images = await fetchAnimalityApiImages();
-            break;
-        case 'purrbot':
-            images = await fetchPurrBotApiImages();
-            break;
-        default:
-            images = await fetchCatApiImages();
-      }
+      const images = await (apiFunctions[curApi] || apiFunctions["default"])();
 
       setImages(images);
     } catch (error) {
-      console.error('Error fetching images:', error);
+      console.error("Error fetching images:", error);
     } finally {
       setIsLoading(false);
     }
@@ -194,7 +186,7 @@ export const ImageCarousel = () => {
 
   const goToPreviousImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
 
@@ -205,25 +197,39 @@ export const ImageCarousel = () => {
   useEffect(() => {
     const colorCookie = document.cookie.replace(
       /(?:(?:^|.*;\s*)color\s*\=\s*([^;]*).*$)|^.*$/,
-      '$1'
+      "$1",
     );
     const body = document.body;
-    body.style.backgroundColor = colorCookie || '#ffdead';
+    body.style.backgroundColor = colorCookie || "#ffdead";
 
     // Add the Konami code event listener
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    const konamiCode = [
+      "ArrowUp",
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowLeft",
+      "ArrowRight",
+      "b",
+      "a",
+    ];
     let konamiCodePosition = 0;
 
     function onKeyDown(e) {
       const keyPressed = e.key;
-      if (keyPressed.toLowerCase() === konamiCode[konamiCodePosition].toLowerCase()) {
+      if (
+        keyPressed.toLowerCase() ===
+        konamiCode[konamiCodePosition].toLowerCase()
+      ) {
         konamiCodePosition++;
       } else {
         konamiCodePosition = 0;
       }
 
       if (konamiCodePosition === konamiCode.length) {
-        alert('Nyan! Pwease, wefwesh this page!');
+        alert("Nyan! Pwease, wefwesh this page!");
         var endpoints = ["neko", "purrbot"];
         var plushVal = endpoints[Math.floor(Math.random() * endpoints.length)];
         document.cookie = `api_val=${plushVal}`;
@@ -231,10 +237,10 @@ export const ImageCarousel = () => {
       }
     }
 
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, []);
 
@@ -260,7 +266,7 @@ export const ImageCarousel = () => {
               src={images[currentImageIndex]}
               alt="carousel-image"
               className="carousel-image"
-              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
             />
           </div>
         )
@@ -271,10 +277,7 @@ export const ImageCarousel = () => {
       >
         &lt;
       </div>
-      <div
-        className="circle-button right btn btn-next"
-        onClick={goToNextImage}
-      >
+      <div className="circle-button right btn btn-next" onClick={goToNextImage}>
         &gt;
       </div>
     </div>
