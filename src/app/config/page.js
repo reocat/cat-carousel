@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import "../styles/fonts.css";
-import "../styles/index.css";
 import "./home.css"; // Create a new CSS file for Home component styles
 
 export default function Home() {
