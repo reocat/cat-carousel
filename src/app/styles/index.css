@@ -57,7 +57,7 @@ h1 {
 .nyan {
     background-image: url("../gif/nyan-bg.gif");
     background-size: 100%;
-    width:100%;
+    width: 100%;
 }
 
 .page-container {
@@ -114,7 +114,7 @@ h1 {
 
 .tooltip {
     background-color: transparent;
-    color:  black;
+    color: black;
     padding: 8px;
     font-family: 'Nokia FC 22';
 }
@@ -177,6 +177,7 @@ h1 {
     }
 
 }
+
 @keyframes rainbow_animation_b {
     100% {
         background-position: 0 200%;
@@ -194,16 +195,21 @@ h1 {
     color: transparent;
     font-size: 45px;
 }
-.nnn-button{
+
+.nnn-button {
     --color1: #f2e4d1;
     --color2: #bb2528;
     animation: rainbow_animation_b 2s linear infinite;
     background: linear-gradient(red, #ff9a00 10%, #d0de21 20%, #4fdc4a 30%, #3fdad8 40%, #2fc9e2 50%, #1c7fee 60%, #5f15f2 70%, #ba0cf8 80%, #fb07d9 90%, red) 0 0/100% 200%;
-
+    border-color: transparent transparent;
 
     color: black;
-    border-radius:5px;
-    padding:5px;
+    border-radius: 5px;
+    padding: 5px;
 
     font-size: 15px;
+}
+
+.tooltiptext {
+    font-family: 'Nokia FC 22';
 }
