@@ -126,14 +126,9 @@ h1 {
     box-shadow: 0 0 5px rgb(123, 63, 0);
   }
   #pagetitle {
-    font-size: 20px !important;
+    font-size: 24px !important;
   }
 
-  /*
-    h1 {
-      font-size: 24px;
-    }
-  */
   .retro {
     background-image: url("../gif/phone-bg.gif");
     background-size: cover;
@@ -193,6 +188,7 @@ h1 {
   background-clip: text;
   color: transparent;
   font-size: 45px;
+  text-shadow: #FFCC0069 1px 0 9px;
 }
 
 .nnn-button {
