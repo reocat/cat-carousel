@@ -13,6 +13,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     text-align: center;
+    font-family: '04b03';
 }
 
 h1 {
@@ -20,10 +21,6 @@ h1 {
     vertical-align: text-top;
     color: #5c4033;
     --webkit-background-clip: text;
-}
-
-.mrb_text {
-    font-family: "04b03";
 }
 
 .carousel-image {
@@ -114,13 +111,9 @@ h1 {
 
 .tooltip {
     background-color: transparent;
-    color: black;
+    filter: invert(1);
+    mix-blend-mode: difference;
     padding: 8px;
-    font-family: 'Nokia FC 22';
-}
-
-.rainbow-button {
-    font-family: "04b03";
 }
 
 @media (max-width: 900px) {
@@ -151,7 +144,7 @@ h1 {
     .h1-retro {
         font-family: "OverdriveAvenue";
         vertical-align: text-top;
-        --webkit-background-clip: text;
+        background-clip: text;
         font-size: 20px;
     }
 }
@@ -163,7 +156,7 @@ h1 {
 .h1-retro {
     font-family: "OverdriveAvenue";
     vertical-align: text-top;
-    --webkit-background-clip: text;
+    background-clip: text;
     font-size: 30px;
 }
 
@@ -186,8 +179,7 @@ h1 {
     --color2: #bb2528;
     animation: rainbow_animation 2s linear infinite;
     background: linear-gradient(red, #ff9a00 10%, #d0de21 20%, #4fdc4a 30%, #3fdad8 40%, #2fc9e2 50%, #1c7fee 60%, #5f15f2 70%, #ba0cf8 80%, #fb07d9 90%, red) 0 0/100% 200%;
-
-    -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
     font-size: 45px;
 }
@@ -199,13 +191,9 @@ h1 {
     background: linear-gradient(red, #ff9a00 10%, #d0de21 20%, #4fdc4a 30%, #3fdad8 40%, #2fc9e2 50%, #1c7fee 60%, #5f15f2 70%, #ba0cf8 80%, #fb07d9 90%, red) 0 0/100% 200%;
     border-color: transparent transparent;
 
-    color: black;
-    border-radius: 5px;
+    color: #fff;
+    border-radius: 10px;
     padding: 5px;
 
     font-size: 15px;
-}
-
-.tooltiptext {
-    font-family: 'Nokia FC 22';
 }

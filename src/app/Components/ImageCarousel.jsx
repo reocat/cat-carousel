@@ -221,7 +221,7 @@ export const ImageCarousel = () => {
                 />
             </Helmet>
             <MagicRainbowButton intervalDelay={1500}>
-                <div className="mrb_text">toggle death mode</div>
+                <div>toggle death mode</div>
             </MagicRainbowButton>
             {isLoading ? (
                 <h2>Loading...</h2>
