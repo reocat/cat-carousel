@@ -1,16 +1,14 @@
 "use client";
-import {useSelector} from "react-redux";
-import React, {useEffect, useRef, useState} from 'react'
+import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, useState} from 'react'
 import ReactPlayer from "react-player";
-import useRainbow from "../hooks/useRainbow.hook.js";
 import {fetchShibeApiImages} from "../api/shibeapi";
 import {fetchCatApiImages} from "../api/catapi";
 import {fetchNekoApiImages} from "../api/nekos";
 import {fetchPurrBotApiImages} from "../api/purrbot";
 import {fetchAnimalityApiImages} from "../api/animality";
 import {Helmet} from "react-helmet";
-import {off, on, toggle} from "@/app/redux/reducers";
-import {useDispatch} from "react-redux";
+import {toggle} from "@/app/redux/reducers";
 
 
 const retro = () => {
@@ -22,11 +20,16 @@ const retro = () => {
     body.classList.add("retro");
 };
 
-const MagicRainbowButton = ({children, intervalDelay = 1000}) => {
+const MagicRainbowButton = ({children}) => {
+    const dispatch = useDispatch();
+    const raw = useSelector(state => state.hell);
+    let hellState = null;
+    if (raw.active !== hellState) {
+        hellState = raw.active;
+    }
+    console.log(hellState)
 
-    const colors = useRainbow({intervalDelay});
-    const colorKeys = Object.keys(colors);
-    const transitionDelay = 200;
+
     const [selectedMusic, setSelectedMusic] = useState("");// New state variable
     const handleMusicSelection = (event) => {
         const selectedValue = event.target.value;
@@ -37,40 +40,13 @@ const MagicRainbowButton = ({children, intervalDelay = 1000}) => {
     };
     // Update effect dependency
     const ElToReturn = () => {
-        const dispatch = useDispatch();
-        const hellState = useSelector(state=>state.hell.active);
-
-
         return (
             <div>
                 <button onClick={() => {
                     dispatch(toggle())
                 }}
                         id="rainbow-button"
-
-                        style={{
-                            fontFamily: "04b03",
-                            padding: "5px 30px",
-                            border: "none",
-                            borderRadius: "10px",
-                            fontSize: "14px",
-                            color: "#fff",
-                            cursor: "pointer",
-                            ...colors,
-                            transition: `
-            ${colorKeys[0]} ${transitionDelay}ms linear,
-            ${colorKeys[1]} ${transitionDelay}ms linear,
-            ${colorKeys[2]} ${transitionDelay}ms linear
-          `,
-                            background: `
-            radial-gradient(
-              circle at top left,
-              var(${colorKeys[2]}),
-              var(${colorKeys[1]}),
-              var(${colorKeys[0]})
-            )
-          `,
-                        }}
+                        className={'nnn-button'}
                 >
                     {children}
                 </button>

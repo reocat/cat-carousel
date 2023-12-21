@@ -17,7 +17,7 @@ function Home() {
                 size="100"
                 href="https://github.com/reocat/cat-carousel"
             />
-            <h1 id="pagetitle" className={'nnn animate__animated slideInLeft'} >
+            <h1 id="pagetitle" className={`${hellState && 'nnn'} animate__animated slideInLeft`} >
 
                 Random Cat Image Carousel
 
@@ -25,7 +25,7 @@ function Home() {
             <div className="carousel-container">
                 <ImageCarousel/>
             </div>
-            <a id="tooltip">Authors</a>
+            <a id="tooltip" className={'tooltip'}>Authors</a>
             <Tooltip anchorSelect="#tooltip" clickable>
         <span className="tooltiptext">
           Made by{" "}
