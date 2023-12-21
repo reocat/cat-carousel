@@ -116,7 +116,7 @@ h1 {
     background-color: transparent;
     color: black;
     padding: 8px;
-    font-family: 'Nokia FC 22';
+    font-family: "04b03";
 }
 
 .rainbow-button {
@@ -199,7 +199,8 @@ h1 {
     background: linear-gradient(red, #ff9a00 10%, #d0de21 20%, #4fdc4a 30%, #3fdad8 40%, #2fc9e2 50%, #1c7fee 60%, #5f15f2 70%, #ba0cf8 80%, #fb07d9 90%, red) 0 0/100% 200%;
     border-color: transparent transparent;
 
-    color: black;
+    color: white;
+    font-weight: 400;
     border-radius: 5px;
     padding: 5px;
 
@@ -207,5 +208,5 @@ h1 {
 }
 
 .tooltiptext {
-    font-family: 'Nokia FC 22';
+    font-family: "04b03";
 }
