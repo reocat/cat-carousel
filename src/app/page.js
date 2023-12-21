@@ -25,7 +25,7 @@ function Home() {
             <div className="carousel-container">
                 <ImageCarousel/>
             </div>
-            <a id="tooltip">Authors</a>
+            <a id="tooltip" className={'tooltip'}>Authors</a>
             <Tooltip anchorSelect="#tooltip" clickable>
         <span className="tooltiptext">
           Made by{" "}
