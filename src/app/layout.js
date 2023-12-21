@@ -5,7 +5,7 @@ const inter = Inter({subsets: ["latin"]});
 
 export const metadata = {
     title: "Random Cat Image Carousel",
-    description: "~Nya~, onii-chan, this is a small site with kawaii nekos!",
+    description: "✨Nyan, onii-chan, this is a small site with kawaii nekos!✨ OwO",
 };
 
 export default function RootLayout({children}) {
