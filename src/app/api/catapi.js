@@ -15,7 +15,7 @@ const FetchCatApiImages = () => {
 
     const dispatch = useDispatch();
     const isNear = useSelector((state) => state.nearState)
-    const {isLoading, data, error, refetch} = availableApis[selectedApi]();
+    const {isLoading, data, error, refetch} = availableApis[selectedApi]()||useGetCatApiQuery('');
     if (isNear) {
         refetch();
         dispatch(notNear())

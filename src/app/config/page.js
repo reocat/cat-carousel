@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 import "../styles/fonts.css";
 import "./home.css";
@@ -50,5 +51,7 @@ export default function Home() {
             }}>Reset background color
             </button>
         </div>
+        <div className={'flex justify-center'}><Link className={'w-fit h-fit block m-2 p-1 color rounded   '} style={{backgroundColor:'#FF0000',color:'white'}} href = '/'>REDIRECT</Link></div>
+
     </div>);
 }
