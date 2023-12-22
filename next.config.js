@@ -2,6 +2,7 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  compress:false,
   output: "export",
   // Optional: Add a trailing slash to all paths `/about` -> `/about/`
   // trailingSlash: true,
