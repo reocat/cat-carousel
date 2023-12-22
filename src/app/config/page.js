@@ -1,72 +1,54 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import React from "react";
 import "../styles/fonts.css";
-import "./home.css"; // Create a new CSS file for Home component styles
+import "./home.css";
+import {useDispatch, useSelector} from "react-redux";
+import {selectApi, setColor} from "@/app/redux/reducers"; // Create a new CSS file for Home component styles
 
 export default function Home() {
-  const [selectedValue, setSelectedValue] = useState("");
-  const [colorValue, setColorValue] = useState("");
+    const dispatch = useDispatch();
+    const apiVal = useSelector((state) => state.selectedApi);
+    const colorVal = useSelector((state) => state.selectedColor);
 
-  useEffect(() => {
-    const apiVal = Cookies.get("api_val");
-    setSelectedValue(apiVal || "");
 
-    const savedColor = Cookies.get("color");
-    setColorValue(savedColor || "");
-    document.body.style.backgroundColor = savedColor || ""; // Apply background color
-  }, []);
+    return (<div className="home-container">
+        <h1>Page Configurator</h1>
+        <div className="form-group">
+            <label htmlFor="apiSelect">Select API:</label>
+            <select
+                id="apiSelect"
+                value={apiVal}
+                onChange={(e) => {
+                    dispatch(selectApi(e.target.value))
+                }}
+            >
+                <option value="">-- Select --</option>
+                <option value="catapi">The Cat API</option>
+                <option value="shibe">Shibe API</option>
+                <option value="animality">Animality API</option>
+            </select>
+        </div>
+        <div className="form-group">
+            <label htmlFor="colorPicker">Select Color:</label>
+            <input
+                type="color"
+                id="colorPicker"
+                value={colorVal}
+                onChange={(e) => {
+                    dispatch(setColor(e.target.value.toString()));
+                }}
+            />
+        </div>
+        <div className={'flex justify-between'}>
+            <div className={'flex flex-col items-center'}>
+                <div>Color:{colorVal}</div>
+                <div className=" w-5 h-5" style={{backgroundColor: `${colorVal}`}}></div>
+            </div>
 
-  const handleSelectChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
-
-  const handleColorChange = (event) => {
-    setColorValue(event.target.value);
-  };
-
-  const handleSaveSettings = () => {
-    Cookies.set("api_val", selectedValue);
-    Cookies.set("color", colorValue);
-    alert(
-      "Settings saved, nya~!\nCurrent settings: \n" +
-        "API: " +
-        Cookies.get("api_val") +
-        "\n" +
-        "Color: " +
-        Cookies.get("color"),
-    );
-    document.location.href = "/";
-  };
-
-  return (
-    <div className="home-container">
-      <h1>Page Configurator</h1>
-      <div className="form-group">
-        <label htmlFor="apiSelect">Select API:</label>
-        <select
-          id="apiSelect"
-          value={selectedValue}
-          onChange={handleSelectChange}
-        >
-          <option value="">-- Select --</option>
-          <option value="catapi">The Cat API</option>
-          <option value="shibe">Shibe API</option>
-          <option value="animality">Animality API</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="colorPicker">Select Color:</label>
-        <input
-          type="color"
-          id="colorPicker"
-          value={colorValue}
-          onChange={handleColorChange}
-        />
-      </div>
-      <button className="save-button" onClick={handleSaveSettings}>
-        Save Settings
-      </button>
-    </div>
-  );
+            <button className={'scale-90'} onClick={() => {
+                dispatch(setColor('#ffdead'))
+            }}>Reset background color
+            </button>
+        </div>
+    </div>);
 }

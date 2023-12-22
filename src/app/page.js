@@ -6,9 +6,12 @@ import GithubCorner from "react-github-corner";
 import { ImageCarousel } from "./Components/ImageCarousel";
 import "./styles/fonts.css";
 import "./styles/index.css";
+import FetchCatApiImages, {fetchCatApiImages} from "@/app/api/catapi";
+import {useGetCatApiQuery} from "@/app/redux/api/catapi";
 
 function Home() {
   const hellState = useSelector((state) => state.hell.active);
+
   return (
     <div className={`page-container ${hellState && "nyan"}`}>
       <GithubCorner
@@ -24,7 +27,8 @@ function Home() {
         Random Cat Image Carousel
       </h1>
       <div className="carousel-container">
-        <ImageCarousel />
+        {/*<ImageCarousel />*/}
+          <FetchCatApiImages/>
       </div>
       <a id="tooltip" className={"tooltip"}>
         Authors
