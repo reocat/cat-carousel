@@ -1,12 +1,11 @@
-"use client"
-import { configureStore } from '@reduxjs/toolkit'
-import {hellStateReducer} from "@/app/redux/reducers";
+"use client";
+import { configureStore } from "@reduxjs/toolkit";
+import { hellStateReducer } from "@/app/redux/reducers";
 
 const rootReducer = {
-    hell:hellStateReducer
-}
+  hell: hellStateReducer,
+};
 
 export const store = configureStore({
-    reducer : rootReducer,
-})
-
+  reducer: rootReducer,
+});
