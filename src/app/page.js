@@ -1,13 +1,12 @@
 "use client";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 import React from "react";
-import { Tooltip } from "react-tooltip";
+import {Tooltip} from "react-tooltip";
 import GithubCorner from "react-github-corner";
-import { ImageCarousel } from "./Components/ImageCarousel";
 import "./styles/fonts.css";
 import "./styles/index.css";
-import FetchCatApiImages, {fetchCatApiImages} from "@/app/api/catapi";
-import {useGetCatApiQuery} from "@/app/redux/api/catapi";
+import '../../public/globals.css'
+import FetchCatApiImages from "@/app/api/catapi";
 
 function Home() {
   const hellState = useSelector((state) => state.hell.active);
