@@ -1,3 +1,8 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
 @font-face {
   font-family: "Nokia FC 22";
   src: url("../fonts/nokiafc22.ttf") format("truetype");

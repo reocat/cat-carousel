@@ -1,12 +1,35 @@
-export const fetchCatApiImages = async () => {
-  try {
-    const apiUrl = "https://api.thecatapi.com/v1/images/search?limit=10";
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    const imageUrls = data.map((image) => image.url);
-    return imageUrls;
-  } catch (error) {
-    console.error("Error fetching cat images:", error);
-    throw error;
-  }
+import React from "react";
+import {useGetCatApiQuery} from "@/app/redux/api/catapi";
+import {ImageCarousel} from "@/app/Components/ImageCarousel";
+import {useDispatch, useSelector} from "react-redux";
+import {notNear} from "@/app/redux/reducers";
+import {useGetShibeApiQuery} from "@/app/redux/api/shibeApi";
+
+const FetchCatApiImages = () => {
+    const availableApis={
+        // animality:useGetAnimalityApiQuery(''),
+        shibe:useGetShibeApiQuery,
+        catapi:useGetCatApiQuery
+    }
+    const selectedApi= useSelector((state)=>state.selectedApi);
+
+    const dispatch = useDispatch();
+    const isNear = useSelector((state) => state.nearState)
+    const {isLoading, data, error, refetch} = availableApis[selectedApi]()|| useGetCatApiQuery('');
+    if (isNear) {
+        refetch();
+        dispatch(notNear())
+    }
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if (data) {
+        return <div><ImageCarousel data={data}/></div>;
+    }
+    if (error) {
+        console.error(error);
+        return <div>Error: {error.message}</div>;
+    }
+    return null;
 };
+export default FetchCatApiImages;
