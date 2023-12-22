@@ -4,8 +4,8 @@ const initialState = {
     active: false,
 };
 const initialNear = false;
-const initialSelectedApi = {};
-const initialColorState = {}
+const initialSelectedApi = 'catapi';
+const initialColorState = 'ffdead';
 
 export const nearStateSlice = createSlice({
     name: 'near', initialState: initialNear, reducers: {
