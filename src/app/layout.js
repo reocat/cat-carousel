@@ -1,4 +1,4 @@
-import '/public/globals.css'
+import "/public/globals.css";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/app/redux/storeProvider";
 
