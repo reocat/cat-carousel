@@ -1,13 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export const nekoapi = createApi({
-  reducerPath: "nekoapi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://nekos.life/api/v2/img/neko" }),
-  endpoints: (builder) => ({
-    getNekoApi: builder.query({
-      query: (numImages) => `?limit=${numImages}`,
-    }),
-  }),
-});
-
-export const { useGetNekoApiQuery } = nekoapi;
+export const fetchMultipleImages = async (count)=>{
+  const imageUrls = [];
+  for (let i=0; i<count; i++){
+    const response = await fetch('https://nekos.life/api/v2/img/neko');
+    const data = response.json();
+    imageUrls.push(data);
+  }
+  return imageUrls
+}

@@ -4,12 +4,17 @@ import { ImageCarousel } from "@/app/Components/ImageCarousel";
 import { useDispatch, useSelector } from "react-redux";
 import { notNear } from "@/app/redux/reducers";
 import { useGetShibeApiQuery } from "@/app/redux/api/shibeApi";
+import {useGetNekoApiQuery} from "@/app/redux/api/nekoapi";
+import {useGetNekoApiQueryWrapper} from "@/app/redux/api/nekoApiWrapper";
 
 const FetchCatApiImages = () => {
+  const {datad} = useGetNekoApiQueryWrapper()
+
   const availableApis = {
     // animality:useGetAnimalityApiQuery(''),
     shibe: useGetShibeApiQuery,
     catapi: useGetCatApiQuery,
+    // nekoapi:useGetNekoApiQueryWrapper
   };
   const selectedApi = useSelector((state) => state.selectedApi);
 

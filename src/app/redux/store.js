@@ -20,6 +20,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import {nekoapi} from "@/app/redux/api/nekoapi";
 
 const persistConfig = {
   key: "root",
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   selectedColor: selectedColorReducer,
   [catapi.reducerPath]: catapi.reducer,
   [shibeApi.reducerPath]: shibeApi.reducer,
+  [nekoapi.reducerPath]: nekoapi.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -47,7 +49,7 @@ export const store = configureStore({
     })
       .concat(catapi.middleware)
       .concat(shibeApi.middleware)
-      .concat(),
+      .concat(nekoapi.middleware),
 });
 setupListeners(store.dispatch);
 export const persistor = persistStore(store);
