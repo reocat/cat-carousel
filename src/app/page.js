@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useSelector } from "react-redux";
 import React from "react";
 import { Tooltip } from "react-tooltip";
@@ -26,7 +26,7 @@ function Home() {
         Random Cat Image Carousel
       </h1>
       <div className="carousel-container">
-        {/*<ImageCarousel />*/}
+
         <FetchCatApiImages />
       </div>
       <a id="tooltip" className={"tooltip"}>

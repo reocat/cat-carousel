@@ -1,55 +1,41 @@
 "use client";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {
-  hellStateReducer,
-  nearStateReducer,
-  selectedApiReducer,
-  selectedColorReducer,
-} from "@/app/redux/reducers";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { catapi } from "@/app/redux/api/catapi";
-import { shibeApi } from "@/app/redux/api/shibeApi";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {hellStateReducer, nearStateReducer, selectedApiReducer, selectedColorReducer,} from "@/app/redux/reducers";
+import {catapi} from "@/app/redux/api/catapi";
+import {shibeApi} from "@/app/redux/api/shibeApi";
 import storage from "redux-persist/lib/storage";
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
-import {nekoapi} from "@/app/redux/api/nekoapi";
+import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE,} from "redux-persist";
+import {nekoApiReducer} from "@/app/redux/nekoapiSlice";
+
 
 const persistConfig = {
   key: "root",
-  version: 1,
   storage,
+  whitelist:['selectedApi','selectedColor']
 };
+
 
 const rootReducer = combineReducers({
   hell: hellStateReducer,
   nearState: nearStateReducer,
   selectedApi: selectedApiReducer,
   selectedColor: selectedColorReducer,
+  nekoapi: nekoApiReducer,
   [catapi.reducerPath]: catapi.reducer,
   [shibeApi.reducerPath]: shibeApi.reducer,
-  [nekoapi.reducerPath]: nekoapi.reducer
 });
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    })
-      .concat(catapi.middleware)
-      .concat(shibeApi.middleware)
-      .concat(nekoapi.middleware),
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      })
+          .concat(catapi.middleware)
+          .concat(shibeApi.middleware)
+
 });
-setupListeners(store.dispatch);
 export const persistor = persistStore(store);
