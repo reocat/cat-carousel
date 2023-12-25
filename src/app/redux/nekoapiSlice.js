@@ -11,7 +11,7 @@ const nekoapiSlice = createSlice({
     initialState,
     reducers: {
         setImages: (state, action) => {
-            state.data = [action.payload];
+            state.data = action.payload;
             state.loading = false;
             state.error = null
         },
@@ -25,7 +25,8 @@ const nekoapiSlice = createSlice({
     }
 
 })
-export const {setImages,setLoading,setError} = nekoapiSlice.actions;
-export const selectImages = state=>state.nekoapiImages.data;
-export const setLoading = state.nekoapiImages.loading;
-export const setError = state.nekoapiImages.error;
+export const nekoApiReducer = nekoapiSlice.reducer;
+export const { setImages, setLoading, setError } = nekoapiSlice.actions;
+export const selectImages = (state) => state.nekoapi.data;
+export const selectLoading = (state) => state.nekoapi.loading;
+export const selectError = (state) => state.nekoapi.error;
