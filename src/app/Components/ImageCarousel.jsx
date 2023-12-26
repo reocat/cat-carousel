@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { Helmet } from "react-helmet";
-import {near, selectApi, toggle} from "@/app/redux/reducers";
+import { near, selectApi, toggle } from "@/app/redux/reducers";
 
 const retro = () => {
   const body = document.body;
@@ -90,13 +90,14 @@ const MagicRainbowButton = ({ children }) => {
   return <ElToReturn />;
 };
 
-
 export const ImageCarousel = ({ data }) => {
-
-  console.log(data.map(i=>i))
+  console.log(data.map((i) => i));
   const dispatch = useDispatch();
-    const images = typeof Object.values(data)[0] === "object" ? [...data.map(i => i.url)]: [...data];
-  console.log(images)
+  const images =
+    typeof Object.values(data)[0] === "object"
+      ? [...data.map((i) => i.url)]
+      : [...data];
+  console.log(images);
   const color = useSelector((state) => state.selectedColor) || "white";
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -118,7 +119,6 @@ export const ImageCarousel = ({ data }) => {
     );
   };
   useEffect(() => {
-
     // Add the Konami code event listener
     const konamiCode = [
       "ArrowUp",
@@ -137,8 +137,8 @@ export const ImageCarousel = ({ data }) => {
     function onKeyDown(e) {
       const keyPressed = e.key;
       if (
-          keyPressed.toLowerCase() ===
-          konamiCode[konamiCodePosition].toLowerCase()
+        keyPressed.toLowerCase() ===
+        konamiCode[konamiCodePosition].toLowerCase()
       ) {
         konamiCodePosition++;
       } else {
@@ -149,8 +149,8 @@ export const ImageCarousel = ({ data }) => {
         // let endpoints = ["nekoapi", "purrbot"];
         // let plushVal = endpoints[Math.floor(Math.random() * endpoints.length)];
         // dispatch(selectApi(plushVal));
-        const plushVal = 'nekoapi';
-        dispatch(selectApi('nekoapi'));
+        const plushVal = "nekoapi";
+        dispatch(selectApi("nekoapi"));
         alert(`Nyan! Pwease, wefwesh this page! selectedApi:${plushVal}`);
 
         konamiCodePosition = 0;

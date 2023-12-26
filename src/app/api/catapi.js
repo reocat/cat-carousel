@@ -1,15 +1,18 @@
-"use client"
-import React, {useEffect} from "react";
-import {useGetCatApiQuery} from "@/app/redux/api/catapi";
-import {ImageCarousel} from "@/app/Components/ImageCarousel";
-import {useDispatch, useSelector} from "react-redux";
-import {notNear} from "@/app/redux/reducers";
-import {useGetShibeApiQuery} from "@/app/redux/api/shibeApi";
-import {fetchImages} from "@/app/redux/actions";
-import {selectError, selectImages, selectLoading} from "@/app/redux/nekoapiSlice";
+"use client";
+import React, { useEffect } from "react";
+import { useGetCatApiQuery } from "@/app/redux/api/catapi";
+import { ImageCarousel } from "@/app/Components/ImageCarousel";
+import { useDispatch, useSelector } from "react-redux";
+import { notNear } from "@/app/redux/reducers";
+import { useGetShibeApiQuery } from "@/app/redux/api/shibeApi";
+import { fetchImages } from "@/app/redux/actions";
+import {
+  selectError,
+  selectImages,
+  selectLoading,
+} from "@/app/redux/nekoapiSlice";
 
 const FetchCatApiImages = () => {
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchImages(10));
@@ -23,16 +26,16 @@ const FetchCatApiImages = () => {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
-      refetch:()=>{
-        dispatch(fetchImages(10))
-      }
-    }
+      refetch: () => {
+        dispatch(fetchImages(10));
+      },
+    },
   };
   const selectedApi = useSelector((state) => state.selectedApi);
 
-
   const isNear = useSelector((state) => state.nearState);
-  const {isLoading, data, error, refetch} = availableApis[selectedApi] || useGetCatApiQuery("");
+  const { isLoading, data, error, refetch } =
+    availableApis[selectedApi] || useGetCatApiQuery("");
   if (isNear) {
     refetch();
     dispatch(notNear());
