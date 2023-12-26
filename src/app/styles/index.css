@@ -3,6 +3,7 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
 body {
   height: 100vh;
   display: flex;
@@ -115,10 +116,10 @@ h1 {
 }
 
 .tooltip {
-  background-color: transparent;
-  filter: invert(1);
-  mix-blend-mode: difference;
+  color: black;
   padding: 8px;
+  backdrop-filter: invert(100%);
+  mix-blend-mode: difference;
 }
 
 @media (max-width: 900px) {
