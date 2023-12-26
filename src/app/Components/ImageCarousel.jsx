@@ -119,7 +119,7 @@ export const ImageCarousel = ({ data }) => {
     );
   };
   useEffect(() => {
-
+    document.body.style.backgroundColor = color;
     // Add the Konami code event listener
     const konamiCode = [
       "ArrowUp",
