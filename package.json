@@ -1,0 +1,26 @@
+{
+  "name": "ctcr2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/open-sans": "^5.0.20",
+    "@fontsource/poppins": "^5.0.8",
+    "axios": "^1.6.2",
+    "bunx": "^0.1.0",
+    "floating-vue": "^2.0.0-beta.24",
+    "oh-vue-icons": "^1.0.0-rc3",
+    "prettier": "^3.1.1",
+    "vue": "^3.3.11",
+    "vue-feather": "^2.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.2",
+    "vite": "^5.0.8"
+  }
+}
