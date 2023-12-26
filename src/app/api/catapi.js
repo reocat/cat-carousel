@@ -1,19 +1,19 @@
 "use client"
-import React, {useEffect} from "react";
+import React from "react";
 import {useGetCatApiQuery} from "@/app/redux/api/catapi";
 import {ImageCarousel} from "@/app/Components/ImageCarousel";
 import {useDispatch, useSelector} from "react-redux";
 import {notNear} from "@/app/redux/reducers";
 import {useGetShibeApiQuery} from "@/app/redux/api/shibeApi";
 import {fetchImages} from "@/app/redux/actions";
-import {selectError, selectImages, selectLoading} from "@/app/redux/nekoapiSlice";
+import {selectError, selectImages, selectLoading, setError, setImages, setLoading} from "@/app/redux/nekoapiSlice";
 
-const FetchCatApiImages = () => {
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchImages(10));
-  }, [dispatch]);
+const FetchCatApiImages = ({vdata}) => {
+  vdata = JSON.parse(vdata)
+const dispatch = useDispatch();
+dispatch(setImages(vdata));
+dispatch(setError(undefined));
+dispatch(setLoading(false));
 
   const availableApis = {
     // animality:useGetAnimalityApiQuery(''),
@@ -42,9 +42,9 @@ const FetchCatApiImages = () => {
   }
   if (data) {
     return (
-      <div>
+      <>
         <ImageCarousel data={data} />
-      </div>
+      </>
     );
   }
   if (error) {

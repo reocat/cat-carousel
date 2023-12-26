@@ -1,9 +1,11 @@
-"use client";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+"use client"
+import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, useState} from "react";
 import ReactPlayer from "react-player";
-import { Helmet } from "react-helmet";
+import {Helmet} from "react-helmet";
 import {near, selectApi, toggle} from "@/app/redux/reducers";
+import GithubCorner from "react-github-corner";
+// import {Tooltip} from "react-tooltip";
 
 const retro = () => {
   const body = document.body;
@@ -92,14 +94,11 @@ const MagicRainbowButton = ({ children }) => {
 
 
 export const ImageCarousel = ({ data }) => {
-
-  console.log(data.map(i=>i))
   const dispatch = useDispatch();
-    const images = typeof Object.values(data)[0] === "object" ? [...data.map(i => i.url)]: [...data];
-  console.log(images)
+  const images = typeof Object.values(data)[0] === "object" ? [...data.map(i => i.url)] : [...data];
   const color = useSelector((state) => state.selectedColor) || "white";
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+const hellState = useSelector (state=>state.hell.active)
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => {
       const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
@@ -117,9 +116,8 @@ export const ImageCarousel = ({ data }) => {
       prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
-  useEffect(() => {
 
-    // Add the Konami code event listener
+  useEffect(() => {
     const konamiCode = [
       "ArrowUp",
       "ArrowUp",
@@ -133,6 +131,7 @@ export const ImageCarousel = ({ data }) => {
       "a",
     ];
     let konamiCodePosition = 0;
+    document.body.backgroundColor  = color
 
     function onKeyDown(e) {
       const keyPressed = e.key;
@@ -156,46 +155,77 @@ export const ImageCarousel = ({ data }) => {
         konamiCodePosition = 0;
       }
     }
-
     document.addEventListener("keydown", onKeyDown);
-
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, []);
+  }, []);//konamiLogic
 
   return (
-    <div className="carousel">
-      <Helmet>
-        <link
-          rel="icon"
-          type="image/png"
-          href="https://cataas.com/cat/says/%20?width=100&height=100"
+      <div className={`page-container ${hellState && "nyan"}`}>
+        <GithubCorner
+            direction="left"
+            bannerColor="#e863a1"
+            size="100"
+            href="https://github.com/reocat/cat-carousel"
         />
-      </Helmet>
-      <MagicRainbowButton>
-        <div>toggle death mode</div>
-      </MagicRainbowButton>
-      {images.length > 0 && (
-        <div className="image-container">
-          <img
-            id="cat-img"
-            src={images[currentImageIndex]}
-            alt="carousel-image"
-            className="carousel-image"
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-          />
+        <h1
+            id="pagetitle"
+            className={`${hellState && "nnn"} animate__animated slideInLeft`}
+        >
+          Random Cat Image Carousel
+        </h1>
+        <div className="carousel-container">
+
+          <div className="carousel">
+            <Helmet>
+              <link
+                  rel="icon"
+                  type="image/png"
+                  href="https://cataas.com/cat/says/%20?width=100&height=100"
+              />
+            </Helmet>
+            <MagicRainbowButton>
+              <div>toggle death mode</div>
+            </MagicRainbowButton>
+            {images.length > 0 && (
+                <div className="image-container">
+                  <img
+                      id="cat-img"
+                      src={images[currentImageIndex]}
+                      alt="carousel-image"
+                      className="carousel-image"
+                      style={{objectFit: "cover", width: "100%", height: "100%"}}
+                  />
+                </div>
+            )}
+            <div
+                className="circle-button left btn btn-prev"
+                onClick={goToPreviousImage}
+            >
+              &lt;
+            </div>
+            <div className="circle-button right btn btn-next" onClick={goToNextImage}>
+              &gt;
+            </div>
+          </div>
         </div>
-      )}
-      <div
-        className="circle-button left btn btn-prev"
-        onClick={goToPreviousImage}
-      >
-        &lt;
+        <a id="tooltip" className={"tooltip"}>
+          Authors
+        </a>
+        {/*<Tooltip anchorSelect="#tooltip" clickable>*/}
+        {/*<span className="tooltiptext">*/}
+        {/*  Made by{" "}*/}
+        {/*  <a className="links" href="https://github.com/reocat">*/}
+        {/*    reocat*/}
+        {/*  </a>{" "}*/}
+        {/*  and{" "}*/}
+        {/*  <a className="links" href="https://github.com/L1ttleWizard">*/}
+        {/*    L1ttleWizard*/}
+        {/*  </a>*/}
+        {/*</span>*/}
+        {/*</Tooltip>*/}
       </div>
-      <div className="circle-button right btn btn-next" onClick={goToNextImage}>
-        &gt;
-      </div>
-    </div>
+
   );
 };
