@@ -4,13 +4,13 @@ import {
   setImages,
   setLoading,
 } from "@/app/redux/nekoapiSlice";
-import { fetchMultipleImages } from "@/app/redux/api/nekoapi";
+import { fetchNekoAPI } from "@/app/redux/api/nekoapi";
 
 export const fetchImages = (count) => async (dispatch) => {
   try {
     dispatch(setLoading()); // Dispatch a loading action before starting the async operation
     // Perform an asynchronous operation (e.g., fetching image URLs)
-    const urls = await fetchMultipleImages(10);
+    const urls = await fetchNekoAPI(10);
     console.log("fff", urls);
     console.log("urls", urls);
     dispatch(setImages(urls));
