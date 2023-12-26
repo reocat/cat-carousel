@@ -1,10 +1,10 @@
 "use client";
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
 import "../styles/fonts.css";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
-import { selectApi, setColor } from "@/app/redux/reducers"; // Create a new CSS file for Home component styles
+import { selectApi, setColor } from "@/app/redux/reducers";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -50,6 +50,15 @@ export default function Home() {
         </div>
 
         <button
+          className={"scale-90 save"}
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          Save
+        </button>
+
+        <button
           className={"scale-90"}
           onClick={() => {
             dispatch(setColor("#ffdead"));
@@ -57,15 +66,6 @@ export default function Home() {
         >
           Reset background color
         </button>
-      </div>
-      <div className={"flex justify-center"}>
-        <Link
-          className={"w-fit h-fit block m-2 p-1 color rounded   "}
-          style={{ backgroundColor: "#FF0000", color: "white" }}
-          href="/"
-        >
-          REDIRECT
-        </Link>
       </div>
     </div>
   );
