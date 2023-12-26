@@ -118,8 +118,7 @@ h1 {
 .tooltip {
   color: black;
   padding: 8px;
-  backdrop-filter: invert(100%);
-  mix-blend-mode: difference;
+  filter: invert(100%);
 }
 
 @media (max-width: 900px) {
