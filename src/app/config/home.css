@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: "04b03";
+}
 .home-container {
   max-width: 400px;
   margin: auto;
@@ -8,7 +12,6 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: "04b03";
   font-weight: bold;
 }
 
@@ -34,14 +37,22 @@ input[type="color"] {
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #c8102e;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 button:hover {
+  background-color: #ed1c24;
+}
+
+.save {
+  background-color: #4caf50;
+}
+.save:hover {
   background-color: #45a049;
 }
