@@ -27,7 +27,6 @@ export default function Home() {
           <option value="catapi">The Cat API</option>
           <option value="shibe">Shibe API</option>
           <option value="animality">Animality API</option>
-          <option value="nekoapi">Neko API</option>
         </select>
       </div>
       <div className="form-group">
