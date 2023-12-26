@@ -119,6 +119,7 @@ export const ImageCarousel = ({ data }) => {
     );
   };
   useEffect(() => {
+
     // Add the Konami code event listener
     const konamiCode = [
       "ArrowUp",
