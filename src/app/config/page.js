@@ -52,6 +52,7 @@ export default function Home() {
         <button
           className={"scale-90 save"}
           onClick={() => {
+            alert("Settings saved, nya~!");
             window.location.href = "/";
           }}
         >
@@ -62,6 +63,7 @@ export default function Home() {
           className={"scale-90"}
           onClick={() => {
             dispatch(setColor("#ffdead"));
+            alert("Default color nyappiled successfully, nya~!");
           }}
         >
           Reset background color
