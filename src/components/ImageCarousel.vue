@@ -13,7 +13,12 @@
             <vue-feather type="arrow-left" class="icon" />
           </span>
         </button>
-        <img :src="currentImage" alt="cat-image" class="carousel-image" rel="preload"/>
+        <img
+          :src="currentImage"
+          alt="cat-image"
+          class="carousel-image"
+          rel="preload"
+        />
         <button
           @click="nextImage"
           :disabled="currentIndex === images.length - 1"
