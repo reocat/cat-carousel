@@ -1,7 +1,7 @@
 "use client";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
-  hellStateReducer,
+  hellStateReducer, loginStateReducer,
   nearStateReducer,
   selectedApiReducer,
   selectedColorReducer,
@@ -24,7 +24,7 @@ import { nekoApiReducer } from "@/app/redux/nekoapiSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["selectedApi", "selectedColor"],
+  whitelist: ["selectedApi", "selectedColor","login"],
 };
 
 const rootReducer = combineReducers({
@@ -33,6 +33,7 @@ const rootReducer = combineReducers({
   selectedApi: selectedApiReducer,
   selectedColor: selectedColorReducer,
   nekoapi: nekoApiReducer,
+  login:loginStateReducer,
   [catapi.reducerPath]: catapi.reducer,
   [shibeApi.reducerPath]: shibeApi.reducer,
 });
