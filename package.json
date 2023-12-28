@@ -12,7 +12,7 @@
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@types/node": "20.10.5",
-    "@types/react": "18.2.45",
+    "@types/react": "18.2.46",
     "@types/react-dom": "18.2.18",
     "@uiw/github-corners": "^1.5.16",
     "animate.css": "^4.1.1",
