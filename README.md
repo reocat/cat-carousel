@@ -1,4 +1,5 @@
 ## Carousel with random cat images ฅ^•ﻌ•^ฅ
+Project implementation written with Vue.JS
 
 Created just fur fun
 
