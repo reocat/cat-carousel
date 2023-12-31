@@ -1,5 +1,5 @@
 "use client"
-
+import '/public/globals.css'
 import React from "react";
 import Link from "next/link";
 import "../styles/fonts.css";
@@ -18,7 +18,7 @@ export const Intern = ()=> {
 
 
     return (
-        <div className="home-container">
+        <div className="w-fit h-auto ml-auto mr-auto mt-40 bg-neutral-200 p-7 rounded-xl">
             <h1>Page Configurator</h1>
             <div className="form-group">
                 <label htmlFor="apiSelect">Select API:</label>
@@ -46,17 +46,14 @@ export const Intern = ()=> {
                     }}
                 />
             </div>
-            <div className={"flex justify-between"}>
-                <div className={"flex flex-col items-center"}>
-                    <div>Color:{colorVal}</div>
-                    <div
-                        className=" w-5 h-5"
-                        style={{ backgroundColor: `${colorVal}` }}
-                    ></div>
+            <div className={"flex justify-between items-center md:flex-col gap-y-2 items-stretch"}>
+                <div className={"flex flex-col items-center justify-center mx-3 p-3 rounded-md"} style={{backgroundColor:`${colorVal}`}}>
+                    <div>Selected color:{colorVal}</div>
+
                 </div>
 
                 <button
-                    className={"scale-90 save"}
+                    className={"rounded-md p-3 mx-3 bg-green-500"}
                     onClick={() => {
                         alert("Settings saved, nya~!");
                         window.location.href = "/";
@@ -66,7 +63,7 @@ export const Intern = ()=> {
                 </button>
 
                 <button
-                    className={"scale-90"}
+                    className={"bg-neutral-200 rounded-md p-3 mx-3 bg-default"}
                     onClick={() => {
                         dispatch(setColor("#ffdead"));
                         alert("Default color nyappiled successfully, nya~!");
@@ -75,7 +72,7 @@ export const Intern = ()=> {
                     Reset background color
                 </button>
                 <button
-                    className={"scale-90"}
+                    className={"bg-neutral-200 rounded-md p-3 mx-3 bg-red-600"}
                     onClick={() => {
                         dispatch(doLogout());
                         alert("Successfully logged out, nya~!");
