@@ -1,87 +1,210 @@
-"use client"
-import '/public/globals.css'
-import React from "react";
+"use client";
+import "/public/globals.css";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import "../styles/fonts.css";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
-import {doLogout, selectApi, setColor} from "@/app/redux/reducers";
-import {useRouter} from "next/navigation";
+import { doLogout, selectApi, setColor } from "@/app/redux/reducers";
+import { useRouter } from "next/navigation";
+import { db } from "../../../firebaseConfig";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
+const createUser = (userName,email, password) => {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password);
+};
+export const Intern = () => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [userName,setUserName] =useState(null);
+  const [users, setUsers] = useState([]);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const apiVal = useSelector((state) => state.selectedApi);
+  const colorVal = useSelector((state) => state.selectedColor);
 
-export const Intern = ()=> {
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const apiVal = useSelector((state) => state.selectedApi);
-    const colorVal = useSelector((state) => state.selectedColor);
+  useEffect(() => {
+    const q = query(collection(db, "rootUsers"));
+    console.log(q);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const users = [];
+      querySnapshot.forEach((doc) => {
+        const id = doc.id;
+        const data = doc.data().uid;
+        users.push({ id, data });
+      });
+      console.log(users);
 
+      setUsers(users);
+    });
+  }, []);
 
-
-    return (
-        <div className="w-fit h-auto ml-auto mr-auto mt-40 bg-neutral-200 p-7 rounded-xl">
-            <h1>Page Configurator</h1>
-            <div className="form-group">
-                <label htmlFor="apiSelect">Select API:</label>
-                <select
-                    id="apiSelect"
-                    value={apiVal}
-                    onChange={(e) => {
-                        dispatch(selectApi(e.target.value));
-                    }}
-                >
-                    <option value="">-- Select --</option>
-                    <option value="catapi">The Cat API</option>
-                    <option value="shibe">Shibe API</option>
-                    <option value="animality">Animality API</option>
-                </select>
-            </div>
-            <div className="form-group">
-                <label htmlFor="colorPicker">Select Color:</label>
-                <input
-                    type="color"
-                    id="colorPicker"
-                    value={colorVal}
-                    onChange={(e) => {
-                        dispatch(setColor(e.target.value.toString()));
-                    }}
-                />
-            </div>
-            <div className={"flex justify-between items-center md:flex-col gap-y-2 items-stretch"}>
-                <div className={"flex flex-col items-center justify-center mx-3 p-3 rounded-md"} style={{backgroundColor:`${colorVal}`}}>
-                    <div>Selected color:{colorVal}</div>
-
-                </div>
-
-                <button
-                    className={"rounded-md p-3 mx-3 bg-green-500"}
-                    onClick={() => {
-                        alert("Settings saved, nya~!");
-                        window.location.href = "/";
-                    }}
-                >
-                    Save
-                </button>
-
-                <button
-                    className={"bg-neutral-200 rounded-md p-3 mx-3 bg-default"}
-                    onClick={() => {
-                        dispatch(setColor("#ffdead"));
-                        alert("Default color nyappiled successfully, nya~!");
-                    }}
-                >
-                    Reset background color
-                </button>
-                <button
-                    className={"bg-neutral-200 rounded-md p-3 mx-3 bg-red-600"}
-                    onClick={() => {
-                        dispatch(doLogout());
-                        alert("Successfully logged out, nya~!");
-                        router.push('/')
-                    }}
-                >
-                    Logout
-                </button>
-            </div>
-        </div>
+  const Users = () => {
+    const newUsers = [];
+    users.forEach((user) =>
+      newUsers.push(
+        <li key={user.id}>
+          {" "}
+          User <span className=" text-red-700 italic font-bold">
+            name
+          </span> is <span className="text-emerald-800">{user.id}</span>,{" "}
+          <span className=" text-red-700 italic font-bold">UID</span> is{" "}
+          {user.data}{" "}
+        </li>
+      )
     );
-}
+    return <ul className="flex flex-col justify-start gap-y-3 ">{newUsers}</ul>;
+  };
+
+  return (
+    <div className="w-fit h-auto ml-auto mr-auto mt-40 bg-neutral-200 p-7 rounded-xl">
+      <h1>Page Configurator</h1>
+      <div className="form-group">
+        <label htmlFor="apiSelect">Select API:</label>
+        <select
+          id="apiSelect"
+          value={apiVal}
+          onChange={(e) => {
+            dispatch(selectApi(e.target.value));
+          }}
+        >
+          <option value="">-- Select --</option>
+          <option value="catapi">The Cat API</option>
+          <option value="shibe">Shibe API</option>
+          <option value="animality">Animality API</option>
+        </select>
+      </div>
+      <div className="form-group">
+        <label htmlFor="colorPicker">Select Color:</label>
+        <input
+          type="color"
+          id="colorPicker"
+          value={colorVal}
+          onChange={(e) => {
+            dispatch(setColor(e.target.value.toString()));
+          }}
+        />
+      </div>
+      <div
+        className={"flex justify-between  md:flex-col gap-y-2 items-stretch"}
+      >
+        <div
+          className={
+            "flex flex-col items-center justify-center mx-3 p-3 rounded-md"
+          }
+          style={{ backgroundColor: `${colorVal}` }}
+        >
+          <div>Selected color:{colorVal}</div>
+        </div>
+
+        <button
+          className={"rounded-md p-3 mx-3 bg-green-500"}
+          onClick={() => {
+            alert("Settings saved, nya~!");
+            window.location.href = "/";
+          }}
+        >
+          Save
+        </button>
+
+        <button
+          className={" rounded-md p-3 mx-3 bg-default"}
+          onClick={() => {
+            dispatch(setColor("#ffdead"));
+            alert("Default color nyappiled successfully, nya~!");
+          }}
+        >
+          Reset background color
+        </button>
+        <button
+          className={"rounded-md p-3 mx-3 bg-red-600"}
+          onClick={() => {
+            dispatch(doLogout());
+            alert("Successfully logged out, nya~!");
+            router.push("/");
+          }}
+        >
+          Logout
+        </button>
+      </div>
+      <div>
+        <div className="flex items-start justify-start mt-4 p-5 gap-4">
+          <div className="bg-white p-8 rounded-md shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">Register new user</h2>
+            <form
+              onSubmit={() => {
+                createUser(userName,email,password);
+              }}
+            >
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  User name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="user name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+          <div className="bg-white w-100 h-100">
+            <div className="flex flex-col justify-start h-100 shadow-md bg-white items-stretch">
+              <div className="mb-3">Root Users</div>
+              <Users />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
