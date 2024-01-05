@@ -1,5 +1,5 @@
 "use client"
-
+import { TiDeleteOutline } from "react-icons/ti";
 import {useRouter} from "next/navigation";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 // Import necessary React, Tailwind CSS classes, and React Router

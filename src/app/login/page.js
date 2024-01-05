@@ -14,16 +14,13 @@ export default function Home (){
     const [error, setError] = useState(null);
     const onSubmit = event => {
         setError(null)
-        //check if passwords match. If they do, create user in Firebase
-        // and redirect to your logged in page.
+
         if(passwordOne)
             signInWithEmailAndPassword(auth, email, passwordOne)
                 .then((userCredential) => {
                     const uid = userCredential.user.uid;
                     dispatch(doLogin(uid));
                     router.push('/config');
-
-                    // ...
                 })
         else
             setError("Password do not match")
@@ -69,7 +66,7 @@ export default function Home (){
                     </button>
                 </form>
                 <p className="text-center mt-4">
-                    Don't have an account? <Link href="register" className="text-blue-500">Register</Link>
+                    Don't have an account? <Link href="/register" className="text-blue-500">Register</Link>
                 </p>
             </div>
         </div>

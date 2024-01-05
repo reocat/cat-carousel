@@ -36,15 +36,15 @@ input[type="color"] {
   border-radius: 4px;
 }
 
-button {
-  background-color: #c8102e;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 10px;
-}
+/*button {*/
+/*  background-color: #c8102e;*/
+/*  color: white;*/
+/*  padding: 10px 15px;*/
+/*  border: none;*/
+/*  border-radius: 4px;*/
+/*  cursor: pointer;*/
+/*  margin-right: 10px;*/
+/*}*/
 
 button:hover {
   background-color: #ed1c24;
