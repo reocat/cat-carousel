@@ -1,33 +1,55 @@
 "use client";
 import "/public/globals.css";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, {useEffect, useState} from "react";
 import "../styles/fonts.css";
 import "./home.css";
-import { useDispatch, useSelector } from "react-redux";
-import { doLogout, selectApi, setColor } from "@/app/redux/reducers";
-import { useRouter } from "next/navigation";
-import { db } from "../../../firebaseConfig";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {doLogout, selectApi, setColor} from "@/app/redux/reducers";
+import {useRouter} from "next/navigation";
+import {db} from "../../../firebaseConfig";
+import {collection, doc, onSnapshot, query, setDoc} from "firebase/firestore";
+import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 
-const createUser = (userName,email, password) => {
-  const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password);
+const createUser = (userName, email, password, rootState) => {
+  try {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password).then((userCred) => {
+      const userUid = userCred.user.uid;
+      console.log('rootState...',rootState)
+      if (rootState) {
+        setDoc(doc(db, 'rootUsers', userName.toString()), {
+          uid: userUid.toString()
+        }).catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+        });
+      }
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+  } catch (e) {
+    alert(e);
+  }
+
+
 };
+
+
 export const Intern = () => {
+
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [userName,setUserName] =useState(null);
+  const [userName, setUserName] = useState(null);
+  const [isRoot, setIsRoot] = useState(null);
   const [users, setUsers] = useState([]);
   const router = useRouter();
   const dispatch = useDispatch();
   const apiVal = useSelector((state) => state.selectedApi);
   const colorVal = useSelector((state) => state.selectedColor);
-
   useEffect(() => {
     const q = query(collection(db, "rootUsers"));
-    console.log(q);
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const users = [];
       querySnapshot.forEach((doc) => {
@@ -35,9 +57,7 @@ export const Intern = () => {
         const data = doc.data().uid;
         users.push({ id, data });
       });
-      console.log(users);
 
-      setUsers(users);
     });
   }, []);
 
@@ -45,17 +65,17 @@ export const Intern = () => {
     const newUsers = [];
     users.forEach((user) =>
       newUsers.push(
-        <li key={user.id}>
-          {" "}
-          User <span className=" text-red-700 italic font-bold">
+          <li key={user.id}>
+            {" "}
+            User <span className=" text-red-700 italic font-bold">
             name
           </span> is <span className="text-emerald-800">{user.id}</span>,{" "}
-          <span className=" text-red-700 italic font-bold">UID</span> is{" "}
-          {user.data}{" "}
-        </li>
+            <span className=" text-red-700 italic font-bold">UID</span> is{" "}
+            {user.data}{" "}
+          </li>
       )
     );
-    return <ul className="flex flex-col justify-start gap-y-3 ">{newUsers}</ul>;
+    return <ul className="flex flex-col justify-start gap-y-3">{newUsers}</ul>;
   };
 
   return (
@@ -110,49 +130,46 @@ export const Intern = () => {
         </button>
 
         <button
-          className={" rounded-md p-3 mx-3 bg-default"}
-          onClick={() => {
-            dispatch(setColor("#ffdead"));
-            alert("Default color nyappiled successfully, nya~!");
-          }}
+            className={" rounded-md p-3 mx-3 bg-default"}
+            onClick={() => {
+              dispatch(setColor("#ffdead"));
+              alert("Default color nyappiled successfully, nya~!");
+            }}
         >
           Reset background color
         </button>
         <button
-          className={"rounded-md p-3 mx-3 bg-red-600"}
-          onClick={() => {
-            dispatch(doLogout());
-            alert("Successfully logged out, nya~!");
-            router.push("/");
-          }}
+            className={"rounded-md p-3 mx-3 bg-red-600"}
+            onClick={() => {
+              dispatch(doLogout());
+              alert("Successfully logged out, nya~!");
+              router.push("/");
+            }}
         >
           Logout
         </button>
       </div>
       <div>
-        <div className="flex items-start justify-start mt-4 p-5 gap-4">
-          <div className="bg-white p-8 rounded-md shadow-md">
+        <div className="flex items-start justify-start mt-4 p-5 gap-4 md:flex-col">
+          <div className="bg-white p-8 rounded-md shadow-md md:w-full">
             <h2 className="text-2xl font-semibold mb-4">Register new user</h2>
-            <form
-              onSubmit={() => {
-                createUser(userName,email,password);
-              }}
+            <div
             >
               <div className="mb-4">
                 <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-600"
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-600"
                 >
                   User name
                 </label>
                 <input
-                  type="text"
-                  id="name"
-                  name="user name"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-                  required
+                    type="text"
+                    id="name"
+                    name="user name"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                    required
                 />
               </div>
               <div className="mb-4">
@@ -174,33 +191,52 @@ export const Intern = () => {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-600"
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-600"
                 >
                   Password
                 </label>
                 <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-                  required
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                    required
+                />
+              </div>
+              <div className="mb-4 flex justify-center ">
+                <label
+                    htmlFor="root"
+                    className="block text-sm font-medium text-gray-600"
+                >
+                  Root
+                </label>
+                <input
+                    type="checkbox"
+                    id="root"
+                    name="root"
+                    value={''}
+                    onChange={(e) => setIsRoot(e.target.checked)}
+                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+
                 />
               </div>
               <button
-                type="submit"
-                className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                  onClick={() => {
+                    createUser(userName, email, password, isRoot)
+                  }}
+                  className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
               >
-                Login
+                Create a new user
               </button>
-            </form>
+            </div>
           </div>
-          <div className="bg-white w-100 h-100">
-            <div className="flex flex-col justify-start h-100 shadow-md bg-white items-stretch">
+          <div className="bg-white w-100 h-100 rounded-md">
+            <div className="flex flex-col justify-start h-100  bg-white items-stretch p-2 rounded-md">
               <div className="mb-3">Root Users</div>
-              <Users />
+              <Users/>
             </div>
           </div>
         </div>
