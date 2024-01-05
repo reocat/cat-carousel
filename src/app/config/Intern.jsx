@@ -37,6 +37,7 @@ const createUser = (userName, email, password, rootState) => {
 };
 
 
+
 export const Intern = () => {
 
   const [email, setEmail] = useState(null);
@@ -50,19 +51,23 @@ export const Intern = () => {
   const colorVal = useSelector((state) => state.selectedColor);
   useEffect(() => {
     const q = query(collection(db, "rootUsers"));
+    console.log(q)
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const users = [];
       querySnapshot.forEach((doc) => {
+        console.log(doc)
         const id = doc.id;
         const data = doc.data().uid;
         users.push({ id, data });
       });
-
+      setUsers(users);
     });
   }, []);
 
   const Users = () => {
+
     const newUsers = [];
+    console.log(users)
     users.forEach((user) =>
       newUsers.push(
           <li key={user.id}>
