@@ -6,7 +6,7 @@ export const shibeApi = createApi({
   }),
   endpoints: (builder) => ({
     getShibeApi: builder.query({
-      query: (name) => ``,
+      query: () => ``,
     }),
   }),
 });

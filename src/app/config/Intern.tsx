@@ -9,8 +9,12 @@ import {useRouter} from "next/navigation";
 import {db} from "../../../firebaseConfig";
 import {collection, doc, onSnapshot, query, setDoc} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
+import { state } from "../types";
 
-const createUser = (userName, email, password, rootState) => {
+
+type CreateUser = (userName: string, email: string, password: string, rootState: boolean|null) => void;
+
+const createUser:CreateUser = (userName, email, password, rootState) => {
   try {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).then((userCred) => {
@@ -19,16 +23,9 @@ const createUser = (userName, email, password, rootState) => {
       if (rootState) {
         setDoc(doc(db, 'rootUsers', userName.toString()), {
           uid: userUid.toString()
-        }).catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-
-        });
+        })
       }
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+    }).catch((error) => {alert(error.message)});
   } catch (e) {
     alert(e);
   }
@@ -36,26 +33,29 @@ const createUser = (userName, email, password, rootState) => {
 
 };
 
-
+type Users = Array<{
+  id:string,
+  data:string
+}>
 
 export const Intern = () => {
 
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [isRoot, setIsRoot] = useState(null);
-  const [users, setUsers] = useState([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [isRoot, setIsRoot] = useState<boolean|null>(null);
+  const [users, setUsers] = useState<Users>([]);
   const router = useRouter();
   const dispatch = useDispatch();
-  const apiVal = useSelector((state) => state.selectedApi);
-  const colorVal = useSelector((state) => state.selectedColor);
+  const apiVal = useSelector<state,state["selectedApi"]>((state) => state.selectedApi);
+  const colorVal = useSelector<state,state["selectedColor"]>((state) => state.selectedColor);
   useEffect(() => {
     const q = query(collection(db, "rootUsers"));
     console.log(q)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const users = [];
+      const users:Users = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc)
         const id = doc.id;
         const data = doc.data().uid;
         users.push({ id, data });
@@ -66,7 +66,7 @@ export const Intern = () => {
 
   const Users = () => {
 
-    const newUsers = [];
+    const newUsers:React.ReactNode[] = [];
     console.log(users)
     users.forEach((user) =>
       newUsers.push(
