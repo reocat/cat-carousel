@@ -1,10 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 * {
   font-family: "04b03";
 }
+
 .home-container {
   max-width: 400px;
   margin: auto;
@@ -53,6 +52,7 @@ button:hover {
 .save {
   background-color: #4caf50;
 }
+
 .save:hover {
   background-color: #45a049;
 }

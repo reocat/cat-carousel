@@ -7,9 +7,10 @@ import "./styles/fonts.css";
 import "./styles/index.css";
 import "../../public/globals.css";
 import FetchCatApiImages from "@/app/api/catapi";
+import {state} from "@/app/types";
 
 function Home() {
-  const hellState = useSelector((state) => state.hell.active);
+  const hellState = useSelector((state:state) => state.hell.active);
 
   return (
     <div className={`page-container ${hellState && "nyan"}`}>

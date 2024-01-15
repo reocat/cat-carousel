@@ -6,7 +6,7 @@ export const catapi = createApi({
   }),
   endpoints: (builder) => ({
     getCatApi: builder.query({
-      query: (name) => ``,
+      query: () => ``,
     }),
   }),
 });

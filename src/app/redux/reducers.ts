@@ -1,23 +1,30 @@
 import {createSlice} from "@reduxjs/toolkit";
-
+import { state } from "../types";
+type InitialLoginState = {
+  logged:boolean,
+  uid:string|null
+}
 const initialState = {
   active: false,
 };
-const initialNear = false;
-const initialSelectedApi = "catapi";
-const initialColorState = "ffdead";
-const initialLoginState = {
+const initialNear:boolean = false;
+const initialSelectedApi:string = "catapi";
+const initialColorState:string = "ffdead";
+const initialLoginState:InitialLoginState = {
   logged: false,
   uid: null
 }
+
 
 export const nearStateSlice = createSlice({
   name: "near",
   initialState: initialNear,
   reducers: {
-    near: (state) => (state = true),
-    notNear: (state) => (state = false),
-    toggleNear: (state) => (state = !state),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    near: (state:boolean) => (state = true),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    notNear: (state:boolean) => (state = false),
+    toggleNear: (state:boolean) => (state = !state),
   },
 });
 export const switchSlice = createSlice({
@@ -55,7 +62,7 @@ export const loginSlice = createSlice({
       state.uid = action.payload
     }, doLogout: (state) => {
       state.logged = false;
-      state.uid = undefined;
+      state.uid = null;
     }
   }
 
@@ -73,5 +80,5 @@ export const {near, notNear, toggleNear} = nearStateSlice.actions;
 export const {selectApi} = apiSlice.actions;
 export const {setColor} = colorSlice.actions;
 
-export const selectUserUID = (state) => state.login.uid;
-export const selectUserIsLogged = (state) => state.login.logged
+export const selectUserUID = (state:state) => state.login.uid;
+export const selectUserIsLogged = (state:state) => state.login.logged

@@ -1,21 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nekoapi } from "@/app/redux/api/nekoapi";
+import { state } from "../types";
 
-const initialState = {
+
+interface NekoApiState {
+  data: string[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: NekoApiState = {
   data: [],
-  isLoading: false,
+  loading: false,
   error: null,
 };
 const nekoapiSlice = createSlice({
   name: "nekoapiImages",
   initialState,
   reducers: {
-    setImages: (state, action) => {
+    setImages: (state, action): void => {
       state.data = action.payload;
       state.loading = false;
       state.error = null;
     },
-    setLoading: (state, action) => {
+    setLoading: (state) => {
       state.loading = true;
     },
     setError: (state, action) => {
@@ -26,6 +33,7 @@ const nekoapiSlice = createSlice({
 });
 export const nekoApiReducer = nekoapiSlice.reducer;
 export const { setImages, setLoading, setError } = nekoapiSlice.actions;
-export const selectImages = (state) => state.nekoapi.data;
-export const selectLoading = (state) => state.nekoapi.loading;
-export const selectError = (state) => state.nekoapi.error;
+export const selectImages = (state: state) => state.nekoapi.data;
+export const selectLoading = (state: state) => state.nekoapi.loading;
+
+export const selectError = (state: state) => state.nekoapi.error;
