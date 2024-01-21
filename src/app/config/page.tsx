@@ -13,13 +13,12 @@ export default async function Home() {
             if (doc.data()) {
                 rootUsers.push(doc.data().uid);
             }
-            console.log(doc.id, " => ", doc.data());
         });
         return rootUsers
 
     }
-    const d = await getData();
+    const whitelist = await getData();
 
 
-    return <MainPage whitelist={d}/>
+    return <MainPage whitelist={whitelist}/>
 }

@@ -1,4 +1,4 @@
-export const fetchNekoApiImages = async () => {
+ export const fetchNekoApiImages = async () => {
   try {
     const numImages = 10; // Number of images to fetch per request
     const apiUrl = "https://nekos.life/api/v2/img/neko";
