@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import { useGetCatApiQuery } from "@/app/redux/api/catapi";
 import { ImageCarousel } from "@/app/Components/ImageCarousel";
@@ -13,6 +12,7 @@ import {
 } from "@/app/redux/nekoapiSlice";
 import { state } from "../types";
 import { Dispatch } from "redux";
+import { Skeleton } from "@mui/material";
 
 interface Actions {
   isLoading: boolean;
@@ -34,12 +34,12 @@ const FetchCatApiImages = () => {
   const dispatch = useDispatch<Dispatch<any>>();
 
   useEffect(() => {
-    if (selectedApi === "nekoapi"){
-    dispatch(fetchImages(10));
+    if (selectedApi === "nekoapi") {
+      dispatch(fetchImages(10));
     }
-  }, [dispatch,selectedApi]);
+  }, [dispatch, selectedApi]);
 
-  const availableApis: AvailableApi = { 
+  const availableApis: AvailableApi = {
     // animality:useGetAnimalityApiQuery(''),
     shibe: useGetShibeApiQuery(""),
     catapi: useGetCatApiQuery(""),
@@ -63,8 +63,15 @@ const FetchCatApiImages = () => {
   }
   return (
     <>
-      {isLoading && <div>Loading...</div>}
-      {data && <ImageCarousel data={data} />}
+      {isLoading && (
+        <Skeleton
+          className="image-container border-none shadow-none rounded-md"
+          variant="rectangular"
+          animation="wave"
+          height={600}
+        />
+      )}
+      {!isLoading && <ImageCarousel data={data} />}
       {error && <div className="error bg-red-500">Error: {error.message}</div>}
     </>
   );

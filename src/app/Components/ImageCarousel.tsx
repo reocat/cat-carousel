@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { near, selectApi } from "@/app/redux/reducers";
 import { state } from "../types";
-
+import { Skeleton } from "@mui/material";
 
 type ImagesArray = string[];
-type ImagesObject = Array<{url:string}>;
+type ImagesObject = Array<{ url: string }>;
 type PropT = {
   data: ImagesArray | ImagesObject;
   // Add other props as needed
@@ -14,7 +14,6 @@ type PropT = {
 
 // Define ImageCarousel component
 export const ImageCarousel: React.FC<PropT> = ({ data }) => {
-
   const color = useSelector((state: state) => state.selectedColor) || "white";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
@@ -22,7 +21,6 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     typeof Object.values(data)[0] === "object"
       ? [...(data as ImagesObject).map((i) => i.url)]
       : [...(data as ImagesArray)];
-
 
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => {
@@ -87,31 +85,37 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     };
   }, [color, dispatch]);
 
-  return (
-    <div className="carousel">
-     
-      {images.length > 0 && (
-        <div className="image-container">
-          <img
-            id="cat-img"
-            src={images[currentImageIndex]}
-            alt="carousel-image"
-            className="carousel-image"
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-          />
+  if (images) {
+    return (
+      <div className="carousel">
+        {images.length > 0 && (
+          <div className="image-container ">
+            <img
+              id="cat-img"
+              src={images[currentImageIndex]}
+              alt="carousel-image"
+              className="carousel-image"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          </div>
+        )}
+        <div
+          className="circle-button left btn btn-prev"
+          onClick={goToPreviousImage}
+        >
+          &lt;
         </div>
-      )}
-      <div
-        className="circle-button left btn btn-prev"
-        onClick={goToPreviousImage}
-      >
-        &lt;
+        <div
+          className="circle-button right btn btn-next"
+          onClick={goToNextImage}
+        >
+          &gt;
+        </div>
       </div>
-      <div className="circle-button right btn btn-next" onClick={goToNextImage}>
-        &gt;
-      </div>
-    </div>
-  );
+    );
+  } else {
+    return <Skeleton />;
+  }
 };
 
 // Export the ImageCarousel component

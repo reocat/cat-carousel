@@ -128,7 +128,9 @@ h1 {
     margin: 10px;
     border-radius: 15px;
     border: 1px solid #ccc;
-    box-shadow: 0 0 5px rgb(123, 63, 0);
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
   #pagetitle {
     font-size: 24px !important;
@@ -149,9 +151,6 @@ h1 {
   }
 }
 
-.carousel {
-  position: relative;
-}
 
 .h1-retro {
   font-family: "OverdriveAvenue";

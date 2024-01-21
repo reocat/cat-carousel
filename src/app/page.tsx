@@ -27,7 +27,7 @@ function Home() {
       >
         Random Cat Image Carousel
       </h1>
-      <div className="carousel-container">
+      <div className="carousel-container relative">
       <MagicRainbowButton>
         <div>toggle death mode</div>
       </MagicRainbowButton>
