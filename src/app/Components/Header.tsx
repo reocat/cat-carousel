@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 
-export default function Header() {
+export const Header:React.FC<{animalType:React.ReactNode}> = ({animalType})=> {
   const dispatch = useDispatch();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -43,7 +43,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Cat Carousel
+            {`${animalType} Carousel`}
           </Typography> 
           { auth?  (
             <div>

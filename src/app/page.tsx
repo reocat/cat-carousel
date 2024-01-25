@@ -9,8 +9,9 @@ import "../../public/globals.css";
 import FetchCatApiImages from "@/app/Components/FetchCatApiImages";
 import { state } from "@/app/types";
 import { MagicRainbowButton } from "./Components/MagicRainbowButton";
-import Header from "./Components/Header";
+
 import { selectedApi } from "./redux/reducers";
+import { Header } from "./Components/Header";
 
 type ApiConfig<T extends string> = {
   [key in T]: string;
@@ -22,7 +23,7 @@ function Home() {
   const selector:ApiConfig<state['selectedApi']> = { dogapi: "Dog", catapi: "Cat", shibe:'Cat',nekoapi:'Cat'};
   return (
     <>
-      <Header />
+      <Header animalType = {selector[currentApi]} />
       <div className={`page-container ${hellState && "nyan"}`}>
         <GithubCorner
           direction="left"

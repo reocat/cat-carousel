@@ -26,7 +26,7 @@ export const Selectors = () => {
           <option value="catapi">The Cat API</option>
           <option value="shibe">Shibe API</option>
           <option value="animality">Animality API</option>
-          <option value="dogapi">Dog API</option>
+          <option value="dogapi">Dog API (can be unstable )</option>
         </select>
       </div>
       <div className="form-group">
