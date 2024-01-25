@@ -4,12 +4,12 @@ import { ImageCarousel } from "@/app/Components/ImageCarousel";
 import { useDispatch, useSelector } from "react-redux";
 import { notNear } from "@/app/redux/reducers";
 import { useGetShibeApiQuery } from "@/app/redux/api/shibeApi";
-import { fetchDoggoImages, fetchNekoImages } from "@/app/redux/actions";
+import { fetchAnimalImages } from "@/app/redux/actions";
 import {
   selectError,
   selectImages,
   selectLoading,
-} from "@/app/redux/nekoapiSlice";
+} from "@/app/redux/otherAnimalsApiSlice";
 import { state } from "../types";
 import { Dispatch } from "redux";
 import { Skeleton } from "@mui/material";
@@ -25,6 +25,10 @@ interface AvailableApi {
   catapi: any;
   nekoapi: Actions;
   dogapi: Actions;
+  placedogapi:Actions;
+  placekittenapi:Actions;
+  placebearapi:Actions;
+  duckapi:Actions;
 }
 
 const FetchCatApiImages = () => {
@@ -34,12 +38,15 @@ const FetchCatApiImages = () => {
   const dispatch = useDispatch<Dispatch<any>>();
 
   useEffect(() => {
-    if (selectedApi === "nekoapi") {
-      dispatch(fetchNekoImages(10));
+    if (selectedApi !=='shibe' && selectedApi !=='catapi') {
+      dispatch(fetchAnimalImages(selectedApi))
     }
-    if (selectedApi === "dogapi") {
-      dispatch(fetchDoggoImages(10));
-    }
+    // if (selectedApi === "nekoapi") {
+    //   dispatch(fetchNekoImages(10));
+    // }
+    // if (selectedApi === "dogapi") {
+    //   dispatch(fetchDoggoImages(10));
+    // }
   }, [dispatch, selectedApi]);
 
   const availableApis: AvailableApi = {
@@ -51,7 +58,7 @@ const FetchCatApiImages = () => {
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        dispatch(fetchNekoImages(10));
+        dispatch(fetchAnimalImages('nekoapi'));
       },
     },
     dogapi: {
@@ -59,7 +66,39 @@ const FetchCatApiImages = () => {
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        dispatch(fetchDoggoImages(10));
+        dispatch(fetchAnimalImages('dogapi'));
+      },
+    },
+    placedogapi:{
+      data: useSelector(selectImages),
+      isLoading: useSelector(selectLoading),
+      error: useSelector(selectError),
+      refetch: () => {
+        dispatch(fetchAnimalImages('placedogapi'));
+      },
+    },
+    placekittenapi:{
+      data: useSelector(selectImages),
+      isLoading: useSelector(selectLoading),
+      error: useSelector(selectError),
+      refetch: () => {
+        ()=>{}
+      },
+    },
+    placebearapi:{
+      data: useSelector(selectImages),
+      isLoading: useSelector(selectLoading),
+      error: useSelector(selectError),
+      refetch: () => {
+        ()=>{}
+      },
+    },
+    duckapi:{
+      data: useSelector(selectImages),
+      isLoading: useSelector(selectLoading),
+      error: useSelector(selectError),
+      refetch: () => {
+        dispatch(fetchAnimalImages('duckapi'));
       },
     },
   };

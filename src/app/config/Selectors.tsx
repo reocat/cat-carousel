@@ -23,10 +23,14 @@ export const Selectors = () => {
           }}
         >
           <option value="">-- Select --</option>
-          <option value="catapi">The Cat API</option>
-          <option value="shibe">Shibe API</option>
-          <option value="animality">Animality API</option>
+          <option value="catapi">The Cat API (moderate)</option>
+          <option value="shibe">Shibe API (moderate)</option>
+          <option value="animality" disabled>Animality API (not available)</option>
           <option value="dogapi">Dog API (can be unstable )</option>
+          <option value="placedogapi">Place Dog API (fast)</option>
+          <option value="placekittenapi">Place Kitten API (fast)</option>
+          <option value="placebearapi">Place Bear API (fast)</option>
+          <option value="duckapi" disabled>Duck Api (fast)</option>
         </select>
       </div>
       <div className="form-group">

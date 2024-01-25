@@ -19,8 +19,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-import { nekoApiReducer } from "@/app/redux/nekoapiSlice";
-import { dogApiReducer } from "./api/dogapiSlice";
+import { otherAnimalsApiReducer } from "./otherAnimalsApiSlice";
 
 const persistConfig = {
   key: "root",
@@ -33,8 +32,7 @@ const rootReducer = combineReducers({
   nearState: nearStateReducer,
   selectedApi: selectedApiReducer,
   selectedColor: selectedColorReducer,
-  nekoapi: nekoApiReducer,
-  dogapi:dogApiReducer,
+  otheranimalapi: otherAnimalsApiReducer,
   login:loginStateReducer,
   [catapi.reducerPath]: catapi.reducer,
   [shibeApi.reducerPath]: shibeApi.reducer,
