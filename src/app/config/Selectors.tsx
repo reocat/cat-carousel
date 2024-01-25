@@ -4,12 +4,16 @@ import { state } from "../types";
 import { selectApi, setColor } from "../redux/reducers";
 import { useDispatch } from "react-redux";
 export const Selectors = () => {
-    const dispatch = useDispatch();
-    const colorVal = useSelector<state,state["selectedColor"]>((state) => state.selectedColor);
-    const apiVal = useSelector<state,state["selectedApi"]>((state) => state.selectedApi);
+  const dispatch = useDispatch();
+  const colorVal = useSelector<state, state["selectedColor"]>(
+    (state) => state.selectedColor
+  );
+  const apiVal = useSelector<state, state["selectedApi"]>(
+    (state) => state.selectedApi
+  );
   return (
     <>
-           <div className="form-group">
+      <div className="form-group">
         <label htmlFor="apiSelect">Select API:</label>
         <select
           id="apiSelect"
@@ -22,6 +26,7 @@ export const Selectors = () => {
           <option value="catapi">The Cat API</option>
           <option value="shibe">Shibe API</option>
           <option value="animality">Animality API</option>
+          <option value="dogapi">Dog API</option>
         </select>
       </div>
       <div className="form-group">

@@ -10,6 +10,7 @@ const StoreProvider: React.FC<{children:ReactNode}> = ({ children }) => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={<div>loading</div>}>
+        
         {children}
       </PersistGate>
     </Provider>
