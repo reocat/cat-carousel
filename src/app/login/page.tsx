@@ -28,7 +28,7 @@ export default function Home() {
     event.preventDefault();
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen min-w-full flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md">
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
         <form

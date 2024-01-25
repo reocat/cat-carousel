@@ -82,3 +82,4 @@ export const {setColor} = colorSlice.actions;
 
 export const selectUserUID = (state:state) => state.login.uid;
 export const selectUserIsLogged = (state:state) => state.login.logged
+export const selectedApi = (state:state)=>state.selectedApi;
