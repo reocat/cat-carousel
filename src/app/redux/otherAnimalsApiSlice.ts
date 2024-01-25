@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { state } from "../types";
 
 
-interface NekoApiState {
+interface otherAnimalsApiSlice {
   data: string[];
   loading: boolean;
   error: string | null;
 }
 
-const initialState: NekoApiState = {
+const initialState: otherAnimalsApiSlice = {
   data: [],
   loading: false,
   error: null,
 };
-const nekoapiSlice = createSlice({
-  name: "nekoapiImages",
+const otherAnimalsApiSlice = createSlice({
+  name: "otherAnimalsApi",
   initialState,
   reducers: {
     setImages: (state, action): void => {
@@ -31,9 +31,9 @@ const nekoapiSlice = createSlice({
     },
   },
 });
-export const nekoApiReducer = nekoapiSlice.reducer;
-export const { setImages, setLoading, setError } = nekoapiSlice.actions;
-export const selectImages = (state: state) => state.nekoapi.data;
-export const selectLoading = (state: state) => state.nekoapi.loading;
+export const otherAnimalsApiReducer = otherAnimalsApiSlice.reducer;
+export const { setImages, setLoading, setError } = otherAnimalsApiSlice.actions;
+export const selectImages = (state: state) => state.otheranimalapi.data;
+export const selectLoading = (state: state) => state.otheranimalapi.loading;
 
-export const selectError = (state: state) => state.nekoapi.error;
+export const selectError = (state: state) => state.otheranimalapi.error;

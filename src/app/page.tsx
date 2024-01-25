@@ -20,10 +20,19 @@ type ApiConfig<T extends string> = {
 function Home() {
   const currentApi = useSelector(selectedApi);
   const hellState = useSelector((state: state) => state.hell.active);
-  const selector:ApiConfig<state['selectedApi']> = { dogapi: "Dog", catapi: "Cat", shibe:'Cat',nekoapi:'Cat'};
+  const selector: ApiConfig<state["selectedApi"]> = {
+    dogapi: "Dog",
+    catapi: "Cat",
+    shibe: "Cat",
+    nekoapi: "Neko",
+    placedogapi:'Dog',
+    placekittenapi: 'Kitten',
+    placebearapi:'Bear',
+    duckapi:'Duck'
+  };
   return (
     <>
-      <Header animalType = {selector[currentApi]} />
+      <Header animalType={selector[currentApi]} />
       <div className={`page-container ${hellState && "nyan"}`}>
         <GithubCorner
           direction="left"
