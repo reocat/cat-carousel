@@ -2,7 +2,6 @@
 import { useSelector } from "react-redux";
 import React from "react";
 import { Tooltip } from "react-tooltip";
-import GithubCorner from "react-github-corner";
 import "./styles/fonts.css";
 import "./styles/index.css";
 import "../../public/globals.css";
@@ -34,12 +33,6 @@ function Home() {
     <>
       <Header animalType={selector[currentApi]} />
       <div className={`page-container ${hellState && "nyan"}`}>
-        <GithubCorner
-          direction="left"
-          bannerColor="#e863a1"
-          size="100"
-          href="https://github.com/reocat/cat-carousel"
-        />
         <h1
           id="pagetitle"
           className={`${hellState && "nnn"} animate__animated slideInLeft`}
