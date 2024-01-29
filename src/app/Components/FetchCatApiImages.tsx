@@ -21,7 +21,7 @@ interface Actions {
   refetch: () => void;
 }
 interface AvailableApi {
-  shibe: any;
+  shiebe: any;
   catapi: any;
   nekoapi: Actions;
   dogapi: Actions;
@@ -29,6 +29,7 @@ interface AvailableApi {
   placekittenapi:Actions;
   placebearapi:Actions;
   duckapi:Actions;
+  purrbot:Actions;
 }
 
 const FetchCatApiImages = () => {
@@ -99,6 +100,14 @@ const FetchCatApiImages = () => {
       error: useSelector(selectError),
       refetch: () => {
         dispatch(fetchAnimalImages('duckapi'));
+      },
+    },
+    purrbot:{
+      data: useSelector(selectImages),
+      isLoading: useSelector(selectLoading),
+      error: useSelector(selectError),
+      refetch: () => {
+        dispatch(fetchAnimalImages(selectedApi));
       },
     },
   };

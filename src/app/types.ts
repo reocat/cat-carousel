@@ -11,7 +11,8 @@ export interface state {
     | "placedogapi"
     | "placekittenapi"
     | "placebearapi"
-    | "duckapi";
+    | "duckapi"
+    | "purrbot";
   selectedColor: string;
   otheranimalapi: {
     data: string[];

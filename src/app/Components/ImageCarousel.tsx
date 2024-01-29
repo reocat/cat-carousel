@@ -25,7 +25,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => {
       const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
-      const nearEndOfPictures = nextIndex === images.length - 3;
+      const nearEndOfPictures = nextIndex === images.length - 1;
 
       if (nearEndOfPictures) {
         dispatch(near());
@@ -76,7 +76,6 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
         konamiCodePosition = 0;
       }
     }
-
     document.addEventListener("keydown", onKeyDown);
 
     // Cleanup function to remove event listener on component unmount
@@ -85,7 +84,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     };
   }, [color, dispatch]);
 
-  if (images) {
+  if (images.length) {
     return (
       <div className="carousel">
         {images.length > 0 && (

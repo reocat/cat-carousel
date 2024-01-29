@@ -11,31 +11,13 @@ import { fetchPlaceDogAPI } from "./api/placedogapi";
 import { fetchPlaceKittenApi } from "./api/placekittenapi";
 import { fetchPlaceBearApi } from "./api/placebearapi";
 import { fetchDuckApi } from "./api/duckapi";
+import { fetchPurrbotApi } from "./api/purrbot";
+
 
 type FetchImages = (
   animalType: state["selectedApi"]
 ) => (dispatch: Dispatch) => Promise<void>;
 
-// export const fetchNekoImages:FetchImages = () => async (dispatch: Dispatch) => {
-
-//   try {
-//     dispatch(setLoading());
-//     const urls = await fetchNekoAPI();
-//     dispatch(setImages(urls));
-//   } catch (error:any) {
-//     dispatch(setError(error.message || "Error fetching images"));
-//   }
-// };
-// export const fetchDoggoImages:FetchImages = () => async (dispatch: Dispatch) => {
-
-//   try {
-//     dispatch(setLoading());
-//     const urls = await fetchDogAPI();
-//     dispatch(setImages(urls));
-//   } catch (error:any) {
-//     dispatch(setError(error.message || "Error fetching images"));
-//   }
-// };
 
 export const fetchAnimalImages: FetchImages =
   (animalType) => async (dispatch: Dispatch) => {
@@ -71,7 +53,7 @@ export const fetchAnimalImages: FetchImages =
         dispatch(setLoading());
         const urls = await fetchPlaceKittenApi();
         console.log(urls);
-        
+
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));
@@ -82,7 +64,7 @@ export const fetchAnimalImages: FetchImages =
         dispatch(setLoading());
         const urls = await fetchPlaceBearApi();
         console.log(urls);
-        
+
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));
@@ -93,7 +75,18 @@ export const fetchAnimalImages: FetchImages =
         dispatch(setLoading());
         const urls = await fetchDuckApi();
         console.log(urls);
-        
+
+        dispatch(setImages(urls));
+      } catch (error: any) {
+        dispatch(setError(error.message || "Error fetching images"));
+      }
+    }
+
+    if (animalType.includes("purrbot")) {
+      try {
+        dispatch(setLoading());
+        const urls = await fetchPurrbotApi(animalType);
+
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));

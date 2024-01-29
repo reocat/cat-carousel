@@ -27,7 +27,8 @@ function Home() {
     placedogapi:'Dog',
     placekittenapi: 'Kitten',
     placebearapi:'Bear',
-    duckapi:'Duck'
+    duckapi:'Duck',
+    purrbot:'Purr'
   };
   return (
     <>
