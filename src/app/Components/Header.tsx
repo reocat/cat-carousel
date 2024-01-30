@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -12,6 +11,7 @@ import { doLogout, selectUserIsLogged } from '../redux/reducers';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 export const Header:React.FC<{animalType:React.ReactNode}> = ({animalType})=> {
   const dispatch = useDispatch();
@@ -31,15 +31,18 @@ export const Header:React.FC<{animalType:React.ReactNode}> = ({animalType})=> {
   return (
     <>
       <AppBar position="static">
-        <Toolbar className='bg-gray-300 bg-opacity-65'>
+        <Toolbar className="bg-gray-300 bg-opacity-65">
           <IconButton
+            onClick={() => {
+              router.push("https://github.com/reocat/cat-carousel");
+            }}
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <GitHubIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {`${animalType} Carousel`}
