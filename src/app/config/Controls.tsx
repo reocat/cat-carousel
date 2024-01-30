@@ -35,7 +35,7 @@ export const Controls = () => {
       <button
         className={" rounded-md p-3 mx-3 bg-default"}
         onClick={() => {
-          dispatch(setColor("#ffdead"));
+          dispatch(setColor("#fff"));
           alert("Default color nyappiled successfully, nya~!");
         }}
       >
