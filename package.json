@@ -19,7 +19,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.12",
     "@reduxjs/toolkit": "^2.0.1",
     "@types/node": "20.11.14",
-    "@types/react": "18.2.48",
+    "@types/react": "18.2.49",
     "@types/react-dom": "18.2.18",
     "@types/react-redux": "^7.1.33",
     "@uiw/github-corners": "^1.5.16",
