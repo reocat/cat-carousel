@@ -20,7 +20,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "@types/node": "20.11.16",
     "@types/react": "18.2.55",
-    "@types/react-dom": "18.2.18",
+    "@types/react-dom": "18.2.19",
     "@types/react-redux": "^7.1.33",
     "@uiw/github-corners": "^1.5.16",
     "animate.css": "^4.1.1",
