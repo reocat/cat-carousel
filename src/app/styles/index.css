@@ -26,6 +26,7 @@ h1 {
   vertical-align: text-top;
   color: #5c4033;
   background-clip: text;
+  text-shadow: 1px 1px 2px sandybrown;
 }
 
 .carousel-image {
