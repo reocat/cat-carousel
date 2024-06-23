@@ -48,7 +48,7 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - name: Setup Node
