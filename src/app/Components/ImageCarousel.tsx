@@ -1,4 +1,3 @@
-// Import necessary dependencies and components
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { near, selectApi } from "@/app/redux/reducers";
@@ -12,7 +11,6 @@ type PropT = {
   // Add other props as needed
 };
 
-// Define ImageCarousel component
 export const ImageCarousel: React.FC<PropT> = ({ data }) => {
   const color = useSelector((state: state) => state.selectedColor) || "white";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -34,7 +32,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
       return nextIndex;
     });
   };
-  // Function to navigate to the previous image
+
   const goToPreviousImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
@@ -43,6 +41,29 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
 
   useEffect(() => {
     document.body.style.backgroundColor = color;
+
+    // Event listener for carousel navigation
+    function onKeyDown(e: KeyboardEvent) {
+      const keyPressed = e.key;
+
+      if (keyPressed === "ArrowRight") {
+        e.preventDefault();
+        goToNextImage();
+      } else if (keyPressed === "ArrowLeft") {
+        e.preventDefault();
+        goToPreviousImage();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+
+    // Cleanup function to remove event listener on component unmount
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [color, dispatch, goToNextImage, goToPreviousImage]);
+
+  useEffect(() => {
     const konamiCode = [
       "ArrowUp",
       "ArrowUp",
@@ -57,9 +78,10 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     ];
     let konamiCodePosition = 0;
 
-    // Function to handle keydown event for Konami code
+    // Event listener for Konami Code detection
     function onKeyDown(e: KeyboardEvent) {
       const keyPressed = e.key;
+
       if (
         keyPressed.toLowerCase() ===
         konamiCode[konamiCodePosition].toLowerCase()
@@ -83,7 +105,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [color, dispatch]);
+  }, [dispatch]);
 
   if (images) {
     return (
@@ -118,5 +140,4 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
   }
 };
 
-// Export the ImageCarousel component
 export default ImageCarousel;
