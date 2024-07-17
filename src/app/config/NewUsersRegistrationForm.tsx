@@ -7,7 +7,7 @@ type CreateUser = (
   userName: string,
   email: string,
   password: string,
-  rootState: boolean | null
+  rootState: boolean | null,
 ) => void;
 
 const createUser: CreateUser = (userName, email, password, rootState) => {
@@ -22,7 +22,7 @@ const createUser: CreateUser = (userName, email, password, rootState) => {
             uid: userUid.toString(),
           });
         }
-        alert('new user created')
+        alert("new user created");
       })
       .catch((error) => {
         alert(error.message);

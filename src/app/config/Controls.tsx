@@ -1,15 +1,17 @@
-"use client"
+"use client";
 import React from "react";
 import { useSelector } from "react-redux";
 import { state } from "../types";
 import { useDispatch } from "react-redux";
-import {doLogout, setColor} from "@/app/redux/reducers";
+import { doLogout, setColor } from "@/app/redux/reducers";
 import { useRouter } from "next/navigation";
 
 export const Controls = () => {
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const colorVal = useSelector<state,state["selectedColor"]>((state) => state.selectedColor);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const colorVal = useSelector<state, state["selectedColor"]>(
+    (state) => state.selectedColor,
+  );
 
   return (
     <div className={"flex justify-between  md:flex-col gap-y-2 items-stretch"}>

@@ -6,7 +6,13 @@ import { useDispatch } from "react-redux";
 import { state } from "../types";
 import { toggle } from "../redux/reducers";
 import ReactPlayer from "react-player";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface MagicRainbowButtonProps {
   children: ReactNode;
@@ -36,9 +42,7 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
   const [selectedMusic, setSelectedMusic] = useState(""); // New state variable
 
   // Handle music selection
-  const handleMusicSelection = (
-    event: SelectChangeEvent
-  ) => {
+  const handleMusicSelection = (event: SelectChangeEvent) => {
     const selectedValue = event.target.value;
     setSelectedMusic(selectedValue);
     if (selectedValue === "synth") {
@@ -60,7 +64,7 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
       </button>
       <br />
       {hellState.active && (
-        <FormControl variant="filled"  sx={{ m: 1, minWidth: 120}}>
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-standard-label">Music</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"

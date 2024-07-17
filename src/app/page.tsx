@@ -24,10 +24,10 @@ function Home() {
     catapi: "Cat",
     shibe: "Cat",
     nekoapi: "Neko",
-    placedogapi:'Dog',
-    placekittenapi: 'Kitten',
-    placebearapi:'Bear',
-    duckapi:'Duck'
+    placedogapi: "Dog",
+    placekittenapi: "Kitten",
+    placebearapi: "Bear",
+    duckapi: "Duck",
   };
   return (
     <>

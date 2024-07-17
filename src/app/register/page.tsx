@@ -94,7 +94,11 @@ export default function Home() {
               placeholder="Confirm your password"
             />
           </div>
-          {error  && <div className="mb-4 w-full bg-red-500 p-2 rounded-md">Error:{error}</div>}
+          {error && (
+            <div className="mb-4 w-full bg-red-500 p-2 rounded-md">
+              Error:{error}
+            </div>
+          )}
 
           <button
             type="submit"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function NotFound() {
   const containerStyle = {
@@ -14,9 +14,13 @@ function NotFound() {
 
   return (
     <div style={containerStyle}>
-      <img src="https://http.cat/404" alt="404 - Page Not Found" style={imageStyle} />
+      <img
+        src="https://http.cat/404"
+        alt="404 - Page Not Found"
+        style={imageStyle}
+      />
     </div>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;
