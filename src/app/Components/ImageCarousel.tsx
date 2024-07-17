@@ -21,22 +21,36 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
       : [...(data as ImagesArray)];
 
   const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) => {
-      const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
-      const nearEndOfPictures = nextIndex === images.length - 3;
+    const imgElement = document.getElementById("cat-img") as HTMLImageElement;
 
-      if (nearEndOfPictures) {
-        dispatch(near());
-      }
+    imgElement.classList.add("fade-out");
 
-      return nextIndex;
-    });
+    setTimeout(() => {
+      setCurrentImageIndex((prevIndex) => {
+        const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
+        const nearEndOfPictures = nextIndex === images.length - 3;
+
+        if (nearEndOfPictures) {
+          dispatch(near());
+        }
+
+        imgElement.classList.remove("fade-out");
+        return nextIndex;
+      });
+    }, 500); // The timeout value should match the transition duration (0.5s in this case)
   };
 
   const goToPreviousImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
+    const imgElement = document.getElementById("cat-img") as HTMLImageElement;
+
+    imgElement.classList.add("fade-out");
+
+    setTimeout(() => {
+      setCurrentImageIndex((prevIndex) => {
+        imgElement.classList.remove("fade-out");
+        return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
+      });
+    }, 500); // The timeout value should match the transition duration (0.5s in this case)
   };
 
   useEffect(() => {
@@ -113,6 +127,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
         {images.length > 0 && (
           <div className="image-container ">
             <img
+              key={`carousel-image-${currentImageIndex}`}
               id="cat-img"
               src={images[currentImageIndex]}
               alt="carousel-image"
