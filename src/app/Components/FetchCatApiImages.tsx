@@ -25,21 +25,21 @@ interface AvailableApi {
   catapi: any;
   nekoapi: Actions;
   dogapi: Actions;
-  placedogapi:Actions;
-  placekittenapi:Actions;
-  placebearapi:Actions;
-  duckapi:Actions;
+  placedogapi: Actions;
+  placekittenapi: Actions;
+  placebearapi: Actions;
+  duckapi: Actions;
 }
 
 const FetchCatApiImages = () => {
   const selectedApi = useSelector<state, keyof AvailableApi>(
-    (state) => state.selectedApi
+    (state) => state.selectedApi,
   );
   const dispatch = useDispatch<Dispatch<any>>();
 
   useEffect(() => {
-    if (selectedApi !=='shibe' && selectedApi !=='catapi') {
-      dispatch(fetchAnimalImages(selectedApi))
+    if (selectedApi !== "shibe" && selectedApi !== "catapi") {
+      dispatch(fetchAnimalImages(selectedApi));
     }
     // if (selectedApi === "nekoapi") {
     //   dispatch(fetchNekoImages(10));
@@ -58,7 +58,7 @@ const FetchCatApiImages = () => {
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        dispatch(fetchAnimalImages('nekoapi'));
+        dispatch(fetchAnimalImages("nekoapi"));
       },
     },
     dogapi: {
@@ -66,39 +66,39 @@ const FetchCatApiImages = () => {
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        dispatch(fetchAnimalImages('dogapi'));
+        dispatch(fetchAnimalImages("dogapi"));
       },
     },
-    placedogapi:{
+    placedogapi: {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        dispatch(fetchAnimalImages('placedogapi'));
+        dispatch(fetchAnimalImages("placedogapi"));
       },
     },
-    placekittenapi:{
+    placekittenapi: {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        ()=>{}
+        () => {};
       },
     },
-    placebearapi:{
+    placebearapi: {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        ()=>{}
+        () => {};
       },
     },
-    duckapi:{
+    duckapi: {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        dispatch(fetchAnimalImages('duckapi'));
+        dispatch(fetchAnimalImages("duckapi"));
       },
     },
   };

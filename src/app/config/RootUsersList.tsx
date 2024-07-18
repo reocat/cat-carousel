@@ -8,7 +8,9 @@ type Users = Array<{
   data: string;
 }>;
 
-const Users:React.FC<{setLoading:(state:boolean)=>void}> = ({ setLoading }) => {
+const Users: React.FC<{ setLoading: (state: boolean) => void }> = ({
+  setLoading,
+}) => {
   const [users, setUsers] = useState<Users>([]);
   useEffect(() => {
     setLoading(true);
@@ -37,8 +39,8 @@ const Users:React.FC<{setLoading:(state:boolean)=>void}> = ({ setLoading }) => {
         </span> is <span className="text-emerald-800">{user.id}</span>,{" "}
         <span className=" text-red-700 italic font-bold">UID</span> is{" "}
         {user.data}{" "}
-      </li>
-    )
+      </li>,
+    ),
   );
   return <ul className="flex flex-col justify-start gap-y-3">{newUsers}</ul>;
 };
@@ -51,8 +53,8 @@ export const RootUsersList = () => {
         <div className="mb-3 w-full">Root Users</div>
         {loading && (
           <div className="w-full flex flex-col justify-start h-100 bg-white items-stretch p-2 rounded-md justify">
-            <Skeleton className="w-full" animation={'wave'}/>
-            <Skeleton className="w-full" /> 
+            <Skeleton className="w-full" animation={"wave"} />
+            <Skeleton className="w-full" />
             <Skeleton className="w-full" />
           </div>
         )}

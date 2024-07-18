@@ -13,7 +13,7 @@ import { fetchPlaceBearApi } from "./api/placebearapi";
 import { fetchDuckApi } from "./api/duckapi";
 
 type FetchImages = (
-  animalType: state["selectedApi"]
+  animalType: state["selectedApi"],
 ) => (dispatch: Dispatch) => Promise<void>;
 
 // export const fetchNekoImages:FetchImages = () => async (dispatch: Dispatch) => {
@@ -71,7 +71,7 @@ export const fetchAnimalImages: FetchImages =
         dispatch(setLoading());
         const urls = await fetchPlaceKittenApi();
         console.log(urls);
-        
+
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));
@@ -82,7 +82,7 @@ export const fetchAnimalImages: FetchImages =
         dispatch(setLoading());
         const urls = await fetchPlaceBearApi();
         console.log(urls);
-        
+
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));
@@ -93,7 +93,7 @@ export const fetchAnimalImages: FetchImages =
         dispatch(setLoading());
         const urls = await fetchDuckApi();
         console.log(urls);
-        
+
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));

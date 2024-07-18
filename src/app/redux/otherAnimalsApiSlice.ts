@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { state } from "../types";
 
-
 interface otherAnimalsApiSlice {
   data: string[];
   loading: boolean;

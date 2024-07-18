@@ -1,7 +1,7 @@
 export const fetchPurrBotApiImages = async () => {
   try {
-    const numImages:number = 10; // Number of images to fetch per request
-    const endpoints:string[] = [
+    const numImages: number = 10; // Number of images to fetch per request
+    const endpoints: string[] = [
       "smile",
       "slap",
       "pout",
@@ -12,11 +12,12 @@ export const fetchPurrBotApiImages = async () => {
       "lay",
       "kiss",
     ];
-    const type:string = "gif";
-    const plushie:string = endpoints[Math.floor(Math.random() * endpoints.length)];
+    const type: string = "gif";
+    const plushie: string =
+      endpoints[Math.floor(Math.random() * endpoints.length)];
     const apiUrl =
       "https://purrbot.sunflowers-warp.workers.dev/sfw/" + plushie + "/" + type;
-    const images:Array<string> = [];
+    const images: Array<string> = [];
 
     for (let i = 0; i < numImages; i++) {
       const response = await fetch(apiUrl);

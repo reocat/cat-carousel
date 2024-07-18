@@ -1,7 +1,8 @@
 "use client";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
-  hellStateReducer, loginStateReducer,
+  hellStateReducer,
+  loginStateReducer,
   nearStateReducer,
   selectedApiReducer,
   selectedColorReducer,
@@ -24,7 +25,7 @@ import { otherAnimalsApiReducer } from "./otherAnimalsApiSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["selectedApi", "selectedColor","login"],
+  whitelist: ["selectedApi", "selectedColor", "login"],
 };
 
 const rootReducer = combineReducers({
@@ -33,7 +34,7 @@ const rootReducer = combineReducers({
   selectedApi: selectedApiReducer,
   selectedColor: selectedColorReducer,
   otheranimalapi: otherAnimalsApiReducer,
-  login:loginStateReducer,
+  login: loginStateReducer,
   [catapi.reducerPath]: catapi.reducer,
   [shibeApi.reducerPath]: shibeApi.reducer,
 });
