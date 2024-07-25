@@ -113,7 +113,7 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
       )}
       {selectedMusic === "synth" && (
         <ReactPlayer
-          url="http://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5"
+          url="https://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5"
           playing={true}
           loop={true}
           width={0}
