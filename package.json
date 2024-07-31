@@ -22,7 +22,7 @@
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/react-redux": "^7.1.33",
-    "@typescript-eslint/parser": "^7.16.1",
+    "@typescript-eslint/parser": "^8.0.0",
     "animate.css": "^4.1.1",
     "async_hooks": "^1.0.0",
     "autoprefixer": "^10.4.19",
