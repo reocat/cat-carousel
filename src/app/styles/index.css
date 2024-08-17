@@ -1,7 +1,5 @@
 @import "tailwindcss/base";
-
 @import "tailwindcss/components";
-
 @import "tailwindcss/utilities";
 
 body {
@@ -48,8 +46,8 @@ h1 {
 }
 
 .image-container {
-  width: 900px; /* Adjust the container width as needed */
-  height: 600px; /* Adjust the container height as needed */
+  width: 900px;
+  height: 600px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -61,10 +59,15 @@ h1 {
   box-shadow: 0 0 5px rgb(123, 63, 0);
 }
 
-.nyan {
-  background-image: url("../gif/nyan-bg.gif");
-  background-size: 100%;
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Ensure the video is behind all other content */
 }
 
 .page-container {
@@ -93,30 +96,21 @@ h1 {
   background-color: #fff;
   font-size: 18px;
   text-align: center;
-  line-height: 35px; /* Added line-height*/
-  top: 50%; /* Added top */
-  transform: translateY(-50%); /* Added transform */
-}
-
-.retro {
-  background: url("../gif/retro-bg.gif");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  line-height: 35px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .btn-prev {
-  top: 50%; /* Adjusted to 50% */
+  top: 50%;
   left: 5%;
   padding: 5px;
-  /* Added to center vertically */
 }
 
 .btn-next {
-  top: 50%; /* Adjusted to 50% */
+  top: 50%;
   right: 5%;
   padding: 5px;
-  /* Added to center vertically */
 }
 
 .tooltip {
@@ -127,8 +121,8 @@ h1 {
 
 @media (max-width: 900px) {
   .image-container {
-    width: 95%; /* Adjust the container width as needed for mobile */
-    height: auto; /* Adjust the container height as needed for mobile */
+    width: 95%;
+    height: auto;
     margin: 10px;
     border-radius: 15px;
     border: 1px solid #ccc;
@@ -143,13 +137,10 @@ h1 {
     font-size: 24px !important;
   }
 
-  .retro {
-    background-image: url("../gif/phone-bg.gif");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  .background-video {
+    object-fit: cover;
   }
-
+  
   .h1-retro {
     font-family: "OverdriveAvenue";
     vertical-align: text-top;
@@ -220,10 +211,8 @@ h1 {
     )
     0 0/100% 200%;
   border-color: transparent transparent;
-
   color: #fff;
   border-radius: 10px;
   padding: 5px;
-
   font-size: 15px;
-}
+} 

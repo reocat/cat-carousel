@@ -1,8 +1,6 @@
-"use client";
-import React from "react";
-import { ReactNode, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { ReactNode } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { state } from "../types";
 import { toggle } from "../redux/reducers";
 import ReactPlayer from "react-player";
@@ -14,49 +12,88 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-interface MagicRainbowButtonProps {
-  children: ReactNode;
+// Type definition for BackgroundVideo props
+interface BackgroundVideoProps {
+  src: string;
 }
 
-// Define a function to apply retro styling
-const retro = () => {
-  const body = document.body;
-  const title = document.getElementById("pagetitle");
+// BackgroundVideo component with type-checked props
+const BackgroundVideo: React.FC<BackgroundVideoProps> = ({ src }) => {
+  return (
+    <video autoPlay loop muted playsInline className="background-video">
+      <source src={src} type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+  );
+};
 
-  body.classList.toggle("nyan");
+// Function to apply retro styling
+const retro = () => {
+  const title = document.getElementById("pagetitle");
 
   if (title) {
     title.classList.toggle("h1");
     title.classList.toggle("h1-retro");
   }
-
-  body.classList.toggle("retro");
 };
+
+interface MagicRainbowButtonProps {
+  children: ReactNode;
+}
 
 export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
   children,
 }) => {
-  // Access Redux store
   const dispatch = useDispatch();
   const hellState = useSelector((state: state) => state.hell);
-  const [selectedMusic, setSelectedMusic] = useState(""); // New state variable
+  const [selectedMusic, setSelectedMusic] = useState<string>(""); // Specify type as string
+  const [backgroundVideo, setBackgroundVideo] = useState<string>(""); // Specify type as string
 
   // Handle music selection
   const handleMusicSelection = (event: SelectChangeEvent) => {
     const selectedValue = event.target.value;
     setSelectedMusic(selectedValue);
+
+    const isPhoneScreen = window.innerWidth <= 900;
+
     if (selectedValue === "synth") {
-      retro(); // Apply retro styling for "synth" selection
+      retro();
+      setBackgroundVideo(isPhoneScreen ? "/bg/phone-bg.webm" : "/bg/retro-bg.webm");
+    } else if (hellState.active) {
+      setBackgroundVideo("/bg/nyan-bg.webm");
     }
   };
 
-  // Component to return
+  // Handle button click
+  const handleButtonClick = () => {
+    dispatch(toggle());
+
+    if (!hellState.active) {
+      setBackgroundVideo("/bg/nyan-bg.webm");
+    } else {
+      setBackgroundVideo("");
+    }
+  };
+
+  useEffect(() => {
+    const updateBackgroundVideo = () => {
+      if (selectedMusic === "synth") {
+        setBackgroundVideo(window.innerWidth <= 900 ? "/bg/phone-bg.webm" : "/bg/retro-bg.webm");
+      }
+    };
+
+    window.addEventListener("resize", updateBackgroundVideo);
+
+    return () => {
+      window.removeEventListener("resize", updateBackgroundVideo);
+    };
+  }, [selectedMusic]);
+
   const ElToReturn = () => (
     <>
+      {backgroundVideo && <BackgroundVideo src={backgroundVideo} />}
       <button
-        onClick={() => {
-          dispatch(toggle());
-        }}
+        onClick={handleButtonClick}
         id="rainbow-button"
         className={"nnn-button"}
       >
@@ -83,7 +120,6 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
           </Select>
         </FormControl>
       )}
-      {/* ReactPlayer components for different music selections */}
       {selectedMusic === "lo-fi" && (
         <ReactPlayer
           url="https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de"
