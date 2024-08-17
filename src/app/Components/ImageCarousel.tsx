@@ -17,7 +17,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
   const { ref, inView } = useInView({
-    triggerOnce: true, // Load the image only once when it first enters the viewport
+    triggerOnce: true,
   });
 
   const images: ImagesArray =
@@ -26,36 +26,21 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
       : [...(data as ImagesArray)];
 
   const goToNextImage = () => {
-    const imgElement = document.getElementById("cat-img") as HTMLImageElement;
+    setCurrentImageIndex((prevIndex) => {
+      const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
+      const nearEndOfPictures = nextIndex === images.length - 3;
 
-    imgElement.classList.add("fade-out");
-
-    setTimeout(() => {
-      setCurrentImageIndex((prevIndex) => {
-        const nextIndex = prevIndex === images.length - 1 ? 0 : prevIndex + 1;
-        const nearEndOfPictures = nextIndex === images.length - 3;
-
-        if (nearEndOfPictures) {
-          dispatch(near());
-        }
-
-        imgElement.classList.remove("fade-out");
-        return nextIndex;
-      });
-    }, 500);
+      if (nearEndOfPictures) {
+        dispatch(near());
+      }
+      return nextIndex;
+    });
   };
 
   const goToPreviousImage = () => {
-    const imgElement = document.getElementById("cat-img") as HTMLImageElement;
-
-    imgElement.classList.add("fade-out");
-
-    setTimeout(() => {
-      setCurrentImageIndex((prevIndex) => {
-        imgElement.classList.remove("fade-out");
-        return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
-      });
-    }, 500);
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
   };
 
   useEffect(() => {
@@ -78,7 +63,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [color, dispatch, goToNextImage, goToPreviousImage]);
+  }, [color, dispatch]);
 
   useEffect(() => {
     const konamiCode = [
@@ -109,7 +94,8 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
 
       if (konamiCodePosition === konamiCode.length) {
         dispatch(selectApi("nekoapi"));
-        alert(`Nyan! Please, refresh this page! selectedApi: nekoapi`);
+        // Replace alert with a non-blocking notification
+        console.log("Nyan! Please, refresh this page! selectedApi: nekoapi");
 
         konamiCodePosition = 0;
       }
@@ -126,16 +112,18 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     return (
       <div className="carousel">
         {images.length > 0 && (
-          <div className="image-container ">
-            <img
-              key={`carousel-image-${currentImageIndex}`}
-              id="cat-img"
-              ref={ref} // Attach the ref for lazy loading
-              src={inView ? images[currentImageIndex] : undefined} // Load image only if in view
-              alt="carousel-image"
-              className="carousel-image"
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-            />
+          <div className="image-container">
+            <div className="aspect-ratio-box">
+              <img
+                key={`carousel-image-${currentImageIndex}`}
+                id="cat-img"
+                ref={ref}
+                src={inView ? images[currentImageIndex] : undefined}
+                alt="carousel-image"
+                className="carousel-image fade"
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              />
+            </div>
           </div>
         )}
         <div
