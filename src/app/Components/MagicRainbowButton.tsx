@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { ReactNode } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { state } from "../types";
@@ -12,20 +12,8 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-// Type definition for BackgroundVideo props
-interface BackgroundVideoProps {
-  src: string;
-}
-
-// BackgroundVideo component with type-checked props
-const BackgroundVideo: React.FC<BackgroundVideoProps> = ({ src }) => {
-  return (
-    <video autoPlay loop muted playsInline className="background-video">
-      <source src={src} type="video/webm" />
-      Your browser does not support the video tag.
-    </video>
-  );
-};
+// Lazy load the BackgroundVideo component
+const BackgroundVideo = lazy(() => import("./BackgroundVideo"));
 
 // Function to apply retro styling
 const retro = () => {
@@ -46,8 +34,8 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
 }) => {
   const dispatch = useDispatch();
   const hellState = useSelector((state: state) => state.hell);
-  const [selectedMusic, setSelectedMusic] = useState<string>(""); // Specify type as string
-  const [backgroundVideo, setBackgroundVideo] = useState<string>(""); // Specify type as string
+  const [selectedMusic, setSelectedMusic] = useState<string>(""); 
+  const [backgroundVideo, setBackgroundVideo] = useState<string>("");
 
   // Handle music selection
   const handleMusicSelection = (event: SelectChangeEvent) => {
@@ -91,7 +79,11 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
 
   const ElToReturn = () => (
     <>
-      {backgroundVideo && <BackgroundVideo src={backgroundVideo} />}
+      {backgroundVideo && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <BackgroundVideo src={backgroundVideo} />
+        </Suspense>
+      )}
       <button
         onClick={handleButtonClick}
         id="rainbow-button"
