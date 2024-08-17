@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { near, selectApi } from "@/app/redux/reducers";
 import { state } from "../types";
 import { Skeleton } from "@mui/material";
@@ -15,6 +16,10 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
   const color = useSelector((state: state) => state.selectedColor) || "white";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const dispatch = useDispatch();
+  const { ref, inView } = useInView({
+    triggerOnce: true, // Load the image only once when it first enters the viewport
+  });
+
   const images: ImagesArray =
     typeof Object.values(data)[0] === "object"
       ? [...(data as ImagesObject).map((i) => i.url)]
@@ -37,7 +42,7 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
         imgElement.classList.remove("fade-out");
         return nextIndex;
       });
-    }, 500); // The timeout value should match the transition duration (0.5s in this case)
+    }, 500);
   };
 
   const goToPreviousImage = () => {
@@ -50,13 +55,12 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
         imgElement.classList.remove("fade-out");
         return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
       });
-    }, 500); // The timeout value should match the transition duration (0.5s in this case)
+    }, 500);
   };
 
   useEffect(() => {
     document.body.style.backgroundColor = color;
 
-    // Event listener for carousel navigation
     function onKeyDown(e: KeyboardEvent) {
       const keyPressed = e.key;
 
@@ -71,7 +75,6 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
 
     document.addEventListener("keydown", onKeyDown);
 
-    // Cleanup function to remove event listener on component unmount
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
@@ -92,7 +95,6 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
     ];
     let konamiCodePosition = 0;
 
-    // Event listener for Konami Code detection
     function onKeyDown(e: KeyboardEvent) {
       const keyPressed = e.key;
 
@@ -115,7 +117,6 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
 
     document.addEventListener("keydown", onKeyDown);
 
-    // Cleanup function to remove event listener on component unmount
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
@@ -129,7 +130,8 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
             <img
               key={`carousel-image-${currentImageIndex}`}
               id="cat-img"
-              src={images[currentImageIndex]}
+              ref={ref} // Attach the ref for lazy loading
+              src={inView ? images[currentImageIndex] : undefined} // Load image only if in view
               alt="carousel-image"
               className="carousel-image"
               style={{ objectFit: "cover", width: "100%", height: "100%" }}
