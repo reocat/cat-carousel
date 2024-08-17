@@ -94,7 +94,6 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
 
       if (konamiCodePosition === konamiCode.length) {
         dispatch(selectApi("nekoapi"));
-        // Replace alert with a non-blocking notification
         console.log("Nyan! Please, refresh this page! selectedApi: nekoapi");
 
         konamiCodePosition = 0;
@@ -113,17 +112,14 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
       <div className="carousel">
         {images.length > 0 && (
           <div className="image-container">
-            <div className="aspect-ratio-box">
-              <img
-                key={`carousel-image-${currentImageIndex}`}
-                id="cat-img"
-                ref={ref}
-                src={inView ? images[currentImageIndex] : undefined}
-                alt="carousel-image"
-                className="carousel-image fade"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              />
-            </div>
+            <img
+              key={`carousel-image-${currentImageIndex}`}
+              id="cat-img"
+              ref={ref}
+              src={inView ? images[currentImageIndex] : undefined}
+              alt="carousel-image"
+              className="carousel-image fade"
+            />
           </div>
         )}
         <div
