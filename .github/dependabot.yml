@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # or "yarn" depending on your project
+    directory: "/" # location of package.json
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "path-to-regexp"
+        versions: [">= 8.2.0"]
+    open-pull-requests-limit: 5
+    security-updates: true
