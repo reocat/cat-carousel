@@ -9,18 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fontsource/open-sans": "^5.0.20",
-    "@fontsource/poppins": "^5.0.8",
-    "axios": "^1.6.2",
+    "@fontsource/open-sans": "^5.1.0",
+    "@fontsource/poppins": "^5.1.0",
+    "axios": "^1.7.7",
     "bunx": "^0.1.0",
-    "floating-vue": "^2.0.0-beta.24",
+    "floating-vue": "^5.2.2",
     "oh-vue-icons": "^1.0.0-rc3",
-    "prettier": "^3.1.1",
-    "vue": "^3.3.11",
+    "prettier": "^3.3.3",
+    "vue": "^3.5.11",
     "vue-feather": "^2.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.5.2",
-    "vite": "^5.0.8"
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.8"
   }
 }
