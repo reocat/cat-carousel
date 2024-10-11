@@ -1,5 +1,4 @@
 /* Merged CSS Styles */
-
 .image-carousel {
   height: 100vh;
 }
@@ -21,6 +20,7 @@
   border-radius: 15px;
   border: 4px solid #646cff;
   box-shadow: 0 0 5px rgb(123, 63, 0);
+  position: relative; /* For button positioning */
 }
 
 .carousel-image {
@@ -49,28 +49,85 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  padding: 10px;
+  padding: 0; /* Remove padding to avoid arrow misalignment */
   border: none;
   border-radius: 50%;
-  z-index: 10px;
+  z-index: 10;
   cursor: pointer;
   background-color: #1a1a1a;
+  color: white; /* Ensure the arrow is visible */
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertically center the arrow */
+  justify-content: center; /* Horizontally center the arrow */
   font-size: 18px;
-  text-align: center;
-  line-height: 35px; /* Added line-height */
-  align-items: center;
-  justify-content: center;
 }
 
 .left-button {
-  left: 5%;
+  left: 10px; /* Position on the left side */
+  top: 50%;
+  transform: translateY(-50%); /* Vertically center */
 }
 
 .right-button {
-  right: 5%;
+  right: 10px; /* Position on the right side */
+  top: 50%;
+  transform: translateY(-50%); /* Vertically center */
 }
 
-/* End of Merged CSS Styles */
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+  .left-button, .right-button {
+    width: 30px; /* Smaller buttons on mobile */
+    height: 30px;
+    font-size: 14px; /* Smaller arrow size */
+  }
+
+  .left-button {
+    left: 5px; /* Adjust for mobile spacing */
+  }
+
+  .right-button {
+    right: 5px; /* Adjust for mobile spacing */
+  }
+}
+
+/* New Mobile Tweaks */
+
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+  .image-carousel {
+    height: auto;
+  }
+
+  .image-container {
+    width: 90vw; /* Full width on mobile */
+    height: auto; /* Adjust height to be dynamic */
+    padding: 0; /* Remove extra padding */
+    margin: 0 auto; /* Center the image */
+    border: none; /* Remove border for mobile */
+  }
+
+  .carousel-image {
+    width: 100%; /* Ensure image takes full width */
+    height: auto; /* Adjust height proportionally */
+    object-fit: cover; /* Ensure the image scales properly */
+  }
+
+  .left-button, .right-button {
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Proper centering */
+  }
+
+  h1 {
+    font-size: 24px !important;
+  }
+
+  body {
+    padding: 0;
+    margin: 0;
+    row-gap: 10px; /* Decrease spacing between elements */
+  }
+}
 
 :root {
   color-scheme: light dark;
@@ -101,12 +158,7 @@ body {
   row-gap: 20px;
   margin-left: 1%;
   letter-spacing: 3px;
-}
-
-* {
-  padding: 0;
-  box-sizing: border-box;
-  text-align: center;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 h1 {
@@ -120,7 +172,7 @@ button {
   position: absolute;
   padding: 10px;
   border: none;
-  z-index: 10px;
+  z-index: 10;
   cursor: pointer;
   background-color: #1a1a1a;
   font-size: 18px;
@@ -143,9 +195,11 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
