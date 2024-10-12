@@ -1,4 +1,18 @@
-/* Merged CSS Styles */
+* {
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: "04b03";
+}
+
+h1 {
+  font-family: "Nokia FC 22";
+  vertical-align: text-top;
+  color: #5c4033;
+  background-clip: text;
+  text-shadow: 1px 1px 2px sandybrown;
+}
+
 .image-carousel {
   height: 100vh;
 }
@@ -26,6 +40,15 @@
 .carousel-image {
   width: 100%;
   height: 100%;
+}
+
+.carousel-image {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.carousel-image.fade-out {
+  opacity: 0;
 }
 
 .carousel-button {
@@ -130,9 +153,9 @@
 }
 
 :root {
-  color-scheme: light dark;
+  color-scheme: white;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -164,8 +187,6 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #7339ef;
-  font-family: "Poppins", sans-serif;
 }
 
 button {
