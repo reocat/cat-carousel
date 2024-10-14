@@ -43,6 +43,37 @@
       </div>
     </div>
   </v-container>
+  <div class="d-flex justify-space-around">
+    <v-btn variant="text" @click="show = !show">
+      Authors
+      <v-tooltip
+        activator="parent"
+        location="top"
+        open-delay="200"
+        close-delay="200"
+        content-class="custom-tooltip"
+      >
+        <span>
+          Made by
+          <a
+            href="https://github.com/reocat"
+            target="_blank"
+            class="links"
+          >
+            reocat
+          </a>
+          and
+          <a
+            href="https://github.com/L1ttleWizard"
+            target="_blank"
+            class="links"
+          >
+            L1ttleWizard
+          </a>
+        </span>
+      </v-tooltip>
+    </v-btn>
+  </div>
 </template>
 
 <script>
