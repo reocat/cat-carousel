@@ -10,7 +10,6 @@
     "@mdi/font": "7.4.47",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
-    "vue-feather": "^2.0.0",
     "vuetify": "^3.6.11"
   },
   "devDependencies": {
