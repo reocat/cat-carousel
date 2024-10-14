@@ -1,25 +1,13 @@
-<!-- App.vue -->
 <template>
-  <div id="app">
-    <ImageCarousel />
-  </div>
+  <v-app>
+    <v-main>
+      <div id="app">
+        <ImageCarousel />
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
-<script>
-import ImageCarousel from "./components/ImageCarousel.vue";
-
-export default {
-  components: {
-    ImageCarousel,
-  },
-};
+<script setup lang="ts">
+//
 </script>
-
-<style>
-#app {
-  text-align: center;
-  color: #2c3e50;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  margin-top: 60px;
-}
-</style>

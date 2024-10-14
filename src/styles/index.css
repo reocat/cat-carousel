@@ -1,20 +1,104 @@
+/* Global Styles */
 * {
-  padding: 0;
   box-sizing: border-box;
-  text-align: center;
   font-family: "04b03";
+  padding: 0;
+  text-align: center;
 }
 
+:root {
+  background-color: white;
+  color: rgba(255, 255, 255, 0.87);
+  color-scheme: white;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Typography */
 h1 {
-  font-family: "Nokia FC 22";
-  vertical-align: text-top;
-  color: #5c4033;
   background-clip: text;
+  color: #5c4033;
+  font-family: "Nokia FC 22";
+  font-size: 19px;
+  margin-top: 64px;
   text-shadow: 1px 1px 2px sandybrown;
+  vertical-align: text-top;
 }
 
+a {
+  color: #646cff;
+  font-weight: 500;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+/* Image Carousel */
 .image-carousel {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/*
+.image-container {
+  align-items: center;
+  aspect-ratio: 16 / 9;
+  border: 3px solid #382302;
+  border-radius: 15px;
+  box-shadow: 0 0 5px rgb(123, 63, 0);
+  display: flex;
+  height: auto;
+  margin: 0 auto;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
+*/
+
+.image-container {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 3px solid #382302;
+  border-radius: 15px;
+  box-shadow: 0 0 5px rgb(123, 63, 0);
+  position: relative;
+}
+
+
+.carousel-image {
+  height: auto;
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  width: 100%;
+}
+
+.carousel-image.fade-out {
+  opacity: 0;
 }
 
 .loading {
@@ -22,40 +106,12 @@ h1 {
   text-align: center;
 }
 
-.image-container {
-  width: 900px; /* Adjust the container width as needed */
-  height: 600px; /* Adjust the container height as needed */
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1px;
-  margin: 10px;
-  border-radius: 15px;
-  border: 4px solid #646cff;
-  box-shadow: 0 0 5px rgb(123, 63, 0);
-  position: relative; /* For button positioning */
-}
-
-.carousel-image {
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-image {
-  transition: opacity 0.5s ease-in-out;
-  opacity: 1;
-}
-
-.carousel-image.fade-out {
-  opacity: 0;
-}
-
+/* Carousel Buttons */
 .carousel-button {
-  margin: 10px;
-  padding: 5px 10px;
   cursor: pointer;
   font-size: 1rem;
+  margin: 10px;
+  padding: 5px 10px;
 }
 
 .carousel-button:hover {
@@ -70,151 +126,106 @@ h1 {
 .left-button,
 .right-button {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  padding: 0; /* Remove padding to avoid arrow misalignment */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
   border: none;
   border-radius: 50%;
-  z-index: 10;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  background-color: #1a1a1a;
-  color: white; /* Ensure the arrow is visible */
-  display: flex; /* Use flexbox for centering */
-  align-items: center; /* Vertically center the arrow */
-  justify-content: center; /* Horizontally center the arrow */
-  font-size: 18px;
+  z-index: 10;
 }
-
 .left-button {
-  left: 10px; /* Position on the left side */
-  top: 50%;
-  transform: translateY(-50%); /* Vertically center */
+  left: 10px;
 }
 
 .right-button {
-  right: 10px; /* Position on the right side */
-  top: 50%;
-  transform: translateY(-50%); /* Vertically center */
+  right: 10px;
 }
 
-/* Mobile-specific styles */
-@media (max-width: 600px) {
-  .left-button, .right-button {
-    width: 30px; /* Smaller buttons on mobile */
-    height: 30px;
-    font-size: 14px; /* Smaller arrow size */
-  }
-
-  .left-button {
-    left: 5px; /* Adjust for mobile spacing */
-  }
-
-  .right-button {
-    right: 5px; /* Adjust for mobile spacing */
-  }
+/* Toolbar */
+.v-toolbar {
+  background-color: #ffffff;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1000;
 }
 
-/* New Mobile Tweaks */
+.v-toolbar-title {
+  font-size: 1.5rem;
+  margin: 0 auto;
+  text-align: center;
+}
 
-/* Mobile-specific styles */
+/* Media Queries */
 @media (max-width: 600px) {
-  .image-carousel {
-    height: auto;
-  }
-
-  .image-container {
-    width: 90vw; /* Full width on mobile */
-    height: auto; /* Adjust height to be dynamic */
-    padding: 0; /* Remove extra padding */
-    margin: 0 auto; /* Center the image */
-    border: none; /* Remove border for mobile */
-  }
-
-  .carousel-image {
-    width: 100%; /* Ensure image takes full width */
-    height: auto; /* Adjust height proportionally */
-    object-fit: cover; /* Ensure the image scales properly */
-  }
-
-  .left-button, .right-button {
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Proper centering */
+  body {
+    margin: 0;
+    padding: 0;
+    padding-top: 56px;
+    row-gap: 10px;
   }
 
   h1 {
     font-size: 24px !important;
+    margin-top: 56px;
   }
 
-  body {
+  .image-carousel {
+    height: calc(100vh - 56px);
+  }
+
+  .image-container {
+    border: none;
+    height: auto;
+    margin: 0 auto;
     padding: 0;
-    margin: 0;
-    row-gap: 10px; /* Decrease spacing between elements */
+    width: 90vw;
   }
-}
 
-:root {
-  color-scheme: white;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: white;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  .carousel-image {
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
+  .left-button,
+  .right-button {
+    font-size: 14px;
+    height: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+  }
 
-a:hover {
-  color: #535bf2;
-}
+  .left-button {
+    left: 5px;
+  }
 
-body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  row-gap: 20px;
-  margin-left: 1%;
-  letter-spacing: 3px;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
+  .right-button {
+    right: 5px;
+  }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+  .v-toolbar-title {
+    font-size: 1.2rem;
+  }
 
-button {
-  position: absolute;
-  padding: 10px;
-  border: none;
-  z-index: 10;
-  cursor: pointer;
-  background-color: #1a1a1a;
-  font-size: 18px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  .v-toolbar {
+    padding-left: 10px;
+  }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
     background-color: #ffffff;
+    color: #213547;
   }
 
   a:hover {

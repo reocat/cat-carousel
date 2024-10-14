@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <h1>Random Cat Image Carousel</h1>
+  <v-app-bar :height="appBarHeight">
+    <v-btn icon href="https://github.com/reocat/cat-carousel" target="_blank">
+      <v-icon>mdi-github</v-icon>
+    </v-btn>
+    <v-toolbar-title>Cat Carousel</v-toolbar-title>
+    <v-btn icon>
+      <v-icon>mdi-login</v-icon>
+    </v-btn>
+  </v-app-bar>
+  <h1>Random Cat Image Carousel</h1>
+  <v-container class="fill-height">
     <div class="image-carousel">
       <div v-if="loading" class="loading">Loading...</div>
       <div v-else class="image-container">
@@ -30,66 +39,77 @@
         </button>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
+import { ref, onMounted, computed, watch } from 'vue';
 import { fetchCatApiImages } from "../api/catapi";
 import VueFeather from "vue-feather";
-import "@fontsource/poppins/800.css";
 
 export default {
   components: {
     "vue-feather": VueFeather,
   },
-  data() {
-    return {
-      loading: true,
-      images: [],
-      currentIndex: 0,
+  setup() {
+    const loading = ref(true);
+    const images = ref([]);
+    const currentIndex = ref(0);
+    const appBarHeight = ref(64); // Default to desktop height
+
+    const updateAppBarHeight = () => {
+      appBarHeight.value = window.innerWidth <= 600 ? 56 : 64;
     };
-  },
-  async mounted() {
-    try {
-      await this.loadImages();
-    } catch (error) {
-      this.loading = false;
-    }
-  },
-  computed: {
-    currentImage() {
-      return this.images.length ? this.images[this.currentIndex] : null;
-    },
-  },
-  watch: {
-    currentIndex(newValue) {
-      if (newValue === this.images.length - 1) {
-        // When reaching the end, trigger auto-refresh
-        this.loadImages();
+
+    onMounted(() => {
+      loadImages();
+      updateAppBarHeight();
+      window.addEventListener('resize', updateAppBarHeight);
+    });
+
+    const currentImage = computed(() => {
+      return images.value.length ? images.value[currentIndex.value] : null;
+    });
+
+    watch(currentIndex, (newValue) => {
+      if (newValue === images.value.length - 1) {
+        loadImages();
       }
-    },
-  },
-  methods: {
-    async loadImages() {
-      this.loading = true;
+    });
+
+    const loadImages = async () => {
+      loading.value = true;
       try {
         const newImages = await fetchCatApiImages();
-        this.images = [...this.images, ...newImages];
-        this.loading = false;
+        images.value = [...images.value, ...newImages];
+        loading.value = false;
       } catch (error) {
-        this.loading = false;
+        console.error('Error loading images:', error);
+        loading.value = false;
       }
-    },
-    nextImage() {
-      if (this.currentIndex < this.images.length - 1) {
-        this.currentIndex += 1;
+    };
+
+    const nextImage = () => {
+      if (currentIndex.value < images.value.length - 1) {
+        currentIndex.value += 1;
       }
-    },
-    prevImage() {
-      if (this.currentIndex > 0) {
-        this.currentIndex -= 1;
+    };
+
+    const prevImage = () => {
+      if (currentIndex.value > 0) {
+        currentIndex.value -= 1;
       }
-    },
+    };
+
+    return {
+      loading,
+      images,
+      currentIndex,
+      currentImage,
+      appBarHeight,
+      nextImage,
+      prevImage,
+    };
   },
 };
 </script>
