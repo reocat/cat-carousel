@@ -19,22 +19,25 @@
           class="carousel-button left-button"
         >
           <span>
-            <vue-feather type="arrow-left" class="icon" />
+            <v-icon>mdi-arrow-left</v-icon>
           </span>
         </button>
-        <img
-          :src="currentImage"
-          alt="cat-image"
-          class="carousel-image"
-          rel="preload"
-        />
+        <transition name="fade" mode="out-in">
+          <img
+            :key="currentImage"
+            :src="currentImage"
+            alt="cat-image"
+            class="carousel-image"
+            rel="preload"
+          />
+        </transition>
         <button
           @click="nextImage"
           :disabled="currentIndex === images.length - 1"
           class="carousel-button right-button"
         >
           <span>
-            <vue-feather type="arrow-right" class="icon" />
+            <v-icon>mdi-arrow-right</v-icon>
           </span>
         </button>
       </div>
@@ -43,14 +46,10 @@
 </template>
 
 <script>
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
 import { fetchCatApiImages } from "../api/catapi";
-import VueFeather from "vue-feather";
 
 export default {
-  components: {
-    "vue-feather": VueFeather,
-  },
   setup() {
     const loading = ref(true);
     const images = ref([]);
@@ -61,10 +60,24 @@ export default {
       appBarHeight.value = window.innerWidth <= 600 ? 56 : 64;
     };
 
+    const handleKeydown = (event) => {
+      if (event.key === 'ArrowLeft') {
+        prevImage();
+      } else if (event.key === 'ArrowRight') {
+        nextImage();
+      }
+    };
+
     onMounted(() => {
       loadImages();
       updateAppBarHeight();
       window.addEventListener('resize', updateAppBarHeight);
+      window.addEventListener('keydown', handleKeydown);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', updateAppBarHeight);
+      window.removeEventListener('keydown', handleKeydown);
     });
 
     const currentImage = computed(() => {
