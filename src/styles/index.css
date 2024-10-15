@@ -21,7 +21,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
@@ -55,27 +55,9 @@ a:hover {
   align-items: center;
   width: 100%;
   max-width: 800px;
-  margin: 20px auto;
-  padding: 0 20px;
+  margin: 10px auto; /* Reduced margin */
+  padding: 0; /* Removed padding */
 }
-
-/*
-.image-container {
-  align-items: center;
-  aspect-ratio: 16 / 9;
-  border: 3px solid #382302;
-  border-radius: 15px;
-  box-shadow: 0 0 5px rgb(123, 63, 0);
-  display: flex;
-  height: auto;
-  margin: 0 auto;
-  max-width: 100%;
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
-  width: 100%;
-}
-*/
 
 .image-container {
   width: 100%;
@@ -87,7 +69,6 @@ a:hover {
   box-shadow: 0 0 5px rgb(123, 63, 0);
   position: relative;
 }
-
 
 .carousel-image {
   height: auto;
@@ -176,10 +157,6 @@ a:hover {
   h1 {
     font-size: 24px !important;
     margin-top: 56px;
-  }
-
-  .image-carousel {
-    height: calc(100vh - 56px);
   }
 
   .image-container {

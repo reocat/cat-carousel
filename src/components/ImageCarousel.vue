@@ -8,72 +8,85 @@
       <v-icon>mdi-login</v-icon>
     </v-btn>
   </v-app-bar>
-  <h1>Random Cat Image Carousel</h1>
-  <v-container class="fill-height">
-    <div class="image-carousel">
-      <div v-if="loading" class="loading">Loading...</div>
-      <div v-else class="image-container">
-        <button
-          @click="prevImage"
-          :disabled="currentIndex === 0"
-          class="carousel-button left-button"
-        >
-          <span>
-            <v-icon>mdi-arrow-left</v-icon>
-          </span>
-        </button>
-        <transition name="fade" mode="out-in">
-          <img
-            :key="currentImage"
-            :src="currentImage"
-            alt="cat-image"
-            class="carousel-image"
-            rel="preload"
-          />
-        </transition>
-        <button
-          @click="nextImage"
-          :disabled="currentIndex === images.length - 1"
-          class="carousel-button right-button"
-        >
-          <span>
-            <v-icon>mdi-arrow-right</v-icon>
-          </span>
-        </button>
-      </div>
-    </div>
+
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <h1>Random Cat Image Carousel</h1>
+      </v-col>
+    </v-row>
+
+    <v-row class="fill-height">
+      <v-col cols="12">
+        <div class="image-carousel">
+          <div v-if="loading" class="loading">Loading...</div>
+          <div v-else class="image-container">
+            <button
+              @click="prevImage"
+              :disabled="currentIndex === 0"
+              class="carousel-button left-button"
+            >
+              <span>
+                <v-icon>mdi-arrow-left</v-icon>
+              </span>
+            </button>
+            <transition name="fade" mode="out-in">
+              <img
+                :key="currentImage"
+                :src="currentImage"
+                alt="cat-image"
+                class="carousel-image"
+                rel="preload"
+              />
+            </transition>
+            <button
+              @click="nextImage"
+              :disabled="currentIndex === images.length - 1"
+              class="carousel-button right-button"
+            >
+              <span>
+                <v-icon>mdi-arrow-right</v-icon>
+              </span>
+            </button>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="12" class="d-flex justify-space-around">
+        <v-btn variant="text" @click="show = !show">
+          Authors
+          <v-tooltip
+            activator="parent"
+            location="top"
+            open-delay="200"
+            close-delay="200"
+            content-class="au-tooltip"
+          >
+            <span>
+              Made by
+              <a
+                href="https://github.com/reocat"
+                target="_blank"
+                class="links"
+              >
+                reocat
+              </a>
+              and
+              <a
+                href="https://github.com/L1ttleWizard"
+                target="_blank"
+                class="links"
+              >
+                L1ttleWizard
+              </a>
+            </span>
+          </v-tooltip>
+        </v-btn>
+      </v-col>
+    </v-row>
   </v-container>
-  <div class="d-flex justify-space-around">
-    <v-btn variant="text" @click="show = !show">
-      Authors
-      <v-tooltip
-        activator="parent"
-        location="top"
-        open-delay="200"
-        close-delay="200"
-        content-class="custom-tooltip"
-      >
-        <span>
-          Made by
-          <a
-            href="https://github.com/reocat"
-            target="_blank"
-            class="links"
-          >
-            reocat
-          </a>
-          and
-          <a
-            href="https://github.com/L1ttleWizard"
-            target="_blank"
-            class="links"
-          >
-            L1ttleWizard
-          </a>
-        </span>
-      </v-tooltip>
-    </v-btn>
-  </div>
 </template>
 
 <script>
