@@ -32,11 +32,11 @@
             </button>
             <transition name="fade" mode="out-in">
               <img
-                :key="currentImage"
-                :src="currentImage"
+                v-if="currentImage"
+                :key="currentIndex"
+                v-lazy="currentImage"
                 :alt="currentApi === 'catapi' ? 'cat-image' : 'fox-image'"
                 class="carousel-image"
-                rel="preload"
               />
             </transition>
             <button
@@ -84,6 +84,7 @@
 <script>
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
 import { useApiStore } from '../stores/useApiStore';
+import debounce from 'lodash/debounce';
 
 export default {
   setup() {
@@ -92,7 +93,7 @@ export default {
     const currentIndex = ref(0);
     const appBarHeight = ref(64);
     const apiStore = useApiStore();
-    const prefetchCount = 5; // Number of images to prefetch
+    const prefetchCount = 5;
 
     const updateAppBarHeight = () => {
       appBarHeight.value = window.innerWidth <= 600 ? 56 : 64;
@@ -117,6 +118,9 @@ export default {
         loading.value = false;
       }
     };
+
+    // Debounced version of loadImages
+    const debouncedLoadImages = debounce(loadImages, 300);
 
     const nextImage = () => {
       if (currentIndex.value < images.value.length - 1) {
@@ -146,11 +150,12 @@ export default {
     onBeforeUnmount(() => {
       window.removeEventListener('resize', updateAppBarHeight);
       window.removeEventListener('keydown', handleKeydown);
+      debouncedLoadImages.cancel();
     });
 
     watch(currentIndex, (newValue) => {
       if (newValue >= images.value.length - prefetchCount) {
-        loadImages(prefetchCount);
+        debouncedLoadImages(prefetchCount);
       }
     });
 
