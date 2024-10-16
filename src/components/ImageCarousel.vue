@@ -12,7 +12,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1>Random Cat Image Carousel</h1>
+        <h1>Random {{ currentApi === 'catapi' ? 'Cat' : 'Fox' }} Image Carousel</h1>
       </v-col>
     </v-row>
 
@@ -34,7 +34,7 @@
               <img
                 :key="currentImage"
                 :src="currentImage"
-                alt="cat-image"
+                :alt="currentApi === 'catapi' ? 'cat-image' : 'fox-image'"
                 class="carousel-image"
                 rel="preload"
               />
@@ -66,19 +66,11 @@
           >
             <span>
               Made by
-              <a
-                href="https://github.com/reocat"
-                target="_blank"
-                class="links"
-              >
+              <a href="https://github.com/reocat" target="_blank" class="links">
                 reocat
               </a>
               and
-              <a
-                href="https://github.com/L1ttleWizard"
-                target="_blank"
-                class="links"
-              >
+              <a href="https://github.com/L1ttleWizard" target="_blank" class="links">
                 L1ttleWizard
               </a>
             </span>
@@ -91,14 +83,16 @@
 
 <script>
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
-import { fetchCatApiImages } from "../api/catapi";
+import { useApiStore } from '../stores/useApiStore';
 
 export default {
   setup() {
     const loading = ref(true);
     const images = ref([]);
     const currentIndex = ref(0);
-    const appBarHeight = ref(64); // Default to desktop height
+    const appBarHeight = ref(64);
+    const apiStore = useApiStore();
+    const prefetchCount = 5; // Number of images to prefetch
 
     const updateAppBarHeight = () => {
       appBarHeight.value = window.innerWidth <= 600 ? 56 : 64;
@@ -112,36 +106,14 @@ export default {
       }
     };
 
-    onMounted(() => {
-      loadImages();
-      updateAppBarHeight();
-      window.addEventListener('resize', updateAppBarHeight);
-      window.addEventListener('keydown', handleKeydown);
-    });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('resize', updateAppBarHeight);
-      window.removeEventListener('keydown', handleKeydown);
-    });
-
-    const currentImage = computed(() => {
-      return images.value.length ? images.value[currentIndex.value] : null;
-    });
-
-    watch(currentIndex, (newValue) => {
-      if (newValue === images.value.length - 1) {
-        loadImages();
-      }
-    });
-
-    const loadImages = async () => {
-      loading.value = true;
+    const loadImages = async (count = prefetchCount) => {
+      if (!loading.value) loading.value = true;
       try {
-        const newImages = await fetchCatApiImages();
+        const newImages = await apiStore.fetchImages(count);
         images.value = [...images.value, ...newImages];
-        loading.value = false;
       } catch (error) {
         console.error('Error loading images:', error);
+      } finally {
         loading.value = false;
       }
     };
@@ -158,6 +130,30 @@ export default {
       }
     };
 
+    const currentImage = computed(() => {
+      return images.value.length ? images.value[currentIndex.value] : null;
+    });
+
+    const currentApi = computed(() => apiStore.selectedApi);
+
+    onMounted(() => {
+      loadImages();
+      updateAppBarHeight();
+      window.addEventListener('resize', updateAppBarHeight);
+      window.addEventListener('keydown', handleKeydown);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', updateAppBarHeight);
+      window.removeEventListener('keydown', handleKeydown);
+    });
+
+    watch(currentIndex, (newValue) => {
+      if (newValue >= images.value.length - prefetchCount) {
+        loadImages(prefetchCount);
+      }
+    });
+
     return {
       loading,
       images,
@@ -166,6 +162,7 @@ export default {
       appBarHeight,
       nextImage,
       prevImage,
+      currentApi,
     };
   },
 };

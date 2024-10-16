@@ -1,7 +1,7 @@
 /**
  * main.ts
  *
- * Bootstraps Vuetify and other plugins then mounts the App`
+ * Bootstraps Vuetify and other plugins then mounts the App
  */
 
 // Plugins
@@ -17,8 +17,40 @@ import { createApp } from 'vue'
 import './styles/index.css'
 import './styles/fonts.css'
 
-const app = createApp(App)
+// Pinia 
+import { createPinia } from 'pinia'; 
 
-registerPlugins(app)
+// Vue Router
+import { createRouter, createWebHistory } from 'vue-router';
 
-app.mount('#app')
+// Import your components for routing
+import ImageCarousel from '@/components/ImageCarousel.vue'; 
+import Config from '@/components/Config.vue'; 
+
+// Create a Pinia instance
+const pinia = createPinia();
+
+// Define routes
+const routes = [
+  { path: '/', component: ImageCarousel }, // Main carousel page
+  { path: '/config', component: Config }, // Configuration page
+];
+
+// Create Vue Router instance
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+// Create the app instance
+const app = createApp(App);
+
+// Use Pinia and Vue Router in the app
+app.use(pinia);
+app.use(router);
+
+// Register plugins (e.g., Vuetify)
+registerPlugins(app);
+
+// Mount the app
+app.mount('#app');
