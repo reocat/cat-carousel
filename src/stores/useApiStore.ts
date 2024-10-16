@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { fetchCatApiImages } from '../api/catapi';
 import { fetchFoxApiImages } from '../api/foxapi';
 import { fetchPurrBotApiImages } from '../api/purrbot';
+import { fetchNekoAPI } from '../api/nekos';
 
 export const useApiStore = defineStore('apiStore', {
   state: () => ({
@@ -19,7 +20,8 @@ export const useApiStore = defineStore('apiStore', {
         const apiMethods = {
             catapi: fetchCatApiImages,
             foxapi: fetchFoxApiImages,
-            purrbot: fetchPurrBotApiImages
+            purrbot: fetchPurrBotApiImages,
+            nekos: fetchNekoAPI
           };
           
           if (this.selectedApi in apiMethods) {

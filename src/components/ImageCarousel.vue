@@ -3,7 +3,7 @@
     <v-btn icon href="https://github.com/reocat/cat-carousel" target="_blank">
       <v-icon>mdi-github</v-icon>
     </v-btn>
-    <v-toolbar-title>Cat Carousel</v-toolbar-title>
+    <v-toolbar-title>{{ apiTitle }} Carousel</v-toolbar-title>
     <v-btn icon>
       <v-icon>mdi-login</v-icon>
     </v-btn>
@@ -12,7 +12,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1>Random {{ currentApi === 'catapi' ? 'Cat' : 'Fox' }} Image Carousel</h1>
+        <h1>Random {{ apiTitle }} Image Carousel</h1>
       </v-col>
     </v-row>
 
@@ -35,7 +35,7 @@
                 v-if="currentImage"
                 :key="currentIndex"
                 v-lazy="currentImage"
-                :alt="currentApi === 'catapi' ? 'cat-image' : 'fox-image'"
+                :alt="apiTitle.toLowerCase() + '-image'"
                 class="carousel-image"
               />
             </transition>
@@ -92,7 +92,7 @@ export default {
     const images = ref([]);
     const currentIndex = ref(0);
     const appBarHeight = ref(64);
-    const apiStore = useApiStore();
+    const apiStore = useApiStore(); // Use API store
     const prefetchCount = 5;
 
     const updateAppBarHeight = () => {
@@ -119,7 +119,6 @@ export default {
       }
     };
 
-    // Debounced version of loadImages
     const debouncedLoadImages = debounce(loadImages, 300);
 
     const nextImage = () => {
@@ -140,16 +139,56 @@ export default {
 
     const currentApi = computed(() => apiStore.selectedApi);
 
+    const apiTitle = computed(() => {
+      switch (apiStore.selectedApi) {
+        case 'catapi':
+          return 'Cat';
+        case 'foxapi':
+          return 'Fox';
+        case 'purrbot':
+          return 'Purrbot GIF';
+        case 'nekos':
+          return 'Neko';
+        default:
+          return 'Animal';
+      }
+    });
+
+    // Konami code tracking
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = ref(0);
+
+    const handleKonamiKeydown = (event) => {
+      if (event.key === konamiCode[konamiIndex.value]) {
+        konamiIndex.value++;
+        if (konamiIndex.value === konamiCode.length) {
+          triggerKonamiCodeEffect();
+          konamiIndex.value = 0;
+        }
+      } else {
+        konamiIndex.value = 0;
+      }
+    };
+
+    const triggerKonamiCodeEffect = () => {
+      const randomChoice = Math.random() < 0.5 ? 'purrbot' : 'nekos';
+      apiStore.switchApi(randomChoice); // Update store and localStorage
+      console.log('Konami code activated! Switching to:', randomChoice);
+      alert(`Nyan! Please, refresh this page!`);
+    };
+
     onMounted(() => {
       loadImages();
       updateAppBarHeight();
       window.addEventListener('resize', updateAppBarHeight);
       window.addEventListener('keydown', handleKeydown);
+      window.addEventListener('keydown', handleKonamiKeydown); // Add Konami code listener
     });
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', updateAppBarHeight);
       window.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('keydown', handleKonamiKeydown); // Remove Konami code listener
       debouncedLoadImages.cancel();
     });
 
@@ -168,6 +207,7 @@ export default {
       nextImage,
       prevImage,
       currentApi,
+      apiTitle,
     };
   },
 };
