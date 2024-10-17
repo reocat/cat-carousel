@@ -48,6 +48,40 @@ a:hover {
   color: #535bf2;
 }
 
+/* Layout */
+.v-container {
+  padding-top: 20px;
+}
+
+.mb-6 {
+  margin-bottom: 40px;
+}
+
+/* Player */
+.plyr {
+  max-width: 100%; /* Ensure it doesn't exceed its container */
+  height: auto !important; /* Maintain responsiveness */
+  margin: 0 auto; /* Center */
+  min-height: 200px; /* Set a minimum height */
+  max-height: 200px; /* Set a maximum height */
+  display: block; /* Ensure block display for centering */
+}
+
+.player-container {
+  max-width: 700px; /* Optional: adjust as needed */
+  height: auto;
+  margin: 20px auto; /* Center horizontally */
+  display: flex;
+  justify-content: center; /* Center child elements horizontally */
+  align-items: center; /* Center child elements vertically */
+  padding: 20px; /* Add some padding if needed */
+}
+
+.plyr video {
+  max-height: 100%;
+  width: auto;
+}
+
 /* Image Carousel */
 .image-carousel {
   display: flex;
@@ -55,8 +89,8 @@ a:hover {
   align-items: center;
   width: 100%;
   max-width: 800px;
-  margin: 10px auto; /* Reduced margin */
-  padding: 0; /* Removed padding */
+  margin: 40px auto 10px;
+  padding: 0;
 }
 
 .image-container {
@@ -72,10 +106,11 @@ a:hover {
 
 .carousel-image {
   height: auto;
+  width: 100%;
+  max-height: 60vh;
   object-fit: cover;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
-  width: 100%;
 }
 
 .carousel-image.fade-out {
@@ -121,6 +156,7 @@ a:hover {
   cursor: pointer;
   z-index: 10;
 }
+
 .left-button {
   left: 10px;
 }
@@ -143,6 +179,17 @@ a:hover {
   font-size: 1.5rem;
   margin: 0 auto;
   text-align: center;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* Media Queries */
@@ -197,6 +244,24 @@ a:hover {
   .v-toolbar {
     padding-left: 10px;
   }
+
+  .player-container {
+    margin: 20px auto 30px;
+    max-height: 300px;
+  }
+
+  .plyr {
+    min-height: 150px;
+    max-height: 300px;
+  }
+
+  .image-carousel {
+    margin-top: 30px;
+  }
+
+  .mb-6 {
+    margin-bottom: 30px;
+  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -212,14 +277,4 @@ a:hover {
   button {
     background-color: #f9f9f9;
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }

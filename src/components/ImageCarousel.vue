@@ -10,69 +10,60 @@
   </v-app-bar>
 
   <v-container>
+    <!-- Carousel Header -->
     <v-row>
       <v-col cols="12">
-        <h1>Random {{ apiTitle }} Image Carousel</h1>
+        <h1 class="text-center">Random {{ apiTitle }} Image Carousel</h1>
       </v-col>
     </v-row>
 
+    <!-- Plyr Player Controls -->
+    <v-row>
+      <v-col cols="12" class="d-flex justify-center">
+        <v-btn @click="togglePlayer">Toggle Player</v-btn>
+      </v-col>
+    </v-row>
+
+    <!-- Plyr Player Section -->
+    <v-row v-if="showPlayer" class="d-flex justify-center align-center">
+      <v-col cols="12" sm="8" md="6" class="mx-auto">
+        <v-select v-model="selectedMusic" :items="musicOptions" item-title="text" item-value="value" label="Select Music" @update:model-value="handleMusicSelection"></v-select>
+        <vue-plyr ref="plyr" v-if="selectedMusic" class="mx-auto player-container">
+          <div data-plyr-provider="youtube" :data-plyr-embed-id="selectedMusic"></div>
+        </vue-plyr>
+      </v-col>
+    </v-row>
+
+    <!-- Image Carousel Section -->
     <v-row class="fill-height">
       <v-col cols="12">
         <div class="image-carousel">
           <div v-if="loading" class="loading">Loading...</div>
           <div v-else class="image-container">
-            <button
-              @click="prevImage"
-              :disabled="currentIndex === 0"
-              class="carousel-button left-button"
-            >
-              <span>
-                <v-icon>mdi-arrow-left</v-icon>
-              </span>
+            <button @click="prevImage" :disabled="currentIndex === 0" class="carousel-button left-button">
+              <v-icon>mdi-arrow-left</v-icon>
             </button>
             <transition name="fade" mode="out-in">
-              <img
-                v-if="currentImage"
-                :key="currentIndex"
-                v-lazy="currentImage"
-                :alt="apiTitle.toLowerCase() + '-image'"
-                class="carousel-image"
-              />
+              <img v-if="currentImage" :key="currentIndex" v-lazy="currentImage" :alt="apiTitle.toLowerCase() + '-image'" class="carousel-image" />
             </transition>
-            <button
-              @click="nextImage"
-              :disabled="currentIndex === images.length - 1"
-              class="carousel-button right-button"
-            >
-              <span>
-                <v-icon>mdi-arrow-right</v-icon>
-              </span>
+            <button @click="nextImage" :disabled="currentIndex === images.length - 1" class="carousel-button right-button">
+              <v-icon>mdi-arrow-right</v-icon>
             </button>
           </div>
         </div>
       </v-col>
     </v-row>
 
+    <!-- Authors and Music Controls -->
     <v-row>
-      <v-col cols="12" class="d-flex justify-space-around">
+      <v-col cols="12" class="d-flex justify-center">
         <v-btn variant="text" @click="show = !show">
           Authors
-          <v-tooltip
-            activator="parent"
-            location="top"
-            open-delay="200"
-            close-delay="200"
-            content-class="au-tooltip"
-          >
+          <v-tooltip activator="parent" location="top" open-delay="200" close-delay="200" content-class="au-tooltip">
             <span>
               Made by
-              <a href="https://github.com/reocat" target="_blank" class="links">
-                reocat
-              </a>
-              and
-              <a href="https://github.com/L1ttleWizard" target="_blank" class="links">
-                L1ttleWizard
-              </a>
+              <a href="https://github.com/reocat" target="_blank" class="links">reocat</a> and
+              <a href="https://github.com/L1ttleWizard" target="_blank" class="links">L1ttleWizard</a>
             </span>
           </v-tooltip>
         </v-btn>
@@ -85,15 +76,29 @@
 import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
 import { useApiStore } from '../stores/useApiStore';
 import debounce from 'lodash/debounce';
+import VuePlyr from 'vue-plyr';
+import 'vue-plyr/dist/vue-plyr.css';
 
 export default {
+  components: {
+    VuePlyr,
+  },
   setup() {
     const loading = ref(true);
     const images = ref([]);
     const currentIndex = ref(0);
     const appBarHeight = ref(64);
-    const apiStore = useApiStore(); // Use API store
+    const apiStore = useApiStore();
     const prefetchCount = 5;
+    const showPlayer = ref(false);
+    const selectedMusic = ref('');
+    const plyr = ref(null);
+    const musicOptions = [
+      { text: 'Lo-fi', value: 'jfKfPfyJRdk' },
+      { text: 'Nyan Cat Soundtrack', value: 'zqLEO5tIuYs' },
+      { text: 'Rain Sounds', value: 'mPZkdNFkNps' },
+      { text: 'SynthWave', value: '4xDzrJKXOOY' },
+    ];
 
     const updateAppBarHeight = () => {
       appBarHeight.value = window.innerWidth <= 600 ? 56 : 64;
@@ -154,27 +159,26 @@ export default {
       }
     });
 
-    // Konami code tracking
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiIndex = ref(0);
-
-    const handleKonamiKeydown = (event) => {
-      if (event.key === konamiCode[konamiIndex.value]) {
-        konamiIndex.value++;
-        if (konamiIndex.value === konamiCode.length) {
-          triggerKonamiCodeEffect();
-          konamiIndex.value = 0;
-        }
-      } else {
-        konamiIndex.value = 0;
+    const togglePlayer = () => {
+      showPlayer.value = !showPlayer.value;
+      if (showPlayer.value && selectedMusic.value) {
+        handleMusicSelection(selectedMusic.value);
       }
     };
 
-    const triggerKonamiCodeEffect = () => {
-      const randomChoice = Math.random() < 0.5 ? 'purrbot' : 'nekos';
-      apiStore.switchApi(randomChoice); // Update store and localStorage
-      console.log('Konami code activated! Switching to:', randomChoice);
-      alert(`Nyan! Please, refresh this page!`);
+    const handleMusicSelection = (value) => {
+      selectedMusic.value = value;
+      if (plyr.value) {
+        plyr.value.player.source = {
+          type: 'video',
+          sources: [
+            {
+              src: value,
+              provider: 'youtube',
+            },
+          ],
+        };
+      }
     };
 
     onMounted(() => {
@@ -182,13 +186,11 @@ export default {
       updateAppBarHeight();
       window.addEventListener('resize', updateAppBarHeight);
       window.addEventListener('keydown', handleKeydown);
-      window.addEventListener('keydown', handleKonamiKeydown); // Add Konami code listener
     });
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', updateAppBarHeight);
       window.removeEventListener('keydown', handleKeydown);
-      window.removeEventListener('keydown', handleKonamiKeydown); // Remove Konami code listener
       debouncedLoadImages.cancel();
     });
 
@@ -208,6 +210,12 @@ export default {
       prevImage,
       currentApi,
       apiTitle,
+      showPlayer,
+      selectedMusic,
+      musicOptions,
+      togglePlayer,
+      handleMusicSelection,
+      plyr,
     };
   },
 };
