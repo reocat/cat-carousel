@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Config: typeof import('./src/components/Config.vue')['default']
+    FloatingPlayer: typeof import('./src/components/FloatingPlayer.vue')['default']
     ImageCarousel: typeof import('./src/components/ImageCarousel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -24,32 +24,20 @@
       </v-col>
     </v-row>
 
-    <!-- Floating Plyr Player Section -->
-    <div v-if="showPlayer" 
-         class="floating-player" 
-         :style="{ top: playerPosition.y + 'px', left: playerPosition.x + 'px', width: playerSize.width + 'px', height: playerSize.height + 'px' }" 
-         @mousedown="startDragging" 
-         @touchstart="startDragging">
-      <div class="player-header">
-        <v-icon @mousedown.stop @touchstart.stop>mdi-drag</v-icon>
-        <v-select
-          v-model="selectedMusic"
-          :items="musicOptions"
-          item-title="text"
-          item-value="value"
-          label="Select Music"
-          @update:model-value="handleMusicSelection"
-          dense
-        ></v-select>
-        <v-btn icon small @click="togglePlayer">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </div>
-      <vue-plyr ref="plyr" v-if="selectedMusic" class="player-container">
-        <div data-plyr-provider="youtube" :data-plyr-embed-id="selectedMusic"></div>
-      </vue-plyr>
-      <div class="resize-handle" @mousedown="startResizing" @touchstart="startResizing"></div>
-    </div>
+    <!-- Lazy-loaded Floating Player Component -->
+    <Suspense v-if="showPlayer">
+      <template #default>
+        <LazyFloatingPlayer
+          v-model:showPlayer="showPlayer"
+          v-model:position="playerPosition"
+          v-model:size="playerSize"
+          :musicOptions="musicOptions"
+        />
+      </template>
+      <template #fallback>
+        <div>Loading player...</div>
+      </template>
+    </Suspense>
 
     <!-- Image Carousel Section -->
     <v-row class="fill-height">
@@ -100,15 +88,16 @@
 </template>
 
 <script>
-import { ref, onMounted, computed, watch, onBeforeUnmount } from 'vue';
+import { ref, onMounted, computed, watch, onBeforeUnmount, defineAsyncComponent } from 'vue';
 import { useApiStore } from '../stores/useApiStore';
 import debounce from 'lodash/debounce';
-import VuePlyr from 'vue-plyr';
-import 'vue-plyr/dist/vue-plyr.css';
+
+// Lazy-loaded FloatingPlayer component
+const LazyFloatingPlayer = defineAsyncComponent(() => import('./FloatingPlayer.vue'));
 
 export default {
   components: {
-    VuePlyr,
+    LazyFloatingPlayer,
   },
   setup() {
     const loading = ref(true);
@@ -118,19 +107,14 @@ export default {
     const apiStore = useApiStore();
     const prefetchCount = 5;
     const showPlayer = ref(false);
-    const selectedMusic = ref('');
-    const plyr = ref(null);
+    const playerPosition = ref({ x: 20, y: 20 });
+    const playerSize = ref({ width: 300, height: 200 });
     const musicOptions = [
       { text: 'Lo-fi', value: 'jfKfPfyJRdk' },
       { text: 'Nyan Cat Soundtrack', value: 'zqLEO5tIuYs' },
       { text: 'Rain Sounds', value: 'mPZkdNFkNps' },
       { text: 'SynthWave', value: '4xDzrJKXOOY' },
     ];
-    const playerPosition = ref({ x: 20, y: 20 });
-    const playerSize = ref({ width: 300, height: 200 });
-    const isDragging = ref(false);
-    const isResizing = ref(false);
-    const dragOffset = ref({ x: 0, y: 0 });
 
     // Konami code handling
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -213,72 +197,6 @@ export default {
 
     const togglePlayer = () => {
       showPlayer.value = !showPlayer.value;
-      if (!showPlayer.value) {
-        selectedMusic.value = '';
-        if (plyr.value && plyr.value.player) {
-          plyr.value.player.stop();
-        }
-      }
-    };
-
-    const handleMusicSelection = (value) => {
-      selectedMusic.value = value;
-      if (plyr.value && plyr.value.player) {
-        plyr.value.player.source = {
-          type: 'video',
-          sources: [{ src: value, provider: 'youtube' }],
-        };
-      }
-    };
-
-    const startDragging = (event) => {
-      if (event.target.classList.contains('resize-handle')) return;
-      isDragging.value = true;
-      const clientX = event.clientX || event.touches[0].clientX;
-      const clientY = event.clientY || event.touches[0].clientY;
-      dragOffset.value = {
-        x: clientX - playerPosition.value.x,
-        y: clientY - playerPosition.value.y
-      };
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('touchmove', drag);
-      document.addEventListener('mouseup', stopDragging);
-      document.addEventListener('touchend', stopDragging);
-    };
-
-    const drag = (event) => {
-      if (isDragging.value) {
-        const clientX = event.clientX || event.touches[0].clientX;
-        const clientY = event.clientY || event.touches[0].clientY;
-        playerPosition.value = {
-          x: clientX - dragOffset.value.x,
-          y: clientY - dragOffset.value.y
-        };
-      } else if (isResizing.value) {
-        const clientX = event.clientX || event.touches[0].clientX;
-        const clientY = event.clientY || event.touches[0].clientY;
-        playerSize.value = {
-          width: Math.max(200, clientX - playerPosition.value.x),
-          height: Math.max(100, clientY - playerPosition.value.y)
-        };
-      }
-    };
-
-    const stopDragging = () => {
-      isDragging.value = false;
-      isResizing.value = false;
-      document.removeEventListener('mousemove', drag);
-      document.removeEventListener('touchmove', drag);
-      document.removeEventListener('mouseup', stopDragging);
-      document.removeEventListener('touchend', stopDragging);
-    };
-
-    const startResizing = (event) => {
-      isResizing.value = true;
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('touchmove', drag);
-      document.addEventListener('mouseup', stopDragging);
-      document.addEventListener('touchend', stopDragging);
     };
 
     onMounted(() => {
@@ -293,10 +211,6 @@ export default {
       window.removeEventListener('keydown', handleKeydown);
       clearTimeout(konamiTimer);
       debouncedLoadImages.cancel();
-      document.removeEventListener('mousemove', drag);
-      document.removeEventListener('touchmove', drag);
-      document.removeEventListener('mouseup', stopDragging);
-      document.removeEventListener('touchend', stopDragging);
     });
 
     watch(currentIndex, (newValue) => {
@@ -316,156 +230,11 @@ export default {
       currentApi,
       apiTitle,
       showPlayer,
-      selectedMusic,
       musicOptions,
       togglePlayer,
-      handleMusicSelection,
-      plyr,
       playerPosition,
       playerSize,
-      startDragging,
-      startResizing,
     };
   },
 };
 </script>
-
-<style scoped>
-/* Image Carousel */
-.image-carousel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin: 40px auto 10px;
-  padding: 0;
-}
-
-.image-container {
-  display: inline-block;
-  max-width: 100%;
-  border: 3px solid #382302;
-  border-radius: 15px;
-  box-shadow: 0 0 5px rgb(123, 63, 0);
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel-image {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-/* Carousel Buttons */
-.carousel-button {
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 10px;
-  padding: 5px 10px;
-}
-
-.left-button,
-.right-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.left-button {
-  left: 10px;
-}
-
-.right-button {
-  right: 10px;
-}
-
-/* Floating Player styles */
-.floating-player {
-  position: fixed;
-  z-index: 1000;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  min-width: 200px;
-  min-height: 100px;
-}
-
-.player-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px;
-  background-color: #f5f5f5;
-  cursor: move;
-}
-
-.player-container {
-  width: 100%;
-  height: calc(100% - 48px); /* Subtract header height */
-}
-
-/* Resize handle */
-.resize-handle {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 10px;
-  height: 10px;
-  background-color: #ccc;
-  cursor: se-resize;
-}
-
-/* Ensure the v-select in the player header is compact */
-.player-header .v-select {
-  flex-grow: 1;
-  margin: 0 8px;
-}
-
-.player-header .v-select ::v-deep .v-input__control {
-  min-height: 32px;
-}
-
-.player-header .v-select ::v-deep .v-input__slot {
-  min-height: 32px;
-}
-
-/* Adjust the close button size */
-.player-header .v-btn {
-  margin: 0;
-  padding: 0;
-}
-
-/* Media Queries */
-@media (max-width: 600px) {
-  .image-container {
-    border: none;
-    max-width: 95vw;
-  }
-
-  .carousel-image {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .floating-player {
-    width: 90%;
-    max-width: 300px;
-  }
-}
-</style>
