@@ -20,12 +20,12 @@
     <!-- Plyr Player Controls -->
     <v-row>
       <v-col cols="12" class="d-flex justify-center">
-        <v-btn @click="togglePlayer">Toggle Player</v-btn>
+        <v-btn @click="togglePlayer">{{ showPlayer ? 'Hide' : 'Show' }} Player</v-btn>
       </v-col>
     </v-row>
 
     <!-- Plyr Player Section -->
-    <v-row v-show="showPlayer" class="d-flex justify-center align-center">
+    <v-row v-if="showPlayer" class="d-flex justify-center align-center">
       <v-col cols="12" sm="8" md="6" class="mx-auto">
         <v-select
           v-model="selectedMusic"
@@ -198,6 +198,12 @@ export default {
 
     const togglePlayer = () => {
       showPlayer.value = !showPlayer.value;
+      if (!showPlayer.value) {
+        selectedMusic.value = '';
+        if (plyr.value && plyr.value.player) {
+          plyr.value.player.stop();
+        }
+      }
     };
 
     const handleMusicSelection = (value) => {
@@ -319,9 +325,9 @@ export default {
 .player-container {
   max-width: 100%;
   height: auto !important;
-  margin: 0 auto;
+  margin: 20px auto;
   min-height: 200px;
-  max-height: 200px;
+  max-height: 300px;
   display: block;
 }
 
@@ -343,5 +349,3 @@ export default {
   }
 }
 </style>
-
-
