@@ -84,29 +84,29 @@ export default {
     };
 
     const drag = (event) => {
-    const clientX = event.clientX || event.touches[0].clientX;
-    const clientY = event.clientY || event.touches[0].clientY;
+      const clientX = event.clientX || event.touches[0].clientX;
+      const clientY = event.clientY || event.touches[0].clientY;
 
-    if (isDragging.value) {
+      if (isDragging.value) {
         // Handle dragging
         position.value = {
-        x: clientX - dragOffset.value.x,
-        y: clientY - dragOffset.value.y,
+          x: clientX - dragOffset.value.x,
+          y: clientY - dragOffset.value.y,
         };
         emit('update:position', position.value);
-    } else if (isResizing.value) {
+      } else if (isResizing.value) {
         // Handle resizing (allow resizing in both directions)
         const deltaX = clientX - dragOffset.value.x;
         const deltaY = clientY - dragOffset.value.y;
 
         // Apply new width and height, ensuring they're not smaller than the minimum allowed values
         size.value = {
-        width: Math.max(200, deltaX),
-        height: Math.max(100, deltaY),
+          width: Math.max(200, deltaX),
+          height: Math.max(100, deltaY),
         };
 
         emit('update:size', size.value);
-    }
+      }
     };
 
     const stopDragging = () => {
@@ -119,20 +119,20 @@ export default {
     };
 
     const startResizing = (event) => {
-    isResizing.value = true;
-    
-    const clientX = event.clientX || event.touches[0].clientX;
-    const clientY = event.clientY || event.touches[0].clientY;
-    
-    dragOffset.value = {
+      isResizing.value = true;
+
+      const clientX = event.clientX || event.touches[0].clientX;
+      const clientY = event.clientY || event.touches[0].clientY;
+
+      dragOffset.value = {
         x: clientX - size.value.width,
         y: clientY - size.value.height,
-    };
+      };
 
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('mouseup', stopDragging);
-    document.addEventListener('touchend', stopDragging);
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('touchmove', drag);
+      document.addEventListener('mouseup', stopDragging);
+      document.addEventListener('touchend', stopDragging);
     };
 
     const updateScreenSize = () => {
@@ -186,6 +186,9 @@ export default {
   position: static;
   width: 100%;
   height: auto;
+  display: absolute;
+  justify-content: center;
+  align-items: center;
 }
 
 .player-header {
@@ -206,5 +209,4 @@ export default {
   background-color: #ccc;
   cursor: se-resize;
 }
-
 </style>

@@ -110,7 +110,7 @@ export default {
     const playerPosition = ref({ x: 20, y: 20 });
     const playerSize = ref({ width: 300, height: 200 });
     const musicOptions = [
-      { text: 'Lo-fi', value: 'jfKfPfyJRdk' },
+      { text: 'Lo-Fi', value: 'jfKfPfyJRdk' },
       { text: 'Nyan Cat Soundtrack', value: 'zqLEO5tIuYs' },
       { text: 'Rain Sounds', value: 'mPZkdNFkNps' },
       { text: 'SynthWave', value: '4xDzrJKXOOY' },
