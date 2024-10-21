@@ -35,7 +35,7 @@
     "firebaseui": "^6.1.0",
     "fs": "^0.0.2",
     "mdb-react-ui-kit": "^9.0.0",
-    "next": "14.2.15",
+    "next": "15.0.0",
     "nextjs": "^0.0.3",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
