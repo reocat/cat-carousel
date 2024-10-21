@@ -30,7 +30,7 @@
     "eslint": "^9.13.0",
     "eslint-plugin-next": "^0.0.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "firebase": "^10.14.1",
+    "firebase": "^11.0.0",
     "firebase-tools": "^13.22.1",
     "firebaseui": "^6.1.0",
     "fs": "^0.0.2",
