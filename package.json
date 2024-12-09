@@ -22,7 +22,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/node": "22.10.1",
     "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.1",
+    "@types/react-dom": "19.0.2",
     "@types/react-redux": "^7.1.34",
     "animate.css": "^4.1.1",
     "async_hooks": "^1.0.0",
