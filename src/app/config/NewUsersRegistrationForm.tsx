@@ -54,7 +54,7 @@ export const NewUsersRegistrationForm = () => {
             name="user name"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md focus:outline-hidden focus:border-blue-500"
             required
           />
         </div>
@@ -71,7 +71,7 @@ export const NewUsersRegistrationForm = () => {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md focus:outline-hidden focus:border-blue-500"
             required
           />
         </div>
@@ -88,7 +88,7 @@ export const NewUsersRegistrationForm = () => {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md focus:outline-hidden focus:border-blue-500"
             required
           />
         </div>
@@ -105,14 +105,14 @@ export const NewUsersRegistrationForm = () => {
             name="root"
             value={""}
             onChange={(e) => setIsRoot(e.target.checked)}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md focus:outline-hidden focus:border-blue-500"
           />
         </div>
         <button
           onClick={() => {
             createUser(userName, email, password, isRoot);
           }}
-          className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-hidden focus:bg-blue-600"
         >
           Create a new user
         </button>
