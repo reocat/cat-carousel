@@ -1,5 +1,5 @@
 "use client";
-import "/public/globals.css";
+import "../../../public/globals.css";
 import "../styles/fonts.css";
 import "./home.css";
 import React from "react";

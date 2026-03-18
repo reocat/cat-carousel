@@ -127,14 +127,17 @@ export const ImageCarousel: React.FC<PropT> = ({ data }) => {
       <div className="carousel">
         {images.length > 0 && (
           <div className="image-container ">
-            <img
+            <div
               key={`carousel-image-${currentImageIndex}`}
               id="cat-img"
               ref={ref} // Attach the ref for lazy loading
-              src={inView ? images[currentImageIndex] : undefined} // Load image only if in view
-              alt="carousel-image"
               className="carousel-image"
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+                backgroundImage: `url(${inView ? images[currentImageIndex] : ""})`,
+              }}
             />
           </div>
         )}

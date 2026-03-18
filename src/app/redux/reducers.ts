@@ -19,9 +19,7 @@ export const nearStateSlice = createSlice({
   name: "near",
   initialState: initialNear,
   reducers: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     near: (state: boolean) => (state = true),
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     notNear: (state: boolean) => (state = false),
     toggleNear: (state: boolean) => (state = !state),
   },

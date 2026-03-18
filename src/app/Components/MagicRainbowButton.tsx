@@ -12,6 +12,19 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
+// Wrapper component to handle react-player v3 type issues
+const AudioPlayer: React.FC<{ url: string }> = ({ url }) => (
+  <div suppressHydrationWarning>
+    {React.createElement(ReactPlayer as any, {
+      playing: true,
+      loop: true,
+      width: 0,
+      height: 0,
+      url: url,
+    })}
+  </div>
+);
+
 // Lazy load the BackgroundVideo component
 const BackgroundVideo = lazy(() => import("./BackgroundVideo"));
 
@@ -113,40 +126,16 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
         </FormControl>
       )}
       {selectedMusic === "lo-fi" && (
-        <ReactPlayer
-          url="https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de"
-          playing={true}
-          loop={true}
-          width={0}
-          height={0}
-        />
+        <AudioPlayer url="https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de" />
       )}
       {selectedMusic === "nyan-cat" && (
-        <ReactPlayer
-          url="https://www.nyan.cat/music/original.mp3"
-          playing={true}
-          loop={true}
-          width={0}
-          height={0}
-        />
+        <AudioPlayer url="https://www.nyan.cat/music/original.mp3" />
       )}
       {selectedMusic === "rain" && (
-        <ReactPlayer
-          url="https://stream.willstare.com:8850/;?type=http&nocache=9305"
-          playing={true}
-          loop={true}
-          width={0}
-          height={0}
-        />
+        <AudioPlayer url="https://stream.willstare.com:8850/;?type=http&nocache=9305" />
       )}
       {selectedMusic === "synth" && (
-        <ReactPlayer
-          url="https://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5"
-          playing={true}
-          loop={true}
-          width={0}
-          height={0}
-        />
+        <AudioPlayer url="https://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5" />
       )}
     </>
   );

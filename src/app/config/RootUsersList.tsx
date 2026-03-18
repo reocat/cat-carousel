@@ -16,7 +16,6 @@ const Users: React.FC<{ setLoading: (state: boolean) => void }> = ({
     setLoading(true);
     const q = query(collection(db, "rootUsers"));
     console.log(q);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const users: Users = [];
       querySnapshot.forEach((doc) => {

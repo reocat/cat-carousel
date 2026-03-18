@@ -11,7 +11,6 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [passwordOne, setPasswordOne] = useState("");
   const [passwordTwo, setPasswordTwo] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null | undefined>(null);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +19,6 @@ export default function Home() {
     // and redirect to your logged in page.
     if (passwordOne === passwordTwo)
       createUserWithEmailAndPassword(auth, email, passwordOne)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then((authUser) => {
           alert("user created successfully");
           router.push("/config");

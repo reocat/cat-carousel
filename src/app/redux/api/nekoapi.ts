@@ -8,7 +8,6 @@
 //   }
 //   return await Promise.all(imagePromises);
 // };
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const fetchNekoAPI = async () => {
   const urls = [
     "https://nekos.life/api/v2/img/neko",
