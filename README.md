@@ -1,6 +1,8 @@
-# cat_carousel
+## Carousel with random cat images ฅ^•ﻌ•^ฅ
 
-A new Flutter project.
+Created just fur fun
+
+![~nya~](https://cataas.com/cat)
 
 ## Getting Started
 
