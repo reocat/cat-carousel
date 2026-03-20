@@ -12,7 +12,11 @@ class CatCarouselApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Animal Carousel',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange), useMaterial3: true),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        useMaterial3: true,
+        fontFamily: '04b03',
+      ),
       home: const MainNavigationPage(),
     );
   }
