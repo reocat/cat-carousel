@@ -10,7 +10,7 @@
     "build:turbopack": "next build --turbopack"
   },
   "dependencies": {
-    "next": "16.2.3",
+    "next": "16.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -30,7 +30,7 @@
     "@types/react-dom": "^19",
     "@types/react-redux": "^7.1.34",
     "eslint": "^9.0.0",
-    "eslint-config-next": "16.2.0",
+    "eslint-config-next": "16.2.4",
     "firebase": "^12.0.0",
     "firebase-tools": "^15.0.0",
     "postcss": "^8",
