@@ -22,6 +22,7 @@ class AppConfig extends ChangeNotifier {
   bool _showImageIds;
   ApiOption _selectedApi;
   Color _accentColor;
+  bool _useSystemAccent;
 
   AppConfig({
     bool autoPlay = false,
@@ -29,26 +30,30 @@ class AppConfig extends ChangeNotifier {
     bool showImageIds = true,
     ApiOption selectedApi = ApiOption.cat,
     Color accentColor = kDefaultAccentColor,
+    bool useSystemAccent = true,
   })  : _autoPlay = autoPlay, _initialLimit = initialLimit,
         _showImageIds = showImageIds, _selectedApi = selectedApi,
-        _accentColor = accentColor;
+        _accentColor = accentColor, _useSystemAccent = useSystemAccent;
 
   bool get autoPlay => _autoPlay;
   int get initialLimit => _initialLimit;
   bool get showImageIds => _showImageIds;
   ApiOption get selectedApi => _selectedApi;
   Color get accentColor => _accentColor;
+  bool get useSystemAccent => _useSystemAccent;
 
   set autoPlay(bool value) { if (_autoPlay != value) { _autoPlay = value; notifyListeners(); } }
   set initialLimit(int value) { if (_initialLimit != value) { _initialLimit = value; notifyListeners(); } }
   set showImageIds(bool value) { if (_showImageIds != value) { _showImageIds = value; notifyListeners(); } }
   set selectedApi(ApiOption value) { if (_selectedApi != value) { _selectedApi = value; notifyListeners(); } }
   set accentColor(Color value) { if (_accentColor != value) { _accentColor = value; notifyListeners(); } }
+  set useSystemAccent(bool value) { if (_useSystemAccent != value) { _useSystemAccent = value; notifyListeners(); } }
 
   Map<String, dynamic> toJson() => {
     'autoPlay': _autoPlay, 'initialLimit': _initialLimit,
     'showImageIds': _showImageIds, 'selectedApi': _selectedApi.name,
     'accentColor': _accentColor.toARGB32(),
+    'useSystemAccent': _useSystemAccent,
   };
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -61,13 +66,14 @@ class AppConfig extends ChangeNotifier {
         orElse: () => ApiOption.cat,
       ),
       accentColor: Color(json['accentColor'] as int? ?? kDefaultAccentColor.toARGB32()),
+      useSystemAccent: json['useSystemAccent'] ?? true,
     );
   }
 
   void copyFrom(AppConfig other) {
     _autoPlay = other._autoPlay; _initialLimit = other._initialLimit;
     _showImageIds = other._showImageIds; _selectedApi = other._selectedApi;
-    _accentColor = other._accentColor;
+    _accentColor = other._accentColor; _useSystemAccent = other._useSystemAccent;
     notifyListeners();
   }
 }

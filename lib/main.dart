@@ -3,6 +3,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'config/config.dart';
 import 'pages/carousel_page.dart';
 import 'pages/settings_page.dart';
+import 'widgets/system_accent.dart';
 
 void main() => runApp(const CatCarouselApp());
 
@@ -18,12 +19,16 @@ class _CatCarouselAppState extends State<CatCarouselApp> {
   final ConfigStorage _storage = ConfigStorage();
   bool _isLoading = true;
 
+  /// Accent color reported by the browser (web only; null elsewhere).
+  Color? _webAccent;
+
   @override
   void initState() {
     super.initState();
     _config = AppConfig();
     _config.addListener(_saveConfig);
     _loadConfig();
+    _loadWebAccent();
   }
 
   @override
@@ -38,6 +43,11 @@ class _CatCarouselAppState extends State<CatCarouselApp> {
     final savedConfig = await _storage.loadConfig();
     if (savedConfig != null) _config.copyFrom(savedConfig);
     if (mounted) setState(() => _isLoading = false);
+  }
+
+  Future<void> _loadWebAccent() async {
+    final Color? accent = await getSystemAccentColor();
+    if (accent != null && mounted) setState(() => _webAccent = accent);
   }
 
   @override
@@ -57,11 +67,19 @@ class _CatCarouselAppState extends State<CatCarouselApp> {
         return ListenableBuilder(
           listenable: _config,
           builder: (context, _) {
-            final ColorScheme lightScheme = lightDynamic ??
-                ColorScheme.fromSeed(seedColor: _config.accentColor);
-            final ColorScheme darkScheme = darkDynamic ??
+            // "Use device colors" prefers the platform accent (wallpaper on
+            // Android, browser/OS accent on web) and only falls back to the
+            // picked seed. When off, the picked seed always wins.
+            final bool useSystem = _config.useSystemAccent;
+            final Color seed = useSystem
+                ? (_webAccent ?? _config.accentColor)
+                : _config.accentColor;
+
+            final ColorScheme lightScheme = (useSystem ? lightDynamic : null) ??
+                ColorScheme.fromSeed(seedColor: seed);
+            final ColorScheme darkScheme = (useSystem ? darkDynamic : null) ??
                 ColorScheme.fromSeed(
-                  seedColor: _config.accentColor,
+                  seedColor: seed,
                   brightness: Brightness.dark,
                 );
 

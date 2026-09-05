@@ -31,7 +31,20 @@ void main() {
 
     // Accent picker: orange is the default, so exactly one swatch is checked.
     expect(find.text('Accent color'), findsOneWidget);
+    expect(find.text('Use device colors'), findsOneWidget);
     expect(find.byIcon(Icons.check_rounded), findsOneWidget);
+
+    // The device-accent toggle defaults ON; without any device/browser accent
+    // in tests, the picked (orange) seed still applies.
+    final Finder deviceSwitch = find.widgetWithText(SwitchListTile, 'Use device colors');
+    expect(tester.widget<SwitchListTile>(deviceSwitch).value, isTrue);
+
+    // Turn device colors OFF so the picked swatch always wins.
+    await tester.ensureVisible(deviceSwitch);
+    await tester.pumpAndSettle();
+    await tester.tap(deviceSwitch);
+    await tester.pumpAndSettle();
+    expect(tester.widget<SwitchListTile>(deviceSwitch).value, isFalse);
 
     // Tapping a swatch repaints the app theme with that seed color.
     await tester.ensureVisible(find.byKey(const ValueKey('accent-Red')));
