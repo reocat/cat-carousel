@@ -18,7 +18,8 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="A carousel of random cats and foxes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -29,18 +30,84 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>cat_carousel</title>
+  <title>Animal Carousel</title>
   <link rel="manifest" href="manifest.json">
+
+  <!--
+    Splash screen: paints instantly with pure CSS while the Flutter engine
+    downloads. Hidden by flutter_bootstrap.js when Flutter renders its first
+    frame (with a safety fallback timer).
+  -->
+  <style>
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: linear-gradient(160deg, #fff8f0 0%, #ffeadb 55%, #ffe3cf 100%);
+      transition: opacity 400ms ease;
+    }
+    #splash.splash-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #splash .splash-paw {
+      font-size: 52px;
+      line-height: 1;
+      animation: splash-bounce 1.1s ease-in-out infinite;
+    }
+    #splash .splash-progress {
+      width: 148px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+    #splash .splash-progress-bar {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: #ff8c42;
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      transition: transform 250ms ease;
+    }
+    #splash .splash-status {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      color: #8a6d5c;
+      min-height: 1em;
+    }
+    @keyframes splash-bounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.08); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #splash .splash-paw { animation: none; }
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <!-- Instant feedback while the Flutter engine downloads (replaced with the
+       app's theme color as soon as it boots). -->
+  <div id="splash">
+    <div class="splash-paw">🐾</div>
+    <div class="splash-progress">
+      <div class="splash-progress-bar" id="splash-progress-bar"></div>
+    </div>
+    <div class="splash-status" id="splash-status">Loading…</div>
+  </div>
+  <noscript>
+    <div style="font-family: system-ui, sans-serif; padding: 24px; text-align: center;">
+      This app needs JavaScript enabled to run. 🐾
+    </div>
+  </noscript>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

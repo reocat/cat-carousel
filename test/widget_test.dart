@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:cat_carousel/main.dart';
 
 void main() {
-  testWidgets('Cat Carousel app loads correctly', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('App shell renders and the settings tab works', (WidgetTester tester) async {
+    // Without mocked values the plugin call throws in tests and the app
+    // stays stuck on its loading spinner.
+    SharedPreferences.setMockInitialValues({});
+
     await tester.pumpWidget(const CatCarouselApp());
+    // Let the config load complete and the shell appear. (The carousel's
+    // network fetch intentionally never completes inside the test zone, so
+    // nothing beyond the shell needs mocking.)
+    await tester.pump();
 
-    // Verify that the app title is displayed
-    expect(find.text('🐱 Cat Carousel'), findsOneWidget);
+    // Bottom navigation bar is present.
+    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.text('Animals'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
 
-    // Verify that the refresh button is present
-    expect(find.byIcon(Icons.refresh_rounded), findsOneWidget);
+    // Switch to the settings tab (no network involved).
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
 
-    // Verify that loading indicator is shown initially
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text('Selected Animal'), findsOneWidget);
+    expect(find.text('Auto-play'), findsOneWidget);
+    expect(find.text('Show image IDs'), findsOneWidget);
   });
 }

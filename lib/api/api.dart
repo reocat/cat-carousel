@@ -16,7 +16,9 @@ class ApiException implements Exception {
 abstract class ApiClientBase {
   String get baseUrl;
   Map<String, String>? get defaultHeaders => null;
-  Duration get timeout => const Duration(seconds: 30);
+
+  /// Kept tight so a hung request can't stall the UI for half a minute.
+  Duration get timeout => const Duration(seconds: 12);
 
   Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters}) async {
     var uri = Uri.parse('$baseUrl$path');
@@ -39,7 +41,7 @@ class CatApi extends ApiClientBase {
   String get baseUrl => 'https://api.thecatapi.com/v1';
 
   Future<List<CatImage>> searchImages({int limit = 10, int? page}) async {
-    final response = await get('/images/search', queryParameters: {'limit': limit, if (page != null) 'page': page});
+    final response = await get('/images/search', queryParameters: {'limit': limit, 'page': ?page});
     if (response is List) return response.cast<Map<String, dynamic>>().map((json) => CatImage.fromJson(json)).toList();
     throw ApiException(message: 'Unexpected format', originalError: response);
   }
@@ -55,11 +57,18 @@ class FoxApi extends ApiClientBase {
     throw ApiException(message: 'Unexpected format', originalError: response);
   }
 
+  /// Fetches all foxes in parallel instead of one-by-one: 10 round-trips
+  /// overlap instead of stacking up, cutting load time several-fold.
   Future<List<FoxImage>> getRandomFoxes({int count = 5}) async {
-    final foxes = <FoxImage>[];
-    for (var i = 0; i < count; i++) {
-      try { foxes.add(await getRandomFox()); } catch (_) {}
-    }
-    return foxes;
+    final results = await Future.wait(
+      List.generate(count, (_) async {
+        try {
+          return await getRandomFox();
+        } catch (_) {
+          return null; // Skip failed requests, same as before.
+        }
+      }),
+    );
+    return results.whereType<FoxImage>().toList();
   }
 }

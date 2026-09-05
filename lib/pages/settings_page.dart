@@ -68,11 +68,11 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildSettingsGroup(List<Widget> children) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(24),
-      ),
+    // Material (not a colored Container) so ListTile ink splashes render
+    // correctly and don't trip debug-mode assertions.
+    return Material(
+      color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+      borderRadius: BorderRadius.circular(24),
       clipBehavior: Clip.antiAlias,
       child: Column(children: children),
     );

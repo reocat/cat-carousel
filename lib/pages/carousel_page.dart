@@ -6,6 +6,7 @@ import '../api/api.dart';
 import '../models/models.dart';
 import '../config/config.dart';
 import '../widgets/image_card.dart';
+import '../widgets/web_image.dart';
 
 class CatCarouselPage extends StatefulWidget {
   final AppConfig config;
@@ -50,6 +51,14 @@ class _CatCarouselPageState extends State<CatCarouselPage> {
     }
   }
 
+  /// Warm the cache for images around the current slide so swiping never
+  /// waits on a fresh download.
+  void _preloadNeighbors() {
+    for (final i in [_currentIndex + 1, _currentIndex + 2, _currentIndex - 1]) {
+      if (i >= 0 && i < _images.length) preloadWebImage(_images[i].url);
+    }
+  }
+
   bool _handleKeyEvent(KeyEvent event) {
     if (event is KeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
@@ -89,6 +98,7 @@ class _CatCarouselPageState extends State<CatCarouselPage> {
         }
         _isLoading = false; _isFetchingMore = false;
       });
+      _preloadNeighbors();
     } catch (e) {
       setState(() { _error = 'Error: $e'; _isLoading = false; _isFetchingMore = false; });
     }
@@ -208,6 +218,7 @@ class _CatCarouselPageState extends State<CatCarouselPage> {
                         autoPlayInterval: const Duration(seconds: 3),
                         onPageChanged: (index, reason) {
                           setState(() => _currentIndex = index);
+                          _preloadNeighbors();
                           if (index >= _images.length - 3 && !_isFetchingMore) _fetchImages(append: true);
                         },
                       ),
