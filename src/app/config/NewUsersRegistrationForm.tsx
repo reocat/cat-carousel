@@ -1,6 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  writeBatch,
+} from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { db } from "../../../firebaseConfig";
 type CreateUser = (
@@ -18,11 +22,27 @@ const createUser: CreateUser = (userName, email, password, rootState) => {
         const userUid = userCred.user.uid;
         console.log("rootState...", rootState);
         if (rootState) {
-          setDoc(doc(db, "rootUsers", userName.toString()), {
+          // Write the whitelist entry and the rule-only uid index in one
+          // atomic batch: Firestore rules check rootUserUids/{uid} to decide
+          // whether a caller is itself a root user.
+          const batch = writeBatch(db);
+          batch.set(doc(db, "rootUsers", userName.toString()), {
             uid: userUid.toString(),
           });
+          batch.set(doc(db, "rootUserUids", userUid.toString()), {
+            userName: userName.toString(),
+          });
+          batch
+            .commit()
+            .then(() => {
+              alert("new user created");
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+        } else {
+          alert("new user created");
         }
-        alert("new user created");
       })
       .catch((error) => {
         alert(error.message);
