@@ -149,6 +149,10 @@ class AdminController extends ChangeNotifier {
   /// Mirrors the React admin form: creates an Auth user and, when [isRoot]
   /// is checked, writes `rootUsers/{userName}` -> `{uid}` so they show up
   /// in the whitelist immediately (the live snapshot picks it up).
+  ///
+  /// The matching `rootUserUids/{uid}` marker is written atomically in the
+  /// same batch — it is what Firestore rules use to verify that a writer is
+  /// itself a root user.
   Future<void> createUser({
     required String userName,
     required String email,
@@ -158,10 +162,17 @@ class AdminController extends ChangeNotifier {
     final credential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email.trim(), password: password);
     if (isRoot) {
-      await FirebaseFirestore.instance
-          .collection('rootUsers')
-          .doc(userName.trim())
-          .set({'uid': credential.user!.uid});
+      final firestore = FirebaseFirestore.instance;
+      final batch = firestore.batch();
+      batch.set(
+        firestore.collection('rootUsers').doc(userName.trim()),
+        {'uid': credential.user!.uid},
+      );
+      batch.set(
+        firestore.collection('rootUserUids').doc(credential.user!.uid),
+        {'userName': userName.trim()},
+      );
+      await batch.commit();
     }
   }
 

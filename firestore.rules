@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Root-user membership lives in rootUserUids/{uid} — a rule-only index
+    // (doc id = Firebase Auth uid) so rules can answer "is the caller a root
+    // user?" with exists(), without listing rootUsers. Client code never
+    // reads it directly; docs are created alongside rootUsers by the admin
+    // "root user" flow, and the first admin is seeded via the Firebase
+    // console or Admin SDK (which bypass rules).
+    function isRootUser() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/rootUserUids/$(request.auth.uid));
+    }
+
+    // The whitelist shown in both apps' admin UIs (React /config and the
+    // Flutter Admin tab). Reads are open because both apps read the whole
+    // collection to compute membership, and the React app also reads it
+    // during server-side rendering with no signed-in user. Writes are the
+    // sensitive part: only an existing root user may add or remove a root
+    // user, so a random signed-in user cannot self-grant admin by writing
+    // their own uid.
+    match /rootUsers/{userName} {
+      allow read: if true;
+
+      allow create: if isRootUser();
+      // uid is fixed at creation; changing it would silently re-point a
+      // whitelist entry at a different account.
+      allow update: if false;
+      allow delete: if isRootUser();
+    }
+
+    // Rule-only index. Never readable by clients; created only by root
+    // users (and seeded for the first admin via console/Admin SDK).
+    match /rootUserUids/{uid} {
+      allow read: if false;
+      allow create: if isRootUser();
+      allow update, delete: if false;
+    }
+  }
+}
