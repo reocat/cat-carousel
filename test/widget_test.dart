@@ -28,5 +28,19 @@ void main() {
     expect(find.text('Selected Animal'), findsOneWidget);
     expect(find.text('Auto-play'), findsOneWidget);
     expect(find.text('Show image IDs'), findsOneWidget);
+
+    // Accent picker: orange is the default, so exactly one swatch is checked.
+    expect(find.text('Accent color'), findsOneWidget);
+    expect(find.byIcon(Icons.check_rounded), findsOneWidget);
+
+    // Tapping a swatch repaints the app theme with that seed color.
+    await tester.ensureVisible(find.byKey(const ValueKey('accent-Red')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('accent-Red')));
+    await tester.pumpAndSettle();
+
+    final MaterialApp app = tester.widget<MaterialApp>(find.byType(MaterialApp));
+    final ColorScheme expected = ColorScheme.fromSeed(seedColor: Colors.red);
+    expect(app.theme!.colorScheme.primary, expected.primary);
   });
 }

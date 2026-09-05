@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import '../config/config.dart';
 
+/// Preset seed colors offered in the accent picker.
+const List<(Color, String)> _accentOptions = [
+  (Colors.orange, 'Orange'),
+  (Colors.red, 'Red'),
+  (Colors.pink, 'Pink'),
+  (Colors.purple, 'Purple'),
+  (Colors.indigo, 'Indigo'),
+  (Colors.blue, 'Blue'),
+  (Colors.cyan, 'Cyan'),
+  (Colors.teal, 'Teal'),
+  (Colors.green, 'Green'),
+  (Colors.amber, 'Amber'),
+];
+
 class SettingsPage extends StatefulWidget {
   final AppConfig config;
 
@@ -55,6 +69,25 @@ class _SettingsPageState extends State<SettingsPage> {
                           secondary: const Icon(Icons.tag_rounded),
                         ),
                       ]),
+                      const SizedBox(height: 16),
+                      _buildSettingsGroup([
+                        ListTile(
+                          title: const Text('Accent color'),
+                          subtitle: const Text('Used where device colors are not available, like the web'),
+                          leading: const Icon(Icons.palette_outlined),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+                          child: Wrap(
+                            spacing: 14,
+                            runSpacing: 14,
+                            children: [
+                              for (final (color, name) in _accentOptions)
+                                _buildAccentSwatch(context, color, name),
+                            ],
+                          ),
+                        ),
+                      ]),
                       const SizedBox(height: 100),
                     ],
                   ),
@@ -64,6 +97,42 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAccentSwatch(BuildContext context, Color color, String name) {
+    // Compare ARGB values, not Color identity: Colors.orange (a MaterialColor)
+    // is not == to a plain Color(0xFFFF9800) even with the same value.
+    final bool selected = widget.config.accentColor.toARGB32() == color.toARGB32();
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    final bool dark = ThemeData.estimateBrightnessForColor(color) == Brightness.dark;
+    return Tooltip(
+      message: name,
+      child: Semantics(
+        label: name,
+        button: true,
+        selected: selected,
+        child: InkWell(
+          key: ValueKey('accent-$name'),
+          customBorder: const CircleBorder(),
+          onTap: () => widget.config.accentColor = color,
+          child: Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: color,
+              border: Border.all(
+                color: selected ? scheme.primary : scheme.outlineVariant,
+                width: selected ? 3 : 1,
+              ),
+            ),
+            child: selected
+                ? Icon(Icons.check_rounded, size: 22, color: dark ? Colors.white : Colors.black)
+                : null,
+          ),
+        ),
+      ),
     );
   }
 

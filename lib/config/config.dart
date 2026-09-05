@@ -1,6 +1,8 @@
+import 'dart:convert';
+import 'dart:ui' show Color;
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 enum ApiOption {
   cat('Cat API', 'Cute cats'),
@@ -11,33 +13,42 @@ enum ApiOption {
   const ApiOption(this.label, this.description);
 }
 
+/// Brand-orange seed used until the user picks another accent.
+const Color kDefaultAccentColor = Color(0xFFFF9800);
+
 class AppConfig extends ChangeNotifier {
   bool _autoPlay;
   int _initialLimit;
   bool _showImageIds;
   ApiOption _selectedApi;
+  Color _accentColor;
 
   AppConfig({
     bool autoPlay = false,
     int initialLimit = 10,
     bool showImageIds = true,
     ApiOption selectedApi = ApiOption.cat,
+    Color accentColor = kDefaultAccentColor,
   })  : _autoPlay = autoPlay, _initialLimit = initialLimit,
-        _showImageIds = showImageIds, _selectedApi = selectedApi;
+        _showImageIds = showImageIds, _selectedApi = selectedApi,
+        _accentColor = accentColor;
 
   bool get autoPlay => _autoPlay;
   int get initialLimit => _initialLimit;
   bool get showImageIds => _showImageIds;
   ApiOption get selectedApi => _selectedApi;
+  Color get accentColor => _accentColor;
 
   set autoPlay(bool value) { if (_autoPlay != value) { _autoPlay = value; notifyListeners(); } }
   set initialLimit(int value) { if (_initialLimit != value) { _initialLimit = value; notifyListeners(); } }
   set showImageIds(bool value) { if (_showImageIds != value) { _showImageIds = value; notifyListeners(); } }
   set selectedApi(ApiOption value) { if (_selectedApi != value) { _selectedApi = value; notifyListeners(); } }
+  set accentColor(Color value) { if (_accentColor != value) { _accentColor = value; notifyListeners(); } }
 
   Map<String, dynamic> toJson() => {
     'autoPlay': _autoPlay, 'initialLimit': _initialLimit,
     'showImageIds': _showImageIds, 'selectedApi': _selectedApi.name,
+    'accentColor': _accentColor.toARGB32(),
   };
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -49,12 +60,14 @@ class AppConfig extends ChangeNotifier {
         (e) => e.name == (json['selectedApi'] as String?),
         orElse: () => ApiOption.cat,
       ),
+      accentColor: Color(json['accentColor'] as int? ?? kDefaultAccentColor.toARGB32()),
     );
   }
 
   void copyFrom(AppConfig other) {
     _autoPlay = other._autoPlay; _initialLimit = other._initialLimit;
     _showImageIds = other._showImageIds; _selectedApi = other._selectedApi;
+    _accentColor = other._accentColor;
     notifyListeners();
   }
 }
