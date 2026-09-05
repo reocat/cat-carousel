@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum ApiOption {
@@ -23,6 +24,7 @@ class AppConfig extends ChangeNotifier {
   ApiOption _selectedApi;
   Color _accentColor;
   bool _useSystemAccent;
+  ThemeMode _themeMode;
 
   AppConfig({
     bool autoPlay = false,
@@ -31,9 +33,11 @@ class AppConfig extends ChangeNotifier {
     ApiOption selectedApi = ApiOption.cat,
     Color accentColor = kDefaultAccentColor,
     bool useSystemAccent = true,
+    ThemeMode themeMode = ThemeMode.system,
   })  : _autoPlay = autoPlay, _initialLimit = initialLimit,
         _showImageIds = showImageIds, _selectedApi = selectedApi,
-        _accentColor = accentColor, _useSystemAccent = useSystemAccent;
+        _accentColor = accentColor, _useSystemAccent = useSystemAccent,
+        _themeMode = themeMode;
 
   bool get autoPlay => _autoPlay;
   int get initialLimit => _initialLimit;
@@ -41,6 +45,7 @@ class AppConfig extends ChangeNotifier {
   ApiOption get selectedApi => _selectedApi;
   Color get accentColor => _accentColor;
   bool get useSystemAccent => _useSystemAccent;
+  ThemeMode get themeMode => _themeMode;
 
   set autoPlay(bool value) { if (_autoPlay != value) { _autoPlay = value; notifyListeners(); } }
   set initialLimit(int value) { if (_initialLimit != value) { _initialLimit = value; notifyListeners(); } }
@@ -48,12 +53,14 @@ class AppConfig extends ChangeNotifier {
   set selectedApi(ApiOption value) { if (_selectedApi != value) { _selectedApi = value; notifyListeners(); } }
   set accentColor(Color value) { if (_accentColor != value) { _accentColor = value; notifyListeners(); } }
   set useSystemAccent(bool value) { if (_useSystemAccent != value) { _useSystemAccent = value; notifyListeners(); } }
+  set themeMode(ThemeMode value) { if (_themeMode != value) { _themeMode = value; notifyListeners(); } }
 
   Map<String, dynamic> toJson() => {
     'autoPlay': _autoPlay, 'initialLimit': _initialLimit,
     'showImageIds': _showImageIds, 'selectedApi': _selectedApi.name,
     'accentColor': _accentColor.toARGB32(),
     'useSystemAccent': _useSystemAccent,
+    'themeMode': _themeMode.name,
   };
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -67,6 +74,10 @@ class AppConfig extends ChangeNotifier {
       ),
       accentColor: Color(json['accentColor'] as int? ?? kDefaultAccentColor.toARGB32()),
       useSystemAccent: json['useSystemAccent'] ?? true,
+      themeMode: ThemeMode.values.firstWhere(
+        (e) => e.name == (json['themeMode'] as String?),
+        orElse: () => ThemeMode.system,
+      ),
     );
   }
 
@@ -74,6 +85,7 @@ class AppConfig extends ChangeNotifier {
     _autoPlay = other._autoPlay; _initialLimit = other._initialLimit;
     _showImageIds = other._showImageIds; _selectedApi = other._selectedApi;
     _accentColor = other._accentColor; _useSystemAccent = other._useSystemAccent;
+    _themeMode = other._themeMode;
     notifyListeners();
   }
 }

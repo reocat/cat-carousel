@@ -71,6 +71,16 @@ class _SettingsPageState extends State<SettingsPage> {
                       ]),
                       const SizedBox(height: 16),
                       _buildSettingsGroup([
+                        ListTile(
+                          title: const Text('Theme'),
+                          subtitle: Text(_themeModeInfo(widget.config.themeMode).$1),
+                          leading: const Icon(Icons.brightness_6_rounded),
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                          onTap: _showThemePicker,
+                        ),
+                      ]),
+                      const SizedBox(height: 16),
+                      _buildSettingsGroup([
                         SwitchListTile(
                           title: const Text('Use device colors'),
                           subtitle: const Text('Prefer your wallpaper or device/browser accent color'),
@@ -152,6 +162,41 @@ class _SettingsPageState extends State<SettingsPage> {
       borderRadius: BorderRadius.circular(24),
       clipBehavior: Clip.antiAlias,
       child: Column(children: children),
+    );
+  }
+
+  (String, IconData) _themeModeInfo(ThemeMode mode) => switch (mode) {
+    ThemeMode.system => ('System', Icons.brightness_auto_rounded),
+    ThemeMode.light => ('Light', Icons.light_mode_rounded),
+    ThemeMode.dark => ('Dark', Icons.dark_mode_rounded),
+  };
+
+  void _showThemePicker() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Select theme'),
+        content: RadioGroup<ThemeMode>(
+          groupValue: widget.config.themeMode,
+          onChanged: (val) {
+            if (val != null) {
+              widget.config.themeMode = val;
+              Navigator.pop(context);
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final mode in ThemeMode.values)
+                RadioListTile<ThemeMode>(
+                  title: Text(_themeModeInfo(mode).$1),
+                  value: mode,
+                  secondary: Icon(_themeModeInfo(mode).$2),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

@@ -29,6 +29,20 @@ void main() {
     expect(find.text('Auto-play'), findsOneWidget);
     expect(find.text('Show image IDs'), findsOneWidget);
 
+    // Theme picker: default follows the system; picking Dark flips the app.
+    expect(find.text('Theme'), findsOneWidget);
+    await tester.ensureVisible(find.text('Theme'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Theme'));
+    await tester.pumpAndSettle();
+    expect(find.text('Select theme'), findsOneWidget);
+    await tester.tap(find.text('Dark'));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode,
+      ThemeMode.dark,
+    );
+
     // Accent picker: orange is the default, so exactly one swatch is checked.
     expect(find.text('Accent color'), findsOneWidget);
     expect(find.text('Use device colors'), findsOneWidget);

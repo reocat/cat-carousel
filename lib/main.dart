@@ -95,6 +95,7 @@ class _CatCarouselAppState extends State<CatCarouselApp> {
                 useMaterial3: true,
                 fontFamily: '04b03',
               ),
+              themeMode: _config.themeMode,
               home: MainNavigationPage(config: _config),
             );
           },
