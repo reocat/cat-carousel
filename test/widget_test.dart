@@ -20,6 +20,24 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
     expect(find.text('Animals'), findsOneWidget);
     expect(find.text('Settings'), findsOneWidget);
+    expect(find.text('Admin'), findsOneWidget);
+
+    // The Admin page mounts lazily (it boots Firebase), so nothing from it
+    // exists until its tab is opened.
+    expect(find.text('Admin sign in'), findsNothing);
+
+    // Switch to the admin tab. In the VM test environment kIsWeb is false, so
+    // the controller reports "web build only" instead of booting Firebase.
+    await tester.tap(find.text('Admin'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Admin tools run in the web build of this app, nya~'),
+      findsOneWidget,
+    );
+
+    // Back to animals, then on to settings.
+    await tester.tap(find.text('Animals'));
+    await tester.pumpAndSettle();
 
     // Switch to the settings tab (no network involved).
     await tester.tap(find.text('Settings'));

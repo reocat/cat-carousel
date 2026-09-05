@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'config/config.dart';
+import 'pages/admin_page.dart';
 import 'pages/carousel_page.dart';
 import 'pages/settings_page.dart';
 import 'widgets/system_accent.dart';
@@ -116,6 +117,18 @@ class MainNavigationPage extends StatefulWidget {
 class _MainNavigationPageState extends State<MainNavigationPage> {
   int _currentIndex = 0;
 
+  // AdminPage mounts lazily (its init boots Firebase), so we only slot it
+  // into the stack after its tab is opened for the first time. From then on
+  // it stays mounted so auth state survives tab switches.
+  bool _adminMounted = false;
+
+  void _selectTab(int i) {
+    setState(() {
+      _currentIndex = i;
+      if (i == 2) _adminMounted = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,14 +137,23 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         children: [
           CatCarouselPage(config: widget.config),
           SettingsPage(config: widget.config),
+          // Placeholder keeps the slot stable until AdminPage is first shown.
+          _adminMounted
+              ? const AdminPage()
+              : const SizedBox.shrink(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
-        onDestinationSelected: (i) => setState(() => _currentIndex = i),
+        onDestinationSelected: _selectTab,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.pets), label: 'Animals'),
           NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
+          NavigationDestination(
+            icon: Icon(Icons.admin_panel_settings_outlined),
+            selectedIcon: Icon(Icons.admin_panel_settings),
+            label: 'Admin',
+          ),
         ],
       ),
     );
