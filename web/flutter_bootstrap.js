@@ -26,6 +26,16 @@
 
   setProgress(0.1, 'Loading engine…');
 
+  // Defensive: unregister any stale service workers left over from previous
+  // deployments. An old service worker serving a cached mix of old/new files
+  // is a classic cause of a wedged loading screen, and this site currently
+  // has no service-worker-based features to lose.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+      regs.forEach(function (r) { r.unregister(); });
+    }).catch(function () {});
+  }
+
   // Safety net: never leave the splash up for more than 20 seconds, even if
   // something goes wrong with the frame callback (e.g. an older engine).
   const fallbackTimer = setTimeout(hideSplash, 20000);
@@ -51,11 +61,28 @@
   // isolation (COOP/COEP headers). Browsers that ignore COEP: credentialless
   // (e.g. Firefox) never become isolated, so they get the fully-supported
   // CanvasKit renderer instead. Works for both --wasm and JS builds.
-  const engineConfig = {
-    renderer: window.crossOriginIsolated ? 'auto' : 'canvaskit',
-  };
+  //
+  // IMPORTANT: never pass 'auto' here. The loader build-selection compares
+  // the requested renderer string against each build's renderer, so 'auto'
+  // matches nothing and startup dies with "no compatible build found".
+  // Omitting the renderer entirely lets the loader pick on its own.
+  const engineConfig = {};
+  if (!window.crossOriginIsolated) {
+    engineConfig.renderer = 'canvaskit';
+  }
 
-  _flutter.loader.load({
+  // Defensive: drop degenerate build entries (e.g. a bare `{}` stub that some
+  // build pipelines emit when the wasm compile step fails) so the loader
+  // always has a valid build to select.
+  if (window._flutter && _flutter.buildConfig && Array.isArray(_flutter.buildConfig.builds)) {
+    const validBuilds = _flutter.buildConfig.builds.filter(function (b) {
+      return b && typeof b.compileTarget === 'string' &&
+        (typeof b.mainJsPath === 'string' || typeof b.mainWasmPath === 'string');
+    });
+    if (validBuilds.length > 0) _flutter.buildConfig.builds = validBuilds;
+  }
+
+  const loadPromise = _flutter.loader.load({
     config: engineConfig,
     onEntrypointLoaded: async function (engineInitializer) {
       setProgress(0.35, 'Starting engine…');
@@ -71,4 +98,12 @@
       });
     },
   });
+
+  // If startup fails, say so on the splash instead of spinning forever.
+  if (loadPromise && typeof loadPromise.catch === 'function') {
+    loadPromise.catch(function (err) {
+      console.error('Flutter startup failed:', err);
+      if (statusText) statusText.textContent = 'Failed to start — please reload';
+    });
+  }
 })();
