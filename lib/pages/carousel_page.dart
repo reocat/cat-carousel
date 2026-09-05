@@ -53,9 +53,15 @@ class _CatCarouselPageState extends State<CatCarouselPage> {
 
   /// Warm the cache for images around the current slide so swiping never
   /// waits on a fresh download.
+  ///
+  /// We preload the current slide plus two in each direction, so the carousel
+  /// is always at least two swipes ahead of the network.
   void _preloadNeighbors() {
-    for (final i in [_currentIndex + 1, _currentIndex + 2, _currentIndex - 1]) {
-      if (i >= 0 && i < _images.length) preloadWebImage(_images[i].url);
+    if (_images.isEmpty) return;
+    final lower = (_currentIndex - 2).clamp(0, _images.length - 1);
+    final upper = (_currentIndex + 2).clamp(0, _images.length - 1);
+    for (var i = lower; i <= upper; i++) {
+      preloadWebImage(_images[i].url);
     }
   }
 
@@ -98,6 +104,8 @@ class _CatCarouselPageState extends State<CatCarouselPage> {
         }
         _isLoading = false; _isFetchingMore = false;
       });
+      // When switching APIs or reloading, warm neighbors immediately once the
+      // fresh image list arrives.
       _preloadNeighbors();
     } catch (e) {
       setState(() { _error = 'Error: $e'; _isLoading = false; _isFetchingMore = false; });
