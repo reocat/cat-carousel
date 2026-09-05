@@ -88,23 +88,27 @@ class _SettingsPageState extends State<SettingsPage> {
                           onChanged: (v) => widget.config.useSystemAccent = v,
                           secondary: const Icon(Icons.wallpaper_rounded),
                         ),
-                        const Divider(height: 1, indent: 16, endIndent: 16),
-                        ListTile(
-                          title: const Text('Accent color'),
-                          subtitle: const Text('Fallback when no device or browser accent is available'),
-                          leading: const Icon(Icons.palette_outlined),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
-                          child: Wrap(
-                            spacing: 14,
-                            runSpacing: 14,
-                            children: [
-                              for (final (color, name) in _accentOptions)
-                                _buildAccentSwatch(context, color, name),
-                            ],
+                        // The swatch picker only matters when device colors are
+                        // off (or unavailable), so hide it while the toggle is on.
+                        if (!widget.config.useSystemAccent) ...[
+                          const Divider(height: 1, indent: 16, endIndent: 16),
+                          ListTile(
+                            title: const Text('Accent color'),
+                            subtitle: const Text('Choose the app accent color'),
+                            leading: const Icon(Icons.palette_outlined),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+                            child: Wrap(
+                              spacing: 14,
+                              runSpacing: 14,
+                              children: [
+                                for (final (color, name) in _accentOptions)
+                                  _buildAccentSwatch(context, color, name),
+                              ],
+                            ),
+                          ),
+                        ],
                       ]),
                       const SizedBox(height: 100),
                     ],
