@@ -19,9 +19,9 @@ export const nearStateSlice = createSlice({
   name: "near",
   initialState: initialNear,
   reducers: {
-    near: (state: boolean) => (state = true),
-    notNear: (state: boolean) => (state = false),
-    toggleNear: (state: boolean) => (state = !state),
+    near: () => true,
+    notNear: () => false,
+    toggleNear: (state: boolean) => !state,
   },
 });
 export const switchSlice = createSlice({
@@ -44,14 +44,14 @@ export const apiSlice = createSlice({
   name: "selectedApi",
   initialState: initialSelectedApi,
   reducers: {
-    selectApi: (state, payload) => (state = payload.payload),
+    selectApi: (state, payload) => payload.payload,
   },
 });
 export const colorSlice = createSlice({
   name: "color",
   initialState: initialColorState,
   reducers: {
-    setColor: (state, payload) => (state = payload.payload),
+    setColor: (state, payload) => payload.payload,
   },
 });
 export const loginSlice = createSlice({
