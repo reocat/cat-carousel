@@ -27,7 +27,6 @@
     "@types/react-dom": "^19.2.7",
     "@types/react-redux": "^7.1.34",
     "firebase": "^12.18.0",
-    "firebase-tools": "^15.29.0",
     "postcss": "^8.5.28",
     "react-icons": "^5.7.0",
     "react-intersection-observer": "^11.0.1",
@@ -38,11 +37,5 @@
     "redux-persist": "^6.0.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2"
-  },
-  "overrides": {
-    "qs": "^6.16.0",
-    "gaxios": {
-      "uuid": "^14.0.0"
-    }
   }
 }
