@@ -189,7 +189,7 @@ $rel    = $isHtml ? ' rel="noopener"' : ''; // HTML5-only, keep XHTML-MP clean
   body { background: <?= $bg ?>; min-height: 100vh; display: -ms-flexbox; display: flex; -ms-flex-direction: column; flex-direction: column; -ms-flex-align: center; align-items: center; padding: 18px 10px; }
   /* margin:auto centres in a short flex column, but collapses to 0 when the
    * content is taller than the screen — no clipped top on tiny displays */
-  .page { width: 100%; max-width: 980px; margin: auto; }
+  .page { width: 100%; max-width: 980px; margin: auto; position: relative; z-index: 1; }
   h1 { color: #5c4033; text-shadow: 1px 1px 2px sandybrown; font-size: 26px; line-height: 1.25; margin: 4px 0 12px; }
   .imgbox { width: 640px; max-width: 92vw; margin: 0 auto 14px; }
   .imgbox img { display: block; width: 100%; height: auto; margin: 0 auto; }
@@ -211,18 +211,31 @@ $rel    = $isHtml ? ' rel="noopener"' : ''; // HTML5-only, keep XHTML-MP clean
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .nyan h1 { background: linear-gradient(red, #ff9a00 10%, #d0de21 20%, #4fdc4a 30%, #3fdad8 40%, #2fc9e2 50%, #1c7fee 60%, #5f15f2 70%, #ba0cf8 80%, #fb07d9 90%, red) 0 0/100% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; }
   }
-  .nyan .bgflash { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: -1; background: linear-gradient(45deg, #ff0080, #ff8c00, #ffee00, #00e676, #00b0ff, #d500f9, #ff0080) 0 0/200% 200%; animation: rainbow 2s linear infinite; opacity: .35; }
+  .nyan .bgflash { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 0; pointer-events: none; background: linear-gradient(45deg, #ff0080, #ff8c00, #ffee00, #00e676, #00b0ff, #d500f9, #ff0080) 0 0/200% 200%; animation: rainbow 2s linear infinite; opacity: .35; }
   @keyframes rainbow { 100% { background-position: 0 -200%; } }
-  /* nyan tile field for death mode — one 715-byte gif, tiled by css.
-   * repeat means the browser downloads it once; the field costs ~0 bytes. */
-  .nyan .bgflash { background: url('img.php?a=nyan') repeat; background-size: 120px 68px; opacity: 1; animation: none; }
-  .nyan .nyanbar { position: fixed; top: 0; left: 0; right: 0; height: 44px; background: rgba(255,255,255,.9); z-index: -1; }
+  /* nyan tile field for death mode — 6-frame animated gif, tiled by css.
+   * Single-layer fallback first for CSS2 browsers, then staggered brick
+   * layout (two offset layers at 2x integer pixel scale) for CSS3+, nya~ */
+  .nyan .bgflash {
+    background: #fff url('img.php?a=nyan&v=2') repeat;
+    background-image: url('img.php?a=nyan&v=2'), url('img.php?a=nyan&v=2');
+    background-color: #fff;
+    background-repeat: repeat, repeat;
+    background-size: 240px 136px, 240px 136px;
+    background-position: 0 0, 120px 68px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    opacity: 1;
+    animation: none;
+  }
+  .nyan .nyanbar { position: fixed; top: 0; left: 0; right: 0; height: 44px; background: rgba(255,255,255,.9); z-index: 0; pointer-events: none; }
   .authors { font-size: 12px; line-height: 1.7; color: #5c4033; margin-top: 12px; }
   .authors a { color: inherit; }
   @media (max-width: 480px) {
     h1 { font-size: 22px; letter-spacing: 1px; }
     .providers { font-size: 13px; }
     .colors a { padding: 4px 7px; }
+    .nyan .bgflash { background-size: 180px 102px, 180px 102px; background-position: 0 0, 90px 51px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .nyan h1, .nyan .bgflash { animation: none; }

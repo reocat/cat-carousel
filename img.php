@@ -35,9 +35,15 @@ if (isset($_GET['a'])) {
         http_response_code(500);
         exit('asset missing');
     }
+    $etag = '"' . sha1($blob) . '"';
+    header('ETag: ' . $etag);
+    header('Cache-Control: public, max-age=86400');
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === $etag) {
+        http_response_code(304);
+        exit;
+    }
     header('Content-Type: ' . $mime);
     header('Content-Length: ' . strlen($blob));
-    header('Cache-Control: public, max-age=86400');
     echo $blob;
     exit;
 }
