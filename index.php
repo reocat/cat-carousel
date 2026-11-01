@@ -13,63 +13,75 @@ require __DIR__ . '/lib/apis.php';
 require __DIR__ . '/lib/mode.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    /* no-store would kill the back/forward cache (and the back button on old
-     * phones); no-cache still revalidates but lets the browser keep the page */
     session_cache_limiter('');
     session_start();
-    header('Cache-Control: private, no-cache, must-revalidate');
+    header('Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0');
     header('Pragma: no-cache');
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 }
 
 $mode  = detect_mode();
 $isWml = is_wml($mode);
 
 /* ---- state (the redux store, but it is just $_SESSION, nya) ------------- */
+$prevPage  = $_SESSION['last_page'] ?? null;
+$prevHell  = !empty($_SESSION['hell']);
+$prevColor = $_SESSION['color'] ?? DEFAULT_COLOR;
 
-// ?api=catapi|cataas|dogapi|duckapi|nekoapi|placedog|placekitten|placebear
+$apiChanged = false;
+// ?api=catapi|cataas|dogapi|duckapi|nekoapi|placedog|placebear
 if (isset($_GET['api']) && array_key_exists((string) $_GET['api'], carousel_providers())) {
     $_SESSION['api'] = (string) $_GET['api'];
-    // fresh pictures on purposeful provider switch, like refetch() in the original
-    unset($_SESSION['images'], $_SESSION['images_at']);
+    $apiChanged = true;
 }
 $api = $_SESSION['api'] ?? 'catapi';
 
 // ?hell=on|off — death mode. no konami code here, old phones only have a numpad
+$hellChanged = false;
 if (isset($_GET['hell'])) {
-    $_SESSION['hell'] = ($_GET['hell'] === 'on');
+    $newHell = ($_GET['hell'] === 'on');
+    $hellChanged = ($newHell !== $prevHell);
+    $_SESSION['hell'] = $newHell;
 }
 
 // ?color=ffdead etc
+$colorChanged = false;
 if (isset($_GET['color']) && preg_match('/^[0-9a-fA-F]{6}$/', (string) $_GET['color'])) {
-    $_SESSION['color'] = strtolower((string) $_GET['color']);
+    $newColor = strtolower((string) $_GET['color']);
+    $colorChanged = ($newColor !== $prevColor);
+    $_SESSION['color'] = $newColor;
 }
 $color = current_color();
 
 // ?page=N — the "carousel" is just prev/next links, truly zero JS
 $page = max(0, min(9, (int) ($_GET['page'] ?? 0)));
+$pageChanged = isset($_GET['page']) && ($page !== $prevPage);
 
 // secret page, like the original konami egg that switched to nekoapi
 if (isset($_GET['nyan'])) {
     $_SESSION['api'] = 'nekoapi';
     $_SESSION['hell'] = true;
-    unset($_SESSION['images'], $_SESSION['images_at']);
     $api = 'nekoapi';
+    $apiChanged = true;
 }
 
-/* ---- fetch images (cached 15 min per provider, like the api slices) -----
- * ?fresh=1 = the original's "end of the reel" move: paging past the last
- * picture wraps to the start AND pulls a fresh batch from the api, nya */
-$freshPull = false;
+/* ---- fetch images -------------------------------------------------------
+ * Pull a genuinely fresh batch (ttl=0) on initial load, page refresh,
+ * provider switch, or ?fresh=1 at the end of the reel. Keep $_SESSION['images']
+ * only when actively stepping < / > through pages or toggling color/death mode. */
+$isStepOrToggle = ($pageChanged || $hellChanged || $colorChanged) && !isset($_GET['fresh']) && !$apiChanged;
 if (isset($_GET['fresh'])) {
-    unset($_SESSION['images'], $_SESSION['images_at'], $_GET['fresh']); // consumed; don't leak into later links
-    $freshPull = true;
+    unset($_GET['fresh']); // consumed; don't leak into later links
 }
-if (!isset($_SESSION['images']) || !is_array($_SESSION['images']) || !$_SESSION['images']
+if (!$isStepOrToggle || !isset($_SESSION['images']) || !is_array($_SESSION['images']) || !$_SESSION['images']
     || (time() - ($_SESSION['images_at'] ?? 0)) > CACHE_TTL_JSON) {
-    // fresh pull = ttl 0 = skip the api-json cache so the batch is truly new
-    $_SESSION['images']    = provider_fetch($api, $freshPull ? 0 : CACHE_TTL_JSON);
+    $_SESSION['images']    = provider_fetch($api, 0);
     $_SESSION['images_at'] = time();
+    if (!$pageChanged) {
+        $page = 0;
+    }
 }
+$_SESSION['last_page'] = $page;
 $images = $_SESSION['images'];
 $total  = count($images);
 if (!$total) {
@@ -192,10 +204,10 @@ $rel    = $isHtml ? ' rel="noopener"' : ''; // HTML5-only, keep XHTML-MP clean
   .page { width: 100%; max-width: 980px; margin: auto; position: relative; z-index: 1; }
   h1 { color: #5c4033; text-shadow: 1px 1px 2px sandybrown; font-size: 26px; line-height: 1.25; margin: 4px 0 12px; }
   .imgbox { width: 640px; max-width: 92vw; margin: 0 auto 14px; }
-  .imgbox img { display: block; width: 100%; height: auto; margin: 0 auto; }
-  .counter { color: #5c4033; font-size: 13px; margin-top: 2px; }
-  .nav { font-size: 18px; margin: 2px 0 14px; }
-  .nav a, .nav span { display: inline-block; min-width: 30px; line-height: 30px; color: #7a4a21; text-decoration: none; border: 1px solid #b98d5f; background: #fff; background: #fff8; padding: 0 12px; border-radius: 50px; }
+  .imgbox img { display: block; max-width: 100%; margin: 0 auto; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 0 5px rgb(123,63,0); }
+  .counter { color: #5c4033; font-size: 13px; margin-top: 4px; }
+  .nav { font-size: 18px; margin: 4px 0 14px; }
+  .nav a, .nav span { display: inline-block; min-width: 30px; line-height: 30px; color: #7a4a21; text-decoration: none; border: 1px solid #b98d5f; background: #fff; background: rgba(255,255,255,.55); padding: 0 12px; border-radius: 50px; }
   .nav span { border-color: transparent; background: transparent; color: #b98d5f; }
   .providers { font-size: 14px; line-height: 1.9; }
   .providers a { color: #7a4a21; }
@@ -231,6 +243,9 @@ $rel    = $isHtml ? ' rel="noopener"' : ''; // HTML5-only, keep XHTML-MP clean
   .nyan .nyanbar { position: fixed; top: 0; left: 0; right: 0; height: 44px; background: rgba(255,255,255,.9); z-index: 0; pointer-events: none; }
   .authors { font-size: 12px; line-height: 1.7; color: #5c4033; margin-top: 12px; }
   .authors a { color: inherit; }
+  @media (max-width: 680px) {
+    .imgbox img { width: 100%; height: auto; }
+  }
   @media (max-width: 480px) {
     h1 { font-size: 22px; letter-spacing: 1px; }
     .providers { font-size: 13px; }

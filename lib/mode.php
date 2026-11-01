@@ -71,5 +71,5 @@ function img_tag(string $url, string $mode, int $w, int $h, string $alt, bool $p
     }
     /* width/height are the *cropped* proxy size, so the box is reserved before
      * the bytes arrive (no CLS) — even in browsers that ignore modern CSS */
-    return '<img src="' . htmlspecialchars($src, ENT_QUOTES) . '" alt="' . htmlspecialchars($alt, ENT_QUOTES) . '" width="' . $w . '" height="' . $h . '"' . ($priority ? ' fetchpriority="high"' : '') . ' style="width:100%;height:auto;border:1px solid #ccc;border-radius:8px;box-shadow:0 0 5px rgb(123,63,0)" />';
+    return '<img src="' . htmlspecialchars($src, ENT_QUOTES) . '" alt="' . htmlspecialchars($alt, ENT_QUOTES) . '" width="' . $w . '" height="' . $h . '"' . ($priority ? ' fetchpriority="high"' : '') . ' />';
 }

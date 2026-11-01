@@ -44,9 +44,10 @@ function provider_fetch(string $key, int $jsonTtl = CACHE_TTL_JSON): array
 
 /* ---- the cat ones (json list of urls) ---------------------------------- */
 
-function fetch_catapi(int $ttl = CACHE_TTL_JSON): array
+function fetch_catapi(int $ttl = 0): array
 {
-    $data = http_get_json('https://api.thecatapi.com/v1/images/search?limit=' . IMG_COUNT, $ttl);
+    // Always pass ttl=0 so each batch roll fetches a genuinely new set of 10 random cats
+    $data = http_get_json('https://api.thecatapi.com/v1/images/search?limit=' . IMG_COUNT, 0);
     $out = [];
     foreach ((array) $data as $row) {
         if (!empty($row['url'])) {
@@ -64,7 +65,7 @@ function fetch_catapi(int $ttl = CACHE_TTL_JSON): array
  */
 function fetch_cataas(int $ttl = CACHE_TTL_JSON): array
 {
-    $pool = http_get_json('https://cataas.com/api/cats?limit=50', $ttl);
+    $pool = http_get_json('https://cataas.com/api/cats?limit=100', $ttl ?: CACHE_TTL_JSON);
     $ids = [];
     foreach ((array) $pool as $row) {
         if (!empty($row['id'])) {
@@ -138,8 +139,15 @@ function fetch_duckapi(int $ttl = CACHE_TTL_META): array
 function fetch_placedog(): array
 {
     $out = [];
-    for ($i = 0; $i < 8; $i++) {
-        $out[] = 'https://place.dog/' . (900 - $i) . '/600';
+    $used = [];
+    while (count($out) < 8) {
+        $w = random_int(820, 960);
+        $h = random_int(540, 640);
+        $key = $w . 'x' . $h;
+        if (!isset($used[$key])) {
+            $used[$key] = true;
+            $out[] = 'https://place.dog/' . $w . '/' . $h;
+        }
     }
     return $out;
 }
@@ -149,9 +157,15 @@ function fetch_placedog(): array
 function fetch_placebear(): array
 {
     $out = [];
-    for ($i = 0; $i < 8; $i++) {
-        $n = random_int(890, 950);
-        $out[] = 'https://placebear.com/' . $n . '/600';
+    $used = [];
+    while (count($out) < 8) {
+        $w = random_int(820, 960);
+        $h = random_int(540, 640);
+        $key = $w . 'x' . $h;
+        if (!isset($used[$key])) {
+            $used[$key] = true;
+            $out[] = 'https://placebear.com/' . $w . '/' . $h;
+        }
     }
     return $out;
 }
