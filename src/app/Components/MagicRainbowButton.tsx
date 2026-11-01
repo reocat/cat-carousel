@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
+import { createPortal } from "react-dom";
 import { ReactNode } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { state } from "../types";
@@ -25,8 +26,11 @@ const AudioPlayer: React.FC<{ url: string }> = ({ url }) => (
   </div>
 );
 
-// Lazy load the BackgroundVideo component
-const BackgroundVideo = lazy(() => import("./BackgroundVideo"));
+// Lazy load the hand-drawn CSS/SVG backgrounds (webm files retired, nya~)
+const NyanBackground = lazy(() => import("./NyanBackground"));
+const RetroBackground = lazy(() => import("./RetroBackground"));
+
+type Background = "none" | "nyan" | "retro";
 
 // Function to apply retro styling
 const retro = () => {
@@ -47,21 +51,25 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
 }) => {
   const dispatch = useDispatch();
   const hellState = useSelector((state: state) => state.hell);
-  const [selectedMusic, setSelectedMusic] = useState<string>(""); 
-  const [backgroundVideo, setBackgroundVideo] = useState<string>("");
+  const [selectedMusic, setSelectedMusic] = useState<string>("");
+  const [background, setBackground] = useState<Background>("none");
+
+  // The scenes are position:fixed, so they must not sit inside an ancestor
+  // that has backdrop-filter — that makes the glass panel their containing
+  // block and traps the whole background inside the card. Render on <body>. nya~
+  const [portalReady, setPortalReady] = useState(false);
+  useEffect(() => setPortalReady(true), []);
 
   // Handle music selection
   const handleMusicSelection = (event: SelectChangeEvent) => {
     const selectedValue = event.target.value;
     setSelectedMusic(selectedValue);
 
-    const isPhoneScreen = window.innerWidth <= 900;
-
     if (selectedValue === "synth") {
       retro();
-      setBackgroundVideo(isPhoneScreen ? "/bg/phone-bg.webm" : "/bg/retro-bg.webm");
+      setBackground("retro");
     } else if (hellState.active) {
-      setBackgroundVideo("/bg/nyan-bg.webm");
+      setBackground("nyan");
     }
   };
 
@@ -70,33 +78,43 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
     dispatch(toggle());
 
     if (!hellState.active) {
-      setBackgroundVideo("/bg/nyan-bg.webm");
+      setBackground("nyan");
     } else {
-      setBackgroundVideo("");
+      setBackground("none");
     }
   };
 
-  useEffect(() => {
-    const updateBackgroundVideo = () => {
-      if (selectedMusic === "synth") {
-        setBackgroundVideo(window.innerWidth <= 900 ? "/bg/phone-bg.webm" : "/bg/retro-bg.webm");
-      }
-    };
-
-    window.addEventListener("resize", updateBackgroundVideo);
-
-    return () => {
-      window.removeEventListener("resize", updateBackgroundVideo);
-    };
-  }, [selectedMusic]);
+  const backgroundEl = {
+    none: null,
+    nyan: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <NyanBackground />
+      </Suspense>
+    ),
+    retro: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <RetroBackground />
+      </Suspense>
+    ),
+  }[background];
 
   const ElToReturn = () => (
     <>
-      {backgroundVideo && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <BackgroundVideo src={backgroundVideo} />
-        </Suspense>
-      )}
+      {portalReady && backgroundEl
+        ? createPortal(
+            <>
+              {backgroundEl}
+              {/* full-screen glass veil — separates UI from the scene while
+                  keeping the cats visible through it, nya~ */}
+              <div
+                className={`bg-glass ${
+                  background === "retro" ? "bg-glass-dark" : ""
+                }`}
+              />
+            </>,
+            document.body,
+          )
+        : null}
       <button
         onClick={handleButtonClick}
         id="rainbow-button"
@@ -106,7 +124,11 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
       </button>
       <br />
       {hellState.active && (
-        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+        <FormControl
+          className="music-select"
+          variant="filled"
+          sx={{ m: 1, minWidth: 120 }}
+        >
           <InputLabel id="demo-simple-select-standard-label">Music</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
@@ -132,10 +154,10 @@ export const MagicRainbowButton: React.FC<MagicRainbowButtonProps> = ({
         <AudioPlayer url="https://www.nyan.cat/music/original.mp3" />
       )}
       {selectedMusic === "rain" && (
-        <AudioPlayer url="https://stream.willstare.com:8850/;?type=http&nocache=9305" />
-      )}
+        <AudioPlayer url="https://ice1.somafm.com/fluid-128-mp3" />
+ )}
       {selectedMusic === "synth" && (
-        <AudioPlayer url="https://streamingp.shoutcast.com/JamendoLounge?lang=en-US%2cen%3bq%3d0.5" />
+        <AudioPlayer url="https://ice1.somafm.com/u80s-128-mp3" />
       )}
     </>
   );

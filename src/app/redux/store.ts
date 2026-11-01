@@ -8,7 +8,6 @@ import {
   selectedColorReducer,
 } from "@/app/redux/reducers";
 import { catapi } from "@/app/redux/api/catapi";
-import { shibeApi } from "@/app/redux/api/shibeApi";
 import storage from "redux-persist/lib/storage";
 import {
   FLUSH,
@@ -36,7 +35,8 @@ const rootReducer = combineReducers({
   otheranimalapi: otherAnimalsApiReducer,
   login: loginStateReducer,
   [catapi.reducerPath]: catapi.reducer,
-  [shibeApi.reducerPath]: shibeApi.reducer,
+  // shibe.online is gone (domain lapsed) — its slice died with it. The
+  // persisted "shibe" selectedApi value now aliases the live cat api.
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -48,7 +48,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-      .concat(catapi.middleware)
-      .concat(shibeApi.middleware),
+      .concat(catapi.middleware),
 });
 export const persistor = persistStore(store);

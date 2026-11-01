@@ -8,7 +8,6 @@ import { Dispatch } from "redux";
 import { state } from "../types";
 import { fetchDogAPI } from "./api/dogapi";
 import { fetchPlaceDogAPI } from "./api/placedogapi";
-import { fetchPlaceKittenApi } from "./api/placekittenapi";
 import { fetchPlaceBearApi } from "./api/placebearapi";
 import { fetchDuckApi } from "./api/duckapi";
 
@@ -61,17 +60,6 @@ export const fetchAnimalImages: FetchImages =
       try {
         dispatch(setLoading());
         const urls = await fetchPlaceDogAPI();
-        dispatch(setImages(urls));
-      } catch (error: any) {
-        dispatch(setError(error.message || "Error fetching images"));
-      }
-    }
-    if (animalType === "placekittenapi") {
-      try {
-        dispatch(setLoading());
-        const urls = await fetchPlaceKittenApi();
-        console.log(urls);
-
         dispatch(setImages(urls));
       } catch (error: any) {
         dispatch(setError(error.message || "Error fetching images"));

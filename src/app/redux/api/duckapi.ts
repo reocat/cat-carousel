@@ -7,7 +7,7 @@ export const fetchDuckApi = async () => {
   for (let i = 0; i < count; i++) {
     const imagePromise = fetch("https://random-d.uk/api/v2/random")
       .then((response) => response.json())
-      .then((data: Data) => data.url)
+      .then((data: Data) => data.url.replace(/^http:\/\//i, "https://"))
       .then((data) => {
         imagePromises.push(data);
       });

@@ -99,15 +99,7 @@ h1 {
 }
 
 
-.background-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1; /* Ensure the video is behind all other content */
-}
+/* (webm backgrounds retired — see CSS/SVG scenes at the bottom, nya~) */
 
 .page-container {
   display: flex;
@@ -117,6 +109,8 @@ h1 {
   height: 100vh;
   margin-right: 5%;
   margin-left: 5%;
+  position: relative;
+  z-index: 1;
 }
 
 .page-title {
@@ -176,8 +170,16 @@ h1 {
     font-size: 24px !important;
   }
 
-  .background-video {
-    object-fit: cover;
+  .nyan-cat-field {
+    background-size: 176px 99px, 176px 99px;
+    background-position: 0 0, 88px 49.5px;
+  }
+
+  /* portrait synthwave: tighter grid so it reads like the desktop one, owo */
+  .retro-grid {
+    --grid-x: 56px;
+    --grid-y: 44px;
+    perspective: 260px;
   }
   
   .h1-retro {
@@ -254,4 +256,331 @@ h1 {
   border-radius: 10px;
   padding: 5px;
   font-size: 15px;
-} 
+}
+
+/* ============================================================
+   Hand-drawn CSS/SVG backgrounds — webm-free since 2026, nya~
+   ============================================================ */
+
+/* --- shared bits --- */
+
+.nyan-bg,
+.retro-bg,
+.phone-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nyan-stars,
+.retro-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-twinkle {
+  fill: #b9b2a4;
+  animation: bg_twinkle 0.9s steps(1) infinite;
+}
+
+@keyframes bg_twinkle {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* --- nyan scene --- */
+
+.nyan-bg {
+  background: #ffffff;
+}
+
+/* zigzag rainbow trail, drawn as a repeating tile so it scrolls forever */
+.nyan-rainbow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 60px;
+  transform: translateY(-30%);
+  background-image: repeating-linear-gradient(
+    120deg,
+    #ff0000 0 12px,
+    #ff9a00 12px 24px,
+    #d0de21 24px 36px,
+    #4fdc4a 36px 48px,
+    #3fdad8 48px 60px,
+    #2fc9e2 60px 72px,
+    #1c7fee 72px 84px,
+    #ffffff 84px 96px
+  );
+  background-size: 96px 100%;
+  animation: nyan_rainbow_scroll 0.35s linear infinite;
+}
+
+@keyframes nyan_rainbow_scroll {
+  to {
+    background-position: -96px 0;
+  }
+}
+
+/* staggered field of small nyan cats — two offset layers make the brick
+   layout, every tile runs its own internal SVG animation, nya~.
+   The tile is 1.1x the SVG's art box, so the extra 10% is empty spacing:
+   the cats stay the same on-screen size while sitting a little further
+   apart. Bump the numbers together to spread them out more. */
+.nyan-cat-field {
+  position: absolute;
+  inset: 0;
+  background-image: url("/nyancat.svg"), url("/nyancat.svg");
+  background-repeat: repeat, repeat;
+  background-size: 242px 136.125px, 242px 136.125px;
+  background-position: 0 0, 121px 68.0625px;
+  user-select: none;
+}
+
+/* --- retro synthwave scene (palette from the original webm) --- */
+
+.retro-bg {
+  background: #201754;
+}
+
+.retro-sun-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 70vmin;
+  height: 70vmin;
+  transform: translate(-50%, 25%);
+  background: radial-gradient(
+    circle,
+    rgba(205, 4, 223, 0.4) 0%,
+    rgba(205, 4, 223, 0) 60%
+  );
+}
+
+.retro-sun {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 34vmin;
+  height: 34vmin;
+  transform: translate(-50%, 0);
+  border-radius: 50%;
+  background: linear-gradient(
+    #fcda54 0%,
+    #ff8c40 28%,
+    #cd04df 62%,
+    #a30ab5 100%
+  );
+}
+
+/* sky-colored slits across the lower half of the sun, retro style */
+.retro-sun::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(32, 23, 84, 0) 0 1.6vmin,
+    #201754 1.6vmin 2.6vmin
+  );
+}
+
+.retro-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(66, 168, 255, 0) 0%,
+    #42a8ff 50%,
+    rgba(66, 168, 255, 0) 100%
+  );
+  box-shadow: 0 0 12px 2px rgba(66, 168, 255, 0.6);
+}
+
+/* perspective floor: verticals converge via rotateX, lines scroll toward you */
+.retro-grid {
+  --grid-x: 90px;
+  --grid-y: 70px;
+  position: absolute;
+  left: -25%;
+  right: -25%;
+  bottom: 0;
+  height: 50%;
+  background-image: repeating-linear-gradient(
+      to right,
+      rgba(66, 168, 255, 0.9) 0 3px,
+      transparent 3px var(--grid-x)
+    ),
+    repeating-linear-gradient(
+      to top,
+      rgba(46, 87, 158, 0.9) 0 2px,
+      transparent 2px var(--grid-y)
+    );
+  transform: perspective(340px) rotateX(55deg);
+  transform-origin: top center;
+  animation: retro_grid_scroll 1.2s linear infinite;
+}
+
+@keyframes retro_grid_scroll {
+  to {
+    background-position: 0 0, 0 var(--grid-y);
+  }
+}
+
+.retro-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+/* ============================================================
+   Matte glass + lift — the UI floats above the animated scenes
+   instead of sitting flat on top of them, nya~
+   ============================================================ */
+
+.tooltip,
+.music-select .MuiFilledInput-root {
+  background-color: rgba(255, 255, 255, 0.42);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0) 45%
+  );
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 18px 40px -14px rgba(43, 22, 12, 0.45),
+    0 4px 12px -4px rgba(43, 22, 12, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* full-screen glass — car-window tint style: no blur (the cats stay
+   perfectly crisp), just a smoked darken + a touch of saturation so the
+   scene reads clearly while the UI floats brighter on top. nya~
+   (This is a sibling of the scenes, never their ancestor — a backdrop-filter
+   element becomes the containing block for position:fixed children.) */
+.bg-glass {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(24, 17, 36, 0.26),
+    rgba(24, 17, 36, 0.12)
+  );
+  -webkit-backdrop-filter: saturate(120%);
+  backdrop-filter: saturate(120%);
+}
+
+/* retro scene is already deep — keep the same wrap, just a cooler smoke */
+.bg-glass-dark {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 6, 30, 0.22),
+    rgba(10, 6, 30, 0.1)
+  );
+  backdrop-filter: saturate(112%);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .bg-glass {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* the photo frame sits on the glass panel — keep it a quiet matte frame
+   instead of stacking a second blur (looked broken, nya~) */
+.image-container {
+  background-color: transparent;
+  border: 1px solid rgba(43, 22, 12, 0.35);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px -12px rgba(43, 22, 12, 0.45);
+}
+
+.image-container .carousel-image {
+  box-shadow: 0 10px 24px -10px rgba(43, 22, 12, 0.5);
+}
+
+.tooltip {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+
+.btn {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.45);
+  background-image: none;
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  backdrop-filter: blur(10px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 8px 20px -6px rgba(43, 22, 12, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+
+.glass-toolbar {
+  /* a proper white bar — the smoked scene sits behind it, so it stays
+     bright without needing full opacity */
+  background-color: rgba(255, 255, 255, 0.78);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 10px 30px -16px rgba(43, 22, 12, 0.5);
+}
+
+/* the bar itself is white now, so ink the header dark for contrast */
+header.MuiAppBar-root {
+  background-color: transparent;
+  box-shadow: none;
+  color: #3a2a1e;
+  position: relative;
+  z-index: 1;
+}
+
+/* the scene behind is smoked now — lift the title off it with a bright
+   warm fill and a stronger shadow. Scoped to :not(.nnn) so hell mode's
+   rainbow gradient (which needs color:transparent) still wins, nya~ */
+#pagetitle:not(.nnn) {
+  color: #fff8ef;
+  text-shadow:
+    0 2px 4px rgba(43, 22, 12, 0.6),
+    0 0 18px rgba(255, 204, 0, 0.35);
+  filter: drop-shadow(0 4px 10px rgba(43, 22, 12, 0.35));
+}
+ 

@@ -3,7 +3,6 @@ import { useGetCatApiQuery } from "@/app/redux/api/catapi";
 import { ImageCarousel } from "@/app/Components/ImageCarousel";
 import { useDispatch, useSelector } from "react-redux";
 import { notNear } from "@/app/redux/reducers";
-import { useGetShibeApiQuery } from "@/app/redux/api/shibeApi";
 import { fetchAnimalImages } from "@/app/redux/actions";
 import {
   selectError,
@@ -16,17 +15,16 @@ import { Skeleton } from "@mui/material";
 
 interface Actions {
   isLoading: boolean;
-  data: Array<any>;
-  error: any;
+  data?: any; // rtk query types data/error as possibly-undefined; consumers normalize
+  error?: any;
   refetch: () => void;
 }
 interface AvailableApi {
-  shibe: any;
-  catapi: any;
+  shibe: Actions;
+  catapi: Actions;
   nekoapi: Actions;
   dogapi: Actions;
   placedogapi: Actions;
-  placekittenapi: Actions;
   placebearapi: Actions;
   duckapi: Actions;
 }
@@ -37,22 +35,21 @@ const FetchCatApiImages = () => {
   );
   const dispatch = useDispatch<Dispatch<any>>();
 
+  // Hooks stay at the top so their order never shuffles between renders, nya.
+  // "shibe" is retired (shibe.online lapsed and is gone) and now aliases the
+  // live cat api — the value is kept so persisted redux state still hydrates.
+  const catapiQuery = useGetCatApiQuery("");
+  const shibeQuery = useGetCatApiQuery("");
+
   useEffect(() => {
     if (selectedApi !== "shibe" && selectedApi !== "catapi") {
       dispatch(fetchAnimalImages(selectedApi));
     }
-    // if (selectedApi === "nekoapi") {
-    //   dispatch(fetchNekoImages(10));
-    // }
-    // if (selectedApi === "dogapi") {
-    //   dispatch(fetchDoggoImages(10));
-    // }
   }, [dispatch, selectedApi]);
 
   const availableApis: AvailableApi = {
-    // animality:useGetAnimalityApiQuery(''),
-    shibe: useGetShibeApiQuery(""),
-    catapi: useGetCatApiQuery(""),
+    shibe: shibeQuery,
+    catapi: catapiQuery,
     nekoapi: {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
@@ -77,20 +74,12 @@ const FetchCatApiImages = () => {
         dispatch(fetchAnimalImages("placedogapi"));
       },
     },
-    placekittenapi: {
-      data: useSelector(selectImages),
-      isLoading: useSelector(selectLoading),
-      error: useSelector(selectError),
-      refetch: () => {
-        () => {};
-      },
-    },
     placebearapi: {
       data: useSelector(selectImages),
       isLoading: useSelector(selectLoading),
       error: useSelector(selectError),
       refetch: () => {
-        () => {};
+        dispatch(fetchAnimalImages("placebearapi"));
       },
     },
     duckapi: {

@@ -4,12 +4,11 @@ export interface state {
   };
   nearState: boolean;
   selectedApi:
-    | "shibe"
+    | "shibe" // retired api, kept as an alias so persisted redux state still hydrates
     | "catapi"
     | "nekoapi"
     | "dogapi"
     | "placedogapi"
-    | "placekittenapi"
     | "placebearapi"
     | "duckapi";
   selectedColor: string;

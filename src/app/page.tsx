@@ -25,7 +25,6 @@ function Home() {
     shibe: "Cat",
     nekoapi: "Neko",
     placedogapi: "Dog",
-    placekittenapi: "Kitten",
     placebearapi: "Bear",
     duckapi: "Duck",
   };
@@ -33,13 +32,13 @@ function Home() {
     <>
       <Header animalType={selector[currentApi]} />
       <div className={`page-container ${hellState && "nyan"}`}>
-        <h1
-          id="pagetitle"
-          className={`${hellState && "nnn"} animate__animated slideInLeft`}
-        >
-          {`Random ${selector[currentApi]} Image Carousel`}
-        </h1>
         <div className="carousel-container relative">
+          <h1
+            id="pagetitle"
+            className={`${hellState && "nnn"} animate__animated slideInLeft`}
+          >
+            {`Random ${selector[currentApi]} Image Carousel`}
+          </h1>
           <MagicRainbowButton>
             <div>toggle death mode</div>
           </MagicRainbowButton>

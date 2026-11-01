@@ -33,7 +33,7 @@ export const Header: React.FC<{ animalType: React.ReactNode }> = ({
   return (
     <>
       <AppBar position="static">
-        <Toolbar className="bg-gray-300 bg-opacity-65">
+        <Toolbar className="glass-toolbar">
           <IconButton
             onClick={() => {
               router.push("https://github.com/reocat/cat-carousel");
