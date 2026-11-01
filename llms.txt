@@ -1,0 +1,21 @@
+# Cat Carousel
+
+> A zero-JavaScript retro cat image carousel with HTML, WAP2 and WML faces.
+
+Cat Carousel is a tiny PHP website that shows random cat (and dog, duck, bear)
+images. It has no JavaScript, no login, and no build step. It serves modern
+HTML, XHTML-MP for WAP2 feature phones, and WML for WAP 1.x handsets.
+
+## Pages
+
+- [Cat Carousel home](https://lavender.kawaiinekos.com/): random animal image carousel.
+- [ARD catalog](https://lavender.kawaiinekos.com/.well-known/ard.json): machine-readable agent resource manifest.
+- [Original Next.js carousel](https://github.com/reocat/cat-carousel): the project this PHP port is based on.
+- [WML 1.1 DTD](http://www.wapforum.org/DTD/wml_1.1.dtd): the WAP 1.x format used by the lightest face.
+
+## Notes for agents
+
+- No JavaScript is required; every interaction is a plain link.
+- Images are proxied, resized and cached by `img.php`; WAP1 gets 1-bit WBMP.
+- The carousel state is kept in a PHP session and in query parameters.
+- Crawling the home page and the image proxy is welcome.

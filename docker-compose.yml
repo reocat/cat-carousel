@@ -1,0 +1,19 @@
+services:
+  cat-carousel:
+    image: ghcr.io/reocat/cat-carousel:nyan-php
+    build: .
+    container_name: cat-carousel
+    restart: unless-stopped
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${PORT:-8085}:8080"
+    volumes:
+      - ./cache:/var/www/html/cache
+    networks:
+      - cat_net
+
+networks:
+  cat_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.29.85.0/24

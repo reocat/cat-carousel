@@ -1,0 +1,12 @@
+cache/*
+!cache/.gitkeep
+.git
+.github
+.gitignore
+.DS_Store
+Dockerfile
+.dockerignore
+docker-compose*.yml
+README.md
+LICENSE.md
+

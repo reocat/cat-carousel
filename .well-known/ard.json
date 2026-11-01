@@ -1,0 +1,38 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Cat Carousel",
+    "identifier": "did:web:lavender.kawaiinekos.com"
+  },
+  "entries": [
+    {
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:lavender.kawaiinekos.com:agent-skills:cat-carousel",
+      "displayName": "Cat Carousel",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://lavender.kawaiinekos.com/llms.txt",
+      "description": "A zero-JavaScript retro cat image carousel with HTML, XHTML-MP (WAP2) and WML (WAP 1.x) faces. Random cats, dogs, ducks and bears on everything from a modern browser to a Nokia 3310.",
+      "representativeQueries": [
+        "show me a random cat picture",
+        "open the retro cat carousel",
+        "find a cat image that works on an old WAP phone"
+      ],
+      "capabilities": [
+        "RandomCatImages",
+        "RandomAnimalImages",
+        "WAP1",
+        "WAP2",
+        "NoJavaScript"
+      ],
+      "tags": [
+        "cats",
+        "retro",
+        "wml",
+        "wap",
+        "no-javascript"
+      ],
+      "version": "0.1.0",
+      "updatedAt": "2026-10-28T19:30:00Z"
+    }
+  ]
+}
