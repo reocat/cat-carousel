@@ -29,7 +29,7 @@ $prevHell  = !empty($_SESSION['hell']);
 $prevColor = $_SESSION['color'] ?? DEFAULT_COLOR;
 
 $apiChanged = false;
-// ?api=catapi|cataas|dogapi|duckapi|nekoapi|placedog|placebear
+// ?api=catapi|cataas|ourcats|dogapi|duckapi|nekoapi|placedog|placebear
 if (isset($_GET['api']) && array_key_exists((string) $_GET['api'], carousel_providers())) {
     $_SESSION['api'] = (string) $_GET['api'];
     $apiChanged = true;
@@ -282,6 +282,7 @@ $rel    = $isHtml ? ' rel="noopener"' : ''; // HTML5-only, keep XHTML-MP clean
 <p class="providers">
   <?= api_link('catapi', 'cat', $api) ?>
   <?= api_link('cataas', 'cataas', $api) ?>
+  <?= api_link('ourcats', 'ourcats', $api) ?>
   <?= api_link('dogapi', 'dog', $api) ?>
   <?= api_link('duckapi', 'duck', $api) ?>
   <?= api_link('nekoapi', 'neko', $api) ?>

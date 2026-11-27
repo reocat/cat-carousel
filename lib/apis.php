@@ -10,6 +10,7 @@ function carousel_providers(): array
     return [
         'catapi'   => ['Cat',    'fetch_catapi'],
         'cataas'   => ['Cat',    'fetch_cataas'],
+        'ourcats'  => ['Cat',    'fetch_ourcats'],
         'dogapi'   => ['Dog',    'fetch_dogapi'],
         'duckapi'  => ['Duck',   'fetch_duckapi'],
         'nekoapi'  => ['Neko',   'fetch_nekoapi'],
@@ -55,6 +56,16 @@ function fetch_catapi(int $ttl = 0): array
         }
     }
     return $out;
+}
+
+function fetch_ourcats(int $ttl = 0): array
+{
+    // Always pass ttl=0 so each batch roll fetches a genuinely new set of random cats
+    $data = http_get_json(OUR_CAT_API_URL . '/v1/images/random?limit=' . IMG_COUNT, 0);
+    if (!is_array($data)) {
+        return [];
+    }
+    return array_column($data, 'url');
 }
 
 /**

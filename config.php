@@ -42,6 +42,9 @@ define('WAP2_H', 320);
 define('WML_W', 96);               // WBMP for openwave-era handsets (1-bit!)
 define('WML_H', 128);
 
+/* ---- internal cat-api --------------------------------------------------- */
+define('OUR_CAT_API_URL', rtrim(getenv('OUR_CAT_API_URL') ?: 'http://cat-api:8086', '/'));
+
 /* ---- image proxy -------------------------------------------------------- */
 /* img.php?u=… is reachable by anyone, so it may only ever fetch the animal
  * providers below (suffix match, subdomains included). Without this the
@@ -51,6 +54,7 @@ define('WML_H', 128);
 const IMG_HOST_ALLOW = [
     'thecatapi.com',   // catapi (images live on cdn2.)
     'cataas.com',      // cataas
+    'cat-api',         // ourcats (internal Docker bridge hostname for cat-api container)
     'random.dog',      // dogapi
     'random-d.uk',     // duckapi
     'nekos.life',      // nekoapi
